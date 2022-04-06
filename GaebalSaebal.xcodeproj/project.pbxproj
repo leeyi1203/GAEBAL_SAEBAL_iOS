@@ -1,0 +1,624 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6FA1DCFA27FD8F8A009C355F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DCF927FD8F8A009C355F /* AppDelegate.swift */; };
+		6FA1DCFC27FD8F8A009C355F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DCFB27FD8F8A009C355F /* SceneDelegate.swift */; };
+		6FA1DCFE27FD8F8A009C355F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DCFD27FD8F8A009C355F /* ViewController.swift */; };
+		6FA1DD0127FD8F8A009C355F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FA1DCFF27FD8F8A009C355F /* Main.storyboard */; };
+		6FA1DD0427FD8F8A009C355F /* GaebalSaebal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD0227FD8F8A009C355F /* GaebalSaebal.xcdatamodeld */; };
+		6FA1DD0627FD8F8C009C355F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FA1DD0527FD8F8C009C355F /* Assets.xcassets */; };
+		6FA1DD0927FD8F8C009C355F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FA1DD0727FD8F8C009C355F /* LaunchScreen.storyboard */; };
+		6FA1DD1427FD8F8C009C355F /* GaebalSaebalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD1327FD8F8C009C355F /* GaebalSaebalTests.swift */; };
+		6FA1DD1E27FD8F8C009C355F /* GaebalSaebalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD1D27FD8F8C009C355F /* GaebalSaebalUITests.swift */; };
+		6FA1DD2027FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD1F27FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6FA1DD1027FD8F8C009C355F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6FA1DCEE27FD8F8A009C355F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FA1DCF527FD8F8A009C355F;
+			remoteInfo = GaebalSaebal;
+		};
+		6FA1DD1A27FD8F8C009C355F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6FA1DCEE27FD8F8A009C355F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FA1DCF527FD8F8A009C355F;
+			remoteInfo = GaebalSaebal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6FA1DCF627FD8F8A009C355F /* GaebalSaebal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GaebalSaebal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FA1DCF927FD8F8A009C355F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6FA1DCFB27FD8F8A009C355F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		6FA1DCFD27FD8F8A009C355F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6FA1DD0027FD8F8A009C355F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6FA1DD0327FD8F8A009C355F /* GaebalSaebal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GaebalSaebal.xcdatamodel; sourceTree = "<group>"; };
+		6FA1DD0527FD8F8C009C355F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6FA1DD0827FD8F8C009C355F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6FA1DD0A27FD8F8C009C355F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6FA1DD0F27FD8F8C009C355F /* GaebalSaebalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaebalSaebalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FA1DD1327FD8F8C009C355F /* GaebalSaebalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaebalSaebalTests.swift; sourceTree = "<group>"; };
+		6FA1DD1927FD8F8C009C355F /* GaebalSaebalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaebalSaebalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FA1DD1D27FD8F8C009C355F /* GaebalSaebalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaebalSaebalUITests.swift; sourceTree = "<group>"; };
+		6FA1DD1F27FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaebalSaebalUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6FA1DCF327FD8F8A009C355F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FA1DD0C27FD8F8C009C355F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FA1DD1627FD8F8C009C355F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6FA1DCED27FD8F8A009C355F = {
+			isa = PBXGroup;
+			children = (
+				6FA1DCF827FD8F8A009C355F /* GaebalSaebal */,
+				6FA1DD1227FD8F8C009C355F /* GaebalSaebalTests */,
+				6FA1DD1C27FD8F8C009C355F /* GaebalSaebalUITests */,
+				6FA1DCF727FD8F8A009C355F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6FA1DCF727FD8F8A009C355F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6FA1DCF627FD8F8A009C355F /* GaebalSaebal.app */,
+				6FA1DD0F27FD8F8C009C355F /* GaebalSaebalTests.xctest */,
+				6FA1DD1927FD8F8C009C355F /* GaebalSaebalUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6FA1DCF827FD8F8A009C355F /* GaebalSaebal */ = {
+			isa = PBXGroup;
+			children = (
+				6FA1DCF927FD8F8A009C355F /* AppDelegate.swift */,
+				6FA1DCFB27FD8F8A009C355F /* SceneDelegate.swift */,
+				6FA1DCFD27FD8F8A009C355F /* ViewController.swift */,
+				6FA1DCFF27FD8F8A009C355F /* Main.storyboard */,
+				6FA1DD0527FD8F8C009C355F /* Assets.xcassets */,
+				6FA1DD0727FD8F8C009C355F /* LaunchScreen.storyboard */,
+				6FA1DD0A27FD8F8C009C355F /* Info.plist */,
+				6FA1DD0227FD8F8A009C355F /* GaebalSaebal.xcdatamodeld */,
+			);
+			path = GaebalSaebal;
+			sourceTree = "<group>";
+		};
+		6FA1DD1227FD8F8C009C355F /* GaebalSaebalTests */ = {
+			isa = PBXGroup;
+			children = (
+				6FA1DD1327FD8F8C009C355F /* GaebalSaebalTests.swift */,
+			);
+			path = GaebalSaebalTests;
+			sourceTree = "<group>";
+		};
+		6FA1DD1C27FD8F8C009C355F /* GaebalSaebalUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6FA1DD1D27FD8F8C009C355F /* GaebalSaebalUITests.swift */,
+				6FA1DD1F27FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift */,
+			);
+			path = GaebalSaebalUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6FA1DCF527FD8F8A009C355F /* GaebalSaebal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6FA1DD2327FD8F8C009C355F /* Build configuration list for PBXNativeTarget "GaebalSaebal" */;
+			buildPhases = (
+				6FA1DCF227FD8F8A009C355F /* Sources */,
+				6FA1DCF327FD8F8A009C355F /* Frameworks */,
+				6FA1DCF427FD8F8A009C355F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GaebalSaebal;
+			productName = GaebalSaebal;
+			productReference = 6FA1DCF627FD8F8A009C355F /* GaebalSaebal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6FA1DD0E27FD8F8C009C355F /* GaebalSaebalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6FA1DD2627FD8F8C009C355F /* Build configuration list for PBXNativeTarget "GaebalSaebalTests" */;
+			buildPhases = (
+				6FA1DD0B27FD8F8C009C355F /* Sources */,
+				6FA1DD0C27FD8F8C009C355F /* Frameworks */,
+				6FA1DD0D27FD8F8C009C355F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6FA1DD1127FD8F8C009C355F /* PBXTargetDependency */,
+			);
+			name = GaebalSaebalTests;
+			productName = GaebalSaebalTests;
+			productReference = 6FA1DD0F27FD8F8C009C355F /* GaebalSaebalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6FA1DD1827FD8F8C009C355F /* GaebalSaebalUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6FA1DD2927FD8F8C009C355F /* Build configuration list for PBXNativeTarget "GaebalSaebalUITests" */;
+			buildPhases = (
+				6FA1DD1527FD8F8C009C355F /* Sources */,
+				6FA1DD1627FD8F8C009C355F /* Frameworks */,
+				6FA1DD1727FD8F8C009C355F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6FA1DD1B27FD8F8C009C355F /* PBXTargetDependency */,
+			);
+			name = GaebalSaebalUITests;
+			productName = GaebalSaebalUITests;
+			productReference = 6FA1DD1927FD8F8C009C355F /* GaebalSaebalUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6FA1DCEE27FD8F8A009C355F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					6FA1DCF527FD8F8A009C355F = {
+						CreatedOnToolsVersion = 13.3;
+					};
+					6FA1DD0E27FD8F8C009C355F = {
+						CreatedOnToolsVersion = 13.3;
+						TestTargetID = 6FA1DCF527FD8F8A009C355F;
+					};
+					6FA1DD1827FD8F8C009C355F = {
+						CreatedOnToolsVersion = 13.3;
+						TestTargetID = 6FA1DCF527FD8F8A009C355F;
+					};
+				};
+			};
+			buildConfigurationList = 6FA1DCF127FD8F8A009C355F /* Build configuration list for PBXProject "GaebalSaebal" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6FA1DCED27FD8F8A009C355F;
+			productRefGroup = 6FA1DCF727FD8F8A009C355F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6FA1DCF527FD8F8A009C355F /* GaebalSaebal */,
+				6FA1DD0E27FD8F8C009C355F /* GaebalSaebalTests */,
+				6FA1DD1827FD8F8C009C355F /* GaebalSaebalUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6FA1DCF427FD8F8A009C355F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FA1DD0927FD8F8C009C355F /* LaunchScreen.storyboard in Resources */,
+				6FA1DD0627FD8F8C009C355F /* Assets.xcassets in Resources */,
+				6FA1DD0127FD8F8A009C355F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FA1DD0D27FD8F8C009C355F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FA1DD1727FD8F8C009C355F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6FA1DCF227FD8F8A009C355F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FA1DCFE27FD8F8A009C355F /* ViewController.swift in Sources */,
+				6FA1DD0427FD8F8A009C355F /* GaebalSaebal.xcdatamodeld in Sources */,
+				6FA1DCFA27FD8F8A009C355F /* AppDelegate.swift in Sources */,
+				6FA1DCFC27FD8F8A009C355F /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FA1DD0B27FD8F8C009C355F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FA1DD1427FD8F8C009C355F /* GaebalSaebalTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FA1DD1527FD8F8C009C355F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FA1DD2027FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift in Sources */,
+				6FA1DD1E27FD8F8C009C355F /* GaebalSaebalUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6FA1DD1127FD8F8C009C355F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FA1DCF527FD8F8A009C355F /* GaebalSaebal */;
+			targetProxy = 6FA1DD1027FD8F8C009C355F /* PBXContainerItemProxy */;
+		};
+		6FA1DD1B27FD8F8C009C355F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FA1DCF527FD8F8A009C355F /* GaebalSaebal */;
+			targetProxy = 6FA1DD1A27FD8F8C009C355F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6FA1DCFF27FD8F8A009C355F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6FA1DD0027FD8F8A009C355F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6FA1DD0727FD8F8C009C355F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6FA1DD0827FD8F8C009C355F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6FA1DD2127FD8F8C009C355F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6FA1DD2227FD8F8C009C355F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6FA1DD2427FD8F8C009C355F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8B3LP78353;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GaebalSaebal/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6FA1DD2527FD8F8C009C355F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8B3LP78353;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GaebalSaebal/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6FA1DD2727FD8F8C009C355F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8B3LP78353;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaebalSaebal.app/GaebalSaebal";
+			};
+			name = Debug;
+		};
+		6FA1DD2827FD8F8C009C355F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8B3LP78353;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GaebalSaebal.app/GaebalSaebal";
+			};
+			name = Release;
+		};
+		6FA1DD2A27FD8F8C009C355F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8B3LP78353;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GaebalSaebal;
+			};
+			name = Debug;
+		};
+		6FA1DD2B27FD8F8C009C355F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8B3LP78353;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GaebalSaebal;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6FA1DCF127FD8F8A009C355F /* Build configuration list for PBXProject "GaebalSaebal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6FA1DD2127FD8F8C009C355F /* Debug */,
+				6FA1DD2227FD8F8C009C355F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6FA1DD2327FD8F8C009C355F /* Build configuration list for PBXNativeTarget "GaebalSaebal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6FA1DD2427FD8F8C009C355F /* Debug */,
+				6FA1DD2527FD8F8C009C355F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6FA1DD2627FD8F8C009C355F /* Build configuration list for PBXNativeTarget "GaebalSaebalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6FA1DD2727FD8F8C009C355F /* Debug */,
+				6FA1DD2827FD8F8C009C355F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6FA1DD2927FD8F8C009C355F /* Build configuration list for PBXNativeTarget "GaebalSaebalUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6FA1DD2A27FD8F8C009C355F /* Debug */,
+				6FA1DD2B27FD8F8C009C355F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6FA1DD0227FD8F8A009C355F /* GaebalSaebal.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6FA1DD0327FD8F8A009C355F /* GaebalSaebal.xcdatamodel */,
+			);
+			currentVersion = 6FA1DD0327FD8F8A009C355F /* GaebalSaebal.xcdatamodel */;
+			path = GaebalSaebal.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6FA1DCEE27FD8F8A009C355F /* Project object */;
+}
