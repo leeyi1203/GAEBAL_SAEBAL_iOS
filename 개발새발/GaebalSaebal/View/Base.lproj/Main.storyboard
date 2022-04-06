@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KXR-K1-1qs">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController title="Home View Controller" id="BYZ-38-t0r" customClass="ViewController" customModule="GaebalSaebal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VAT-O4-Tp7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2006" y="-897"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="YRw-Rf-5hn">
+            <objects>
+                <viewController title="Search View Controller" id="JD2-pw-kwY" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OtM-zE-70n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="SGK-9I-0tw"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="iAA-dR-HHZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZUi-1S-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2006" y="54"/>
+        </scene>
+        <!--My Page View Controller-->
+        <scene sceneID="mF0-Iq-ym4">
+            <objects>
+                <viewController title="My Page View Controller" id="PXV-Ft-cwf" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AMg-9O-84Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="0IL-5z-aN2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ujn-RU-QsC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v37-3r-3uh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2006" y="1051"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="I3L-Mo-Jgg">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="KXR-K1-1qs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CIF-wW-Y77">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="labelColor"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="8UH-D6-jHk" kind="relationship" relationship="viewControllers" id="JfX-Gk-0oo"/>
+                        <segue destination="hla-0w-QaY" kind="relationship" relationship="viewControllers" id="iFo-Sf-qND"/>
+                        <segue destination="8Gr-M3-wBW" kind="relationship" relationship="viewControllers" id="Rur-6Y-D7b"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Tb-1q-k7O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-357" y="54"/>
+        </scene>
+        <!--나의 기록-->
+        <scene sceneID="QBZ-H6-8hg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8UH-D6-jHk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="나의 기록" image="My_log" selectedImage="My_log_activate" id="vO5-zZ-ODD">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="3"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="d4b-rl-UB4">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="NB4-wq-eok"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nrT-Pd-PY4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="757" y="-897"/>
+        </scene>
+        <!--검색-->
+        <scene sceneID="S8Y-QY-SYi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hla-0w-QaY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="검색" image="Search" selectedImage="Search_activate" id="kgj-jB-nYe">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="3"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YSm-SI-oAk">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JD2-pw-kwY" kind="relationship" relationship="rootViewController" id="2Tk-AS-guq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W6I-dd-xT0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="757" y="54"/>
+        </scene>
+        <!--내 정보-->
+        <scene sceneID="DlT-3q-9Vc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Gr-M3-wBW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="내 정보" image="My_information" selectedImage="My_information_activate" id="717-QZ-AeP">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="3"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ql6-te-2UL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PXV-Ft-cwf" kind="relationship" relationship="rootViewController" id="oiX-tR-9ql"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="757" y="1051"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="My_information" width="30" height="30"/>
+        <image name="My_information_activate" width="30" height="30"/>
+        <image name="My_log" width="30" height="30"/>
+        <image name="My_log_activate" width="30" height="30"/>
+        <image name="Search" width="36" height="36"/>
+        <image name="Search_activate" width="36" height="36"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
