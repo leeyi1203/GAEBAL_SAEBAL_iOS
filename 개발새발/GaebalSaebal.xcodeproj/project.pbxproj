@@ -20,6 +20,8 @@
 		6FA1DD1427FD8F8C009C355F /* GaebalSaebalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD1327FD8F8C009C355F /* GaebalSaebalTests.swift */; };
 		6FA1DD1E27FD8F8C009C355F /* GaebalSaebalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD1D27FD8F8C009C355F /* GaebalSaebalUITests.swift */; };
 		6FA1DD2027FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DD1F27FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift */; };
+		A60375BD281D1D4D0048553A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60375BC281D1D4D0048553A /* DetailViewController.swift */; };
+		A6482470281A771A0008A612 /* DetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A648246F281A771A0008A612 /* DetailStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		6FA1DD1927FD8F8C009C355F /* GaebalSaebalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GaebalSaebalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FA1DD1D27FD8F8C009C355F /* GaebalSaebalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaebalSaebalUITests.swift; sourceTree = "<group>"; };
 		6FA1DD1F27FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaebalSaebalUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A60375BC281D1D4D0048553A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		A648246F281A771A0008A612 /* DetailStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,7 @@
 			children = (
 				6FA1DCFF27FD8F8A009C355F /* Main.storyboard */,
 				6FA1DD0727FD8F8C009C355F /* LaunchScreen.storyboard */,
+				A648246F281A771A0008A612 /* DetailStoryboard.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 		6F21751A27FDA0FE00D74875 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A60375BB281D1D290048553A /* Detail */,
 				3F2B1B0E27FF0975007EFA05 /* Write */,
 				6F21751D27FDA14500D74875 /* MyPage */,
 				6F21751C27FDA13E00D74875 /* Search */,
@@ -193,6 +199,14 @@
 				6FA1DD1F27FD8F8C009C355F /* GaebalSaebalUITestsLaunchTests.swift */,
 			);
 			path = GaebalSaebalUITests;
+			sourceTree = "<group>";
+		};
+		A60375BB281D1D290048553A /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				A60375BC281D1D4D0048553A /* DetailViewController.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +316,7 @@
 			files = (
 				6FA1DD0927FD8F8C009C355F /* LaunchScreen.storyboard in Resources */,
 				6FA1DD0627FD8F8C009C355F /* Assets.xcassets in Resources */,
+				A6482470281A771A0008A612 /* DetailStoryboard.storyboard in Resources */,
 				6FA1DD0127FD8F8A009C355F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,6 +349,7 @@
 				6FA1DCFA27FD8F8A009C355F /* AppDelegate.swift in Sources */,
 				6FA1DCFC27FD8F8A009C355F /* SceneDelegate.swift in Sources */,
 				3F2B1B1627FF0BF4007EFA05 /* WriteViewController.swift in Sources */,
+				A60375BD281D1D4D0048553A /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +468,7 @@
 		6FA1DD2227FD8F8C009C355F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -497,6 +514,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -511,7 +530,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8B3LP78353;
+				DEVELOPMENT_TEAM = XTZ6W4677Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GaebalSaebal/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "개발새발";
@@ -520,12 +539,13 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.13wjdgk.GaebalSaebal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -542,7 +562,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8B3LP78353;
+				DEVELOPMENT_TEAM = XTZ6W4677Z;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GaebalSaebal/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "개발새발";
@@ -551,12 +571,13 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.spring.lee.GaebalSaebal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.13wjdgk.GaebalSaebal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

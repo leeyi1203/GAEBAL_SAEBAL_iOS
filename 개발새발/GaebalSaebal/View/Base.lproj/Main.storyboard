@@ -58,6 +58,17 @@
                     <view key="view" contentMode="scaleToFill" id="OtM-zE-70n">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6w-Mo-Ues">
+                                <rect key="frame" x="294" y="420" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <segue destination="NNI-ix-zaB" kind="modal" id="dGJ-Ku-BsI"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="SGK-9I-0tw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -66,6 +77,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZUi-1S-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2006" y="54"/>
+        </scene>
+        <!--DetailStoryboard-->
+        <scene sceneID="uIB-Kf-Aae">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DetailStoryboard" id="NNI-ix-zaB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wcr-b7-IyY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2651" y="56"/>
         </scene>
         <!--My Page View Controller-->
         <scene sceneID="mF0-Iq-ym4">
