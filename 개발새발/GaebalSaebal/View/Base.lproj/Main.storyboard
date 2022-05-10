@@ -22,7 +22,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="기록작성 임시버튼"/>
                                 <connections>
-                                    <segue destination="tqC-5A-laO" kind="show" id="dgz-YZ-Sqv"/>
+                                    <segue destination="dmz-kf-Byh" kind="show" id="xeJ-rP-7xj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -35,21 +35,15 @@
             </objects>
             <point key="canvasLocation" x="2005.7971014492755" y="-897.32142857142856"/>
         </scene>
-        <!--Write View Controller-->
-        <scene sceneID="Rku-f6-e4u">
+        <!--Write-->
+        <scene sceneID="sD1-1b-ARW">
             <objects>
-                <viewController id="tqC-5A-laO" userLabel="Write View Controller" customClass="WriteViewController" customModule="GaebalSaebal" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="82b-AK-tkU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="VbF-Ga-Ff0"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="EZf-ip-2Tv"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ieI-A1-cik" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Write" id="dmz-kf-Byh" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="f1O-AC-AYC"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MA9-ly-K22" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2993" y="-897"/>
+            <point key="canvasLocation" x="2691" y="-897"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="YRw-Rf-5hn">
@@ -167,6 +161,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="757" y="1051"/>
+        </scene>
+        <!--Storyboard Reference-->
+        <scene sceneID="Cd2-f9-aH5">
+            <objects>
+                <viewControllerPlaceholder id="B2Z-Jk-cmF" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cwY-Id-gnw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="927" y="-564"/>
         </scene>
     </scenes>
     <resources>
