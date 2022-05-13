@@ -79,20 +79,15 @@
                                 <color key="textColor" red="0.75604585584233686" green="0.023529411764705882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MjN-JD-wF7">
-                                <rect key="frame" x="341" y="730" width="64" height="65"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MjN-JD-wF7">
+                                <rect key="frame" x="366" y="753" width="39" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="65" id="Psh-3y-7YV"/>
                                     <constraint firstAttribute="width" constant="64" id="hcr-Lv-CBg"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="guguy"/>
+                                <buttonConfiguration key="configuration" style="plain" image="selectbutton" title=""/>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VPA-rf-U3p">
-                                <rect key="frame" x="58" y="667" width="275" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -130,7 +125,6 @@
                         <outlet property="D_tag" destination="E1R-wn-s9p" id="yCs-iR-uE4"/>
                         <outlet property="D_title" destination="btR-xB-6nC" id="7pA-T3-cyQ"/>
                         <outlet property="contents_label" destination="zAf-0R-rsk" id="4jQ-kH-pvc"/>
-                        <outlet property="contexMenu" destination="VPA-rf-U3p" id="sd2-Bb-Zyf"/>
                         <outlet property="ed_button" destination="MjN-JD-wF7" id="Orc-YV-G5A"/>
                     </connections>
                 </viewController>
@@ -140,6 +134,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="selectbutton" width="104" height="104"/>
         <image name="xmark.app" catalog="system" width="128" height="114"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

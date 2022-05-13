@@ -1,0 +1,83 @@
+//
+//  categorySetViewController.swift
+//  GaebalSaebal
+//
+//  Created by 김가은 on 2022/05/09.
+//
+
+import UIKit
+
+class categorySetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    // MARK: - Declaration
+    let categoryList = ["기본","백준","자료구조"]
+    
+    @IBOutlet weak var categorySet: UITableView!
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.navigationBar.topItem?.title = ""
+        // Do any additional setup after loading the view.
+        categorySet.dataSource=self
+        categorySet.delegate=self
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(categoryList.count)
+        return categoryList.count+1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryTableViewCell",for: indexPath) as! categoryTableViewCell
+
+        if (indexPath.row <= categoryList.count-1){
+            print(indexPath.row)
+            cell.textLabel?.text = categoryList[indexPath.row]
+            cell.categoryButton.isHidden=true
+        }else {
+            cell.textLabel?.text = "추가하기"
+            cell.categoryButton.isHidden=false
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if ((indexPath.row<categoryList.count)&&( 0 < indexPath.row)){
+            // 오른쪽에 만들기
+            let edit = UIContextualAction(style: .normal, title: "edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                        print("edit")
+                        success(true)
+                    }
+                    edit.backgroundColor = UIColor(displayP3Red: 52/255, green: 95/255, blue: 207/255, alpha: 1)
+                    edit.image = UIImage(named: "PencilSquare.png")
+                    
+                    let delete = UIContextualAction(style: .normal, title: "delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                        print("delete")
+                        success(true)
+                    }
+            delete.backgroundColor = UIColor(displayP3Red: 194/255, green: 62/255, blue: 62/255, alpha: 1)
+                delete.image = UIImage(named: "Trash.png")
+                    //actions배열 인덱스 0이 왼쪽에 붙어서 나옴
+                    return UISwipeActionsConfiguration(actions:[delete,edit])
+        }else {return UISwipeActionsConfiguration(actions:[])}
+        
+    }
+
+
+   
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
+extension categorySetViewController: ContentsMainTextDelegate {
+    func categoryButtonTapped() {
+    // --ToDo--
+    print("사용하고 싶은 기능들 추가") }
+    
+}

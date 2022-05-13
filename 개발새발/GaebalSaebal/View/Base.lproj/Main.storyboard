@@ -21,9 +21,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="기록작성 임시버튼"/>
-                                <connections>
-                                    <segue destination="tqC-5A-laO" kind="show" id="dgz-YZ-Sqv"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -35,22 +32,6 @@
             </objects>
             <point key="canvasLocation" x="2005.7971014492755" y="-897.32142857142856"/>
         </scene>
-        <!--Write View Controller-->
-        <scene sceneID="Rku-f6-e4u">
-            <objects>
-                <viewController id="tqC-5A-laO" userLabel="Write View Controller" customClass="WriteViewController" customModule="GaebalSaebal" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="82b-AK-tkU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="VbF-Ga-Ff0"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="EZf-ip-2Tv"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ieI-A1-cik" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2993" y="-897"/>
-        </scene>
         <!--Search View Controller-->
         <scene sceneID="YRw-Rf-5hn">
             <objects>
@@ -58,17 +39,6 @@
                     <view key="view" contentMode="scaleToFill" id="OtM-zE-70n">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6w-Mo-Ues">
-                                <rect key="frame" x="294" y="420" width="67" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                <connections>
-                                    <segue destination="NNI-ix-zaB" kind="modal" id="dGJ-Ku-BsI"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="SGK-9I-0tw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -77,14 +47,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZUi-1S-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2006" y="54"/>
-        </scene>
-        <!--DetailStoryboard-->
-        <scene sceneID="uIB-Kf-Aae">
-            <objects>
-                <viewControllerPlaceholder storyboardName="DetailStoryboard" id="NNI-ix-zaB" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wcr-b7-IyY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2651" y="56"/>
         </scene>
         <!--My Page View Controller-->
         <scene sceneID="mF0-Iq-ym4">
@@ -180,7 +142,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="PXV-Ft-cwf" kind="relationship" relationship="rootViewController" id="oiX-tR-9ql"/>
+                        <segue destination="PXV-Ft-cwf" kind="relationship" relationship="rootViewController" id="bIU-zK-Mqf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

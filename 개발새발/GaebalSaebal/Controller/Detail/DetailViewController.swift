@@ -10,14 +10,16 @@ import SafariServices
 import SwiftUI
 class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        print("좋아요 클릭됨")
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_: [UIMenuElement]) -> UIMenu? in
                     
-                    let btn1 = UIAction(title: "좋아요", image: UIImage(systemName: "hand.thumbsup")) { (UIAction) in
-                        print("좋아요 클릭됨")
+                    let btn1 = UIAction(title: "수정", image: UIImage(systemName: "")) { (UIAction) in
+                        print("수정 클릭됨")
+                    }
+                    let btn2 = UIAction(title: "삭제", image: UIImage(systemName: "")) { (UIAction) in
+                        print("삭제 클릭됨")
                     }
                     
-                    return UIMenu(children: [btn1])
+                    return UIMenu(children: [btn1,btn2])
                 }
     }
     // MARK: - Declaration
