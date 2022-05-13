@@ -89,7 +89,7 @@ class WriteViewController: UIViewController {
         dashBorder.frame = backjoonView.bounds
         dashBorder.fillColor = nil
         
-        backjoonView.addSublayer(dashBorder)
+//        backjoonView.addSublayer(dashBorder)
         self.dashBorder = dashBorder
     }
     
