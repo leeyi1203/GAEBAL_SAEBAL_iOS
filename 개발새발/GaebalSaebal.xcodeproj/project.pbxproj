@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F2B1B1627FF0BF4007EFA05 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2B1B1527FF0BF4007EFA05 /* WriteViewController.swift */; };
+		3F052743281A789D006188FA /* Write.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F052742281A789D006188FA /* Write.storyboard */; };
+		3F85FCD72827B1C500B8C616 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F85FCD62827B1C500B8C616 /* WriteViewController.swift */; };
 		6F21751F27FDA17000D74875 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F21751E27FDA17000D74875 /* SearchViewController.swift */; };
 		6F21752127FDA18300D74875 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F21752027FDA18300D74875 /* MyPageViewController.swift */; };
 		6FA1DCFA27FD8F8A009C355F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA1DCF927FD8F8A009C355F /* AppDelegate.swift */; };
@@ -47,7 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3F2B1B1527FF0BF4007EFA05 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WriteViewController.swift; path = GaebalSaebal/Controller/WriteViewController.swift; sourceTree = SOURCE_ROOT; };
+		3F052742281A789D006188FA /* Write.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Write.storyboard; sourceTree = "<group>"; };
+		3F85FCD62827B1C500B8C616 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		6F21751E27FDA17000D74875 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6F21752027FDA18300D74875 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		6FA1DCF627FD8F8A009C355F /* GaebalSaebal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GaebalSaebal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,10 +100,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3F2B1B0E27FF0975007EFA05 /* Write */ = {
+		3F85FCD82827B1CF00B8C616 /* Write */ = {
 			isa = PBXGroup;
 			children = (
-				3F2B1B1527FF0BF4007EFA05 /* WriteViewController.swift */,
+				3F85FCD62827B1C500B8C616 /* WriteViewController.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -121,6 +123,7 @@
 				6FA1DD0727FD8F8C009C355F /* LaunchScreen.storyboard */,
 				A648246F281A771A0008A612 /* DetailStoryboard.storyboard */,
 				A60992B82827FA9000DD2D91 /* SettingStoryboard.storyboard */,
+				3F052742281A789D006188FA /* Write.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FA1DD0927FD8F8C009C355F /* LaunchScreen.storyboard in Resources */,
+				3F052743281A789D006188FA /* Write.storyboard in Resources */,
 				6FA1DD0627FD8F8C009C355F /* Assets.xcassets in Resources */,
 				A6482470281A771A0008A612 /* DetailStoryboard.storyboard in Resources */,
 				6FA1DD0127FD8F8A009C355F /* Main.storyboard in Resources */,
@@ -366,10 +370,10 @@
 				6FA1DCFA27FD8F8A009C355F /* AppDelegate.swift in Sources */,
 				6FA1DCFC27FD8F8A009C355F /* SceneDelegate.swift in Sources */,
 				A60992BD28291DC800DD2D91 /* categorySetViewController.swift in Sources */,
-				3F2B1B1627FF0BF4007EFA05 /* WriteViewController.swift in Sources */,
 				A60992BF28291DE500DD2D91 /* GitadminViewController.swift in Sources */,
 				A60375BD281D1D4D0048553A /* DetailViewController.swift in Sources */,
 				A6E72E35282E817900454A7C /* categoryTableViewCell.swift in Sources */,
+				3F85FCD72827B1C500B8C616 /* WriteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
