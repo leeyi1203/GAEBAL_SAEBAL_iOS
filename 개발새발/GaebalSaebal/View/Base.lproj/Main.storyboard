@@ -21,9 +21,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="기록작성 임시버튼"/>
-                                <connections>
-                                    <segue destination="dmz-kf-Byh" kind="show" id="xeJ-rP-7xj"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -34,16 +31,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2005.7971014492755" y="-897.32142857142856"/>
-        </scene>
-        <!--Write-->
-        <scene sceneID="sD1-1b-ARW">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Write" id="dmz-kf-Byh" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="f1O-AC-AYC"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MA9-ly-K22" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2691" y="-897"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="YRw-Rf-5hn">
