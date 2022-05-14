@@ -50,6 +50,17 @@ class ViewController: UIViewController {
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
             ])
         navigationItem.largeTitleDisplayMode = .always
+        
+        //클릭이벤트
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapWriteButton(sender:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+
+    }
+    
+    @objc func tapWriteButton(sender:UIGestureRecognizer){
+            //클릭시 실행할 동작
+          performSegue(withIdentifier: "showWirteView", sender: nil)
     }
     
     private func configure() {

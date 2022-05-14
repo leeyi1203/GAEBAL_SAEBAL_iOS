@@ -11,20 +11,29 @@ let categoryList = ["미정", "백준", "자료구조", "스터디"]
 
 class WriteViewController: UIViewController {
 
-    ///✅ Outlets & Actions
+    //MARK: - ✅ Outlets & Actions
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var categoryStackView: UIStackView!
     @IBOutlet weak var bodyTextView: UITextView!
     @IBOutlet weak var tagTextView: UITextView!
-    @IBOutlet weak var backjoonView: UIView!
+    @IBOutlet weak var baekjoonView: UIView!
+    @IBOutlet weak var githubView: UIView!
     
-    ///✅ Variables
-    let lighterGray = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1).cgColor
+    @IBOutlet weak var imageAddView: UIView!
+    @IBOutlet weak var codeTextView: UITextView!
+    //MARK: - ✅ Variables
+    let lighterGray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
+    
+    let dashedBorderGray = UIColor(red: 215/255, green: 215/255, blue: 215/255, alpha: 1).cgColor
 
     let minBodyTextViewHeight : CGFloat = 128
     
-    ///✅ View Cycle
+    //MARK: - ✅ View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
+        addScrollViewTapGuester()
         
         //텍스트필드 델리게이트
         self.bodyTextView.delegate = self
@@ -36,18 +45,34 @@ class WriteViewController: UIViewController {
         //카테고리 버튼 생성
         self.addCategoryButton(categoryList: categoryList)
         
-        //TextView 디자인
-        customTextView(textView:self.bodyTextView, placeHolder:"본문을 입력해주세요")
-        customTextView(textView:self.tagTextView, placeHolder:"태그는 ;으로 구분해서 적어주세요. ex) 백준;")
+        //본문, 태그 TextView 디자인
+        customTextView(textView:self.bodyTextView, placeHolder:"본문을 입력해주세요", bgColor: UIColor.white.cgColor)
+        customTextView(textView:self.tagTextView, placeHolder:"태그는 ;으로 구분해서 적어주세요. ex) 백준;", bgColor : UIColor.white.cgColor)
+        customTextView(textView:self.codeTextView, placeHolder: "#include <stdio.h>", bgColor : lighterGray)
         
-        //백준 버튼 디자인
-        customBaekjoonButton()
-        
-
+        //백준, 깃허브 버튼 디자인
+        customViewButton(viewButton:baekjoonView, radius:baekjoonView.frame.height / 2)
+        customViewButton(viewButton:githubView, radius:baekjoonView.frame.height / 2)
+        customViewButton(viewButton : imageAddView,radius: CGFloat(15))
         
     }
     
-    ///✅ Custom Function
+    //MARK: - ✅ Custom Function
+    
+    func addScrollViewTapGuester(){
+        let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(scrollViewTapMethod))
+//        singleTapGestureRecognizer.numberOfTapsRequired = 1
+//        singleTapGestureRecognizer.isEnabled = true
+//        singleTapGestureRecognizer.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(singleTapGestureRecognizer)
+
+    }
+    
+    @objc func scrollViewTapMethod(sender: UITapGestureRecognizer) {
+        print("scroll view taped")
+        self.bodyTextView.resignFirstResponder()
+        self.tagTextView.resignFirstResponder()
+        }
     
     func customNavgationBar(){
 
@@ -61,40 +86,12 @@ class WriteViewController: UIViewController {
                                              action: nil)
         self.navigationController!.navigationItem.rightBarButtonItem = completeButton
         
-    }
-    
-    func customTextView(textView : UITextView, placeHolder : String){
-        textView.layer.cornerRadius = 20
-        textView.layer.borderWidth = 1.5
-        textView.layer.borderColor = lighterGray
-        textView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
-        textView.text = placeHolder
-    }
-    
-    @IBInspectable var dashWidth: CGFloat = 0
-    @IBInspectable var dashColor: UIColor = .clear
-    @IBInspectable var dashLength: CGFloat = 0
-    @IBInspectable var betweenDashesSpace: CGFloat = 0
-    
-    var dashBorder: CAShapeLayer?
-    
-    func customBaekjoonButton(){
-        backjoonView.layer.cornerRadius = backjoonView.frame.height / 2
-        backjoonView.layer.borderWidth = 1.5
-        backjoonView.layer.borderColor = lighterGray
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+
+        self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         
-        
-        let dashBorder = CAShapeLayer()
-        dashBorder.lineWidth = dashWidth
-        dashBorder.strokeColor = dashColor.cgColor
-        dashBorder.lineDashPattern = [dashLength, betweenDashesSpace] as [NSNumber]
-        dashBorder.frame = backjoonView.bounds
-        dashBorder.fillColor = nil
-        
-//        backjoonView.addSublayer(dashBorder)
-        self.dashBorder = dashBorder
     }
-    
     
     func addCategoryButton(categoryList : [String]){
         for name in categoryList {
@@ -121,8 +118,50 @@ class WriteViewController: UIViewController {
         sender.isSelected = sender.isSelected ? false : true
         
     }
+    
+    // 본문, 태그, 코드 입력란 커스텀
+    func customTextView(textView : UITextView, placeHolder : String, bgColor : CGColor){
+        textView.layer.cornerRadius = 20
+        textView.layer.backgroundColor = bgColor
+        textView.layer.borderWidth = 1.5
+        textView.layer.borderColor = lighterGray
+        textView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
+        textView.text = placeHolder
+    }
+    
+    
+    // 백준, 깃허브 입력란 커스텀
+    func customViewButton(viewButton: UIView, radius : CGFloat){
+        //모서리 둥글게
+        viewButton.layer.cornerRadius = viewButton.frame.height / 2
+        
+        // 점선 보더 설정
+        let borderLayer = CAShapeLayer()
+        borderLayer.strokeColor = dashedBorderGray
+        borderLayer.lineDashPattern = [5, 5]
+        borderLayer.frame = view.bounds
+        borderLayer.fillColor = nil
+        borderLayer.path = UIBezierPath(roundedRect: viewButton.bounds, cornerRadius: radius).cgPath
+        
+        viewButton.layer.addSublayer(borderLayer)
+        
+        // 플러스 이미지 넣기
+        let plusImage = UIImage(named: "PlusIcon.png")
+        let plusImageView = UIImageView(image: plusImage)
+        plusImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        viewButton.addSubview(plusImageView)
+        plusImageView.translatesAutoresizingMaskIntoConstraints = false
+        plusImageView.centerXAnchor.constraint(equalTo:viewButton.centerXAnchor).isActive = true
+        plusImageView.centerYAnchor.constraint(equalTo:viewButton.centerYAnchor).isActive = true
+    }
+    
+    
+    
+
 
 }
+
+//MARK: - ✅ Text View Extension
 
 extension WriteViewController: UITextViewDelegate {
     
@@ -149,7 +188,7 @@ extension WriteViewController: UITextViewDelegate {
             textView.frame.size.height = minBodyTextViewHeight
         }
         textView.isScrollEnabled = false
-        self.view.frame.size.height += textView.frame.width
+//        self.view.frame.size.height += textView.frame.width
         
     }
 
