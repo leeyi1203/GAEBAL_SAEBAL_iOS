@@ -40,6 +40,8 @@ class WriteViewController: UIViewController {
     
     var keyboardHeight:CGFloat = 0
     
+    let bojLink:String = ""
+    
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,8 +176,13 @@ class WriteViewController: UIViewController {
         //모서리 둥글게
         viewButton.layer.cornerRadius = viewButton.frame.height / 2
         
+        // 버튼 뷰 초기화
         viewButton.subviews.forEach({ $0.removeFromSuperview() })
         viewButton.layer.sublayers?.forEach({ $0.removeFromSuperlayer() })
+        // 탭 이벤트 삭제
+        if let removeTargetGesture = viewButton.gestureRecognizers?[0] {
+            viewButton.removeGestureRecognizer(removeTargetGesture)
+        }
 
         //사용 전 / 취소 일 시 UI
         if (isUsed == false){
@@ -203,14 +210,32 @@ class WriteViewController: UIViewController {
             viewButton.addGestureRecognizer(tapGesture)
         }
         else{
-            //그림자 설정
-            viewButton.layer.shadowColor = UIColor.gray.cgColor
-            viewButton.layer.shadowOpacity = 0.17
-            viewButton.layer.shadowRadius = 8
-            viewButton.layer.shadowOffset = CGSize(width: 2, height: 2)
-            viewButton.layer.shadowPath = nil
             
-            //
+            // 보더 설정
+            viewButton.layer.borderWidth = 1.5
+            viewButton.layer.borderColor = lighterGray
+            
+            // 백준 아이콘 추가
+            let bojLogoImage = UIImage(named: "bojLogo")
+            let bojLogoImageView = UIImageView(image: bojLogoImage)
+            viewButton.addSubview(bojLogoImageView)
+            bojLogoImageView.translatesAutoresizingMaskIntoConstraints = false
+            bojLogoImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
+            bojLogoImageView.leftAnchor.constraint(equalTo: view.leftAnchor
+                    , constant: 40).isActive = true // 왼쪽여백
+            
+            // 취소(삭제) 아이콘 추가
+            let cancelIconImage = UIImage(named: "cancelIcon")
+            let cancelIconImageView = UIImageView(image: cancelIconImage)
+            viewButton.addSubview(cancelIconImageView)
+            cancelIconImageView.translatesAutoresizingMaskIntoConstraints = false
+            cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
+            cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
+            
+            // 탭 이벤트 추가
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
+            cancelIconImageView.addGestureRecognizer(tapGesture)
+            cancelIconImageView.isUserInteractionEnabled = true
             
         }
     }
@@ -229,15 +254,17 @@ class WriteViewController: UIViewController {
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
         }
-        else if (sender.view == self.imageAddView){
-            
+        else if (sender.view == self.githubView){
+            performSegue(withIdentifier: "showGithubEventListView", sender: githubView)
         }
     }
     
-    @objc func tapViewButtonFor(sender:UIGestureRecognizer){
-    
-    
-
+    @objc func tapViewButtonForCancel(sender:UIGestureRecognizer){
+        if (sender.view == self.baekjoonView){
+            print("백준 취소 버튼 실행")
+            customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
+        }
+    }
 
 }
 
@@ -322,10 +349,6 @@ extension WriteViewController: UITextViewDelegate {
         // 텍스트 뷰가 길이가 길어진 상태일 경우 scroll view 높이도 조정
         textView.isScrollEnabled = false
         self.scrollView.contentSize.height = defaultScrollViewHeight + self.bodyTextView.frame.height - minBodyTextViewHeight + self.tagTextView.frame.height - minTagTextViewHeight + self.codeTextView.frame.height - minCodeTextViewHeight
-        
-
-        
-        
         
     }
 
