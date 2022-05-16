@@ -6,6 +6,7 @@
 //
 
 import UIKit
+//import JSONDecoder
 
 let categoryList = ["미정", "백준", "자료구조", "스터디"]
 
@@ -45,6 +46,7 @@ class WriteViewController: UIViewController {
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
@@ -184,7 +186,7 @@ class WriteViewController: UIViewController {
             viewButton.removeGestureRecognizer(removeTargetGesture)
         }
 
-        //사용 전 / 취소 일 시 UI
+        //사용 전 / 취소 일시 UI
         if (isUsed == false){
             // 점선 보더 설정
             let borderLayer = CAShapeLayer()
@@ -232,7 +234,7 @@ class WriteViewController: UIViewController {
             cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
             cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
             
-            // 탭 이벤트 추가
+            // 탭 이벤트 (취소) 추가
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
             cancelIconImageView.addGestureRecognizer(tapGesture)
             cancelIconImageView.isUserInteractionEnabled = true
@@ -241,7 +243,7 @@ class WriteViewController: UIViewController {
     }
     
     @objc func tapViewButtonForAdd(sender:UIGestureRecognizer){
-            //클릭시 실행할 동작
+        // 백준 뷰 클릭시 실행할 동작
         if(sender.view == self.baekjoonView){
             let alert = UIAlertController(title: "백준 문제 번호 입력", message: nil, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "확인", style: .default){ _ in
@@ -349,8 +351,8 @@ extension WriteViewController: UITextViewDelegate {
         // 텍스트 뷰가 길이가 길어진 상태일 경우 scroll view 높이도 조정
         textView.isScrollEnabled = false
         self.scrollView.contentSize.height = defaultScrollViewHeight + self.bodyTextView.frame.height - minBodyTextViewHeight + self.tagTextView.frame.height - minTagTextViewHeight + self.codeTextView.frame.height - minCodeTextViewHeight
-        
     }
 
     
 }
+
