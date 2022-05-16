@@ -11,6 +11,8 @@ class GithubEventTableViewCell: UITableViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var eventTitle: UILabel!
     
+    var originContentWidth:CGFloat = 0.0
+    
     
     let greenLabelColor = UIColor.init(red: 77/255, green: 168/255, blue: 86/255, alpha: 1)
     
@@ -20,6 +22,9 @@ class GithubEventTableViewCell: UITableViewCell {
         eventTitle.text = "UI 깨짐 해결하기"
         
         setupLayout()
+        
+        // 원래 contetnView 넓이 기억하기
+        originContentWidth = self.contentView.frame.size.width
 
     }
 
@@ -54,11 +59,13 @@ class GithubEventTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.layer.frame = self.layer.frame.inset(by: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+        //한번 조정된 적이 있으면 inset 설정 X
+        if self.contentView.frame.size.width != originContentWidth - 40 {
+            self.layer.frame = self.layer.frame.inset(by: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
             
-        self.contentView.frame.size.width -= 40
-            
-
+            self.contentView.frame.size.width = originContentWidth - 40
+        }
+        
     }
 
 }

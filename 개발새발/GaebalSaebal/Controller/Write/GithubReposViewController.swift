@@ -25,6 +25,7 @@ class GithubReposViewController: UIViewController {
 
 }
 
+// MARK: - ✅ Table View
 extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,14 +53,40 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
         return cell
     }
     
+    // 터치 이벤트
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-    
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // 이벤트 선택 페이지로 이동
+        self.performSegue(withIdentifier: "showGithubEventListView", sender: nil)
+
+//        switch indexPath.row {
+//
+//        case 0: self.performSegue(withIdentifier: "photoObjectDetection", sender: nil)
+//        case 1: self.performSegue(withIdentifier: "realTimeObjectDetection", sender: nil)
+//        case 2: self.performSegue(withIdentifier: "facialAnalysis", sender: nil)
+//        default:
+//
+//            return
+//
+//        }
+
+    }
+
 }
 
+// MARK: - ✅ GitHub Rest API - Get user repos
 extension GithubReposViewController{
     
+    public struct owner: Codable{
+        public let login:String
+    }
+    
     public struct UserRepoInfo: Codable {
+        public let full_name:String
         public let name:String
+        public let owner:owner
     }
 
     func getUserRepos(){
@@ -85,7 +112,7 @@ extension GithubReposViewController{
                 }
                 print("##\(rsData[0])")
                 for rsItem in rsData {
-                    repoNames.append(rsItem.name)
+                    repoNames.append(rsItem.full_name)
 
                 }
             }
@@ -99,4 +126,53 @@ extension GithubReposViewController{
 
     }
 }
+
+// MARK: - ✅ Custom segue
+//  CustomSegueClass.swift
+import UIKit
+ 
+  // RightViewController  뷰 이동
+  class right: UIStoryboardSegue {
+      override func perform()
+      {
+          let src = self.source as UIViewController
+          let dst = self.destination as UIViewController
+          src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
+          dst.view.transform = CGAffineTransform(translationX: src.view.frame.size.width, y: 0)
+          UIView.animate(withDuration: 0.25,
+                                     delay: 0.0,
+                                    options: UIView.AnimationOptions.curveEaseInOut,
+                                     animations: {
+                                      dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                                      src.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width/3, y: 0)
+          },
+                                     completion: { finished in
+                                      src.present(dst, animated: false, completion: nil)
+          }
+          )
+      }
+  }
+ 
+  // RightViewController  뷰 닫기
+  class Unwind_right: UIStoryboardSegue {
+      override func perform()
+      {
+          let src = self.source as UIViewController
+          let dst = self.destination as UIViewController
+          src.view.superview?.insertSubview(dst.view, belowSubview: src.view)
+          src.view.transform = CGAffineTransform(translationX: 0, y: 0)
+          dst.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width/3, y: 0)
+          UIView.animate(withDuration: 0.25,
+                                     delay: 0.0,
+                                    options: UIView.AnimationOptions.curveEaseInOut,
+                                     animations: {
+                                      src.view.transform = CGAffineTransform(translationX: src.view.frame.size.width, y: 0)
+                                      dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+          },
+                                     completion: { finished in
+                                      src.dismiss(animated: false, completion: nil)
+          }
+          )
+      }
+  }
 

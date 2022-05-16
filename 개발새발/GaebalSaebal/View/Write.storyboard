@@ -188,7 +188,7 @@
                         <outlet property="imageAddView" destination="Sa4-RP-Gx6" id="vLM-2b-A99"/>
                         <outlet property="scrollView" destination="bHp-RX-Xwq" id="nHA-kU-iOk"/>
                         <outlet property="tagTextView" destination="DXw-N7-jDU" id="ugz-kc-09h"/>
-                        <segue destination="gZG-Al-TBM" kind="presentation" identifier="showGithubEventListView" id="8Ls-Ut-BS6"/>
+                        <segue destination="gZG-Al-TBM" kind="presentation" identifier="showGithubRepoListView" id="8Ls-Ut-BS6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R8l-Pb-k8M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -267,6 +267,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="5ad-v9-5w4" id="sck-7o-FhD"/>
+                        <segue destination="mDT-rN-sNk" kind="custom" identifier="showGithubEventListView" customClass="right" customModule="GaebalSaebal" customModuleProvider="target" id="Add-s3-khC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wAp-tO-F6Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -363,6 +364,7 @@
                             <constraint firstItem="1Ah-Fb-5wX" firstAttribute="leading" secondItem="uUN-6f-1YX" secondAttribute="leading" id="xrd-ct-W01"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="yDH-VN-CWQ"/>
                     <connections>
                         <outlet property="tableView" destination="1Ah-Fb-5wX" id="pRx-9T-7Qc"/>
                     </connections>

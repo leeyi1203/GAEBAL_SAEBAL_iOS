@@ -257,7 +257,7 @@ class WriteViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         }
         else if (sender.view == self.githubView){
-            performSegue(withIdentifier: "showGithubEventListView", sender: githubView)
+            performSegue(withIdentifier: "showGithubRepoListView", sender: githubView)
         }
     }
     
