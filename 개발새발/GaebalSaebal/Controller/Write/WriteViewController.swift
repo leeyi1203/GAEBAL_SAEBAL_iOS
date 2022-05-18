@@ -25,6 +25,8 @@ class WriteViewController: UIViewController {
     @IBOutlet weak var imageAddView: UIView!
     @IBOutlet weak var codeTextView: UITextView!
     //MARK: - ✅ Variables
+    var navigationbarWriteButton: UIButton! = nil;
+    
     let lighterGray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
     
     var categoryButtonList: [UIButton] = []
@@ -54,6 +56,8 @@ class WriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 상속된 write 버튼 없애기
+        removeNagationBarWriteButton()
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
@@ -98,6 +102,10 @@ class WriteViewController: UIViewController {
         setButtonGradientBorder(button: self.categoryButtonList[0])
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+
+    }
+    
     //MARK: - ✅ Custom Function
     
     //키보드 올라갔다는 알림을 받으면 실행되는 메서드
@@ -128,9 +136,21 @@ class WriteViewController: UIViewController {
         self.tagTextView.resignFirstResponder()
         self.codeTextView.resignFirstResponder()
         }
+   
+    // 상속된 write 버튼 없애기
+    func removeNagationBarWriteButton(){
+        self.navigationController!.navigationBar.subviews.forEach{
+            print($0)
+            if ( $0 is UIImageView ) {
+                $0.isHidden = true
+                navigationbarWriteButton = $0 as? UIButton
+            }
+        }
+    }
     
     func customNavgationBar(){
-
+        
+        // navbar 수정
         self.navigationController!.navigationBar.topItem?.backButtonTitle = "취소하기"
         self.navigationController!.navigationBar.tintColor = .gray
         
@@ -178,6 +198,8 @@ class WriteViewController: UIViewController {
     func setButtonGradientBorder(button: UIButton){
         // 버튼 그라데이션 도저어어어어어어언
         
+        let borderWidth: CGFloat = 1.5
+        
         button.backgroundColor = UIColor.clear
         button.layoutIfNeeded()
         button.layer.borderColor = UIColor.clear.cgColor
@@ -190,12 +212,12 @@ class WriteViewController: UIViewController {
         
         // 그라디언트 레이어를 border 모양으로 잘라줌
         let shape = CAShapeLayer()
-        shape.lineWidth = 1.5
+        shape.lineWidth = borderWidth
         //보더만큼 Rect 사이즈를 조정해줘야한다. lineWidth가 1.5이니까 크기는 -3씩, 위치는 1.5씩 이동
-        shape.path = UIBezierPath(roundedRect: CGRect(x: 1.5,
-                                                      y: 1.5,
-                                                      width: button.bounds.width - 3,
-                                                      height: button.bounds.height - 3), cornerRadius: 15).cgPath
+        shape.path = UIBezierPath(roundedRect: CGRect(x: borderWidth,
+                                                      y: borderWidth,
+                                                      width: button.bounds.width - borderWidth * 2,
+                                                      height: button.bounds.height - borderWidth * 2), cornerRadius: 15).cgPath
         shape.strokeColor = UIColor.black.cgColor
         shape.fillColor = UIColor.clear.cgColor
         gradientLayer.mask = shape
@@ -215,7 +237,7 @@ class WriteViewController: UIViewController {
 
     
     @objc func clickCategoryButton(_ sender: UIButton){
-        sender.isSelected = sender.isSelected ? false : true
+        sender.isSelected = true
         setButtonGradientBorder(button: sender)
         for button in categoryButtonList{
             if ( button == sender ){
@@ -227,7 +249,6 @@ class WriteViewController: UIViewController {
                 removeButtonGradientBorder(button: button)
             }
         }
-        
     }
     
     // 본문, 태그, 코드 입력란 커스텀

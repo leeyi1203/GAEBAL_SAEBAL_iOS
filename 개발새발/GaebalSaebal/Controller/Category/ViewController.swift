@@ -21,6 +21,22 @@ class ViewController: UIViewController {
         setupDataSource()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController!.navigationBar.subviews.forEach{
+            print($0)
+            if ( $0 is UIImageView ) {
+                $0.isHidden = false
+            }
+        }
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
     //MARK: - 글 작성 버튼 생성 및 크기, 위치 조정
     private let imageView = UIImageView(image: UIImage(named: "write"))
     
