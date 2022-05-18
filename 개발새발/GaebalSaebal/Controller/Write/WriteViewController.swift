@@ -10,6 +10,7 @@ import UIKit
 
 let categoryList = ["미정", "백준", "자료구조", "스터디"]
 
+
 class WriteViewController: UIViewController {
 
     //MARK: - ✅ Outlets & Actions
@@ -25,6 +26,8 @@ class WriteViewController: UIViewController {
     @IBOutlet weak var codeTextView: UITextView!
     //MARK: - ✅ Variables
     let lighterGray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
+    
+    var categoryButtonList: [UIButton] = []
     
     let dashedBorderGray = UIColor(red: 215/255, green: 215/255, blue: 215/255, alpha: 1).cgColor
 
@@ -42,6 +45,10 @@ class WriteViewController: UIViewController {
     var keyboardHeight:CGFloat = 0
     
     let bojLink:String = ""
+    
+    let mainPink = UIColor(red: 250/255, green: 0/255, blue: 255/255, alpha: 1)
+    let mainPurple = UIColor(red: 178/255, green: 14/255, blue: 255/255, alpha: 1)
+
     
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
@@ -82,6 +89,13 @@ class WriteViewController: UIViewController {
                                                 name: UIResponder.keyboardWillShowNotification,
                                                 object: nil)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        /// button bounds가 view가 다 그려졌을 때 바인딩되는 것 같다... 그래서 그라데이션 보더는 뷰가 다 나타나고 지정해줘야한다,,,
+        // 일단 미정 버튼 활성화
+        self.categoryButtonList[0].isSelected = true
+        setButtonGradientBorder(button: self.categoryButtonList[0])
     }
     
     //MARK: - ✅ Custom Function
@@ -134,29 +148,85 @@ class WriteViewController: UIViewController {
         
     }
     
-    func addCategoryButton(categoryList : [String]){
+    func addCategoryButton(categoryList: [String]){
         for name in categoryList {
             let categoryItemButton = UIButton()
+            
+            // 일반설정
             categoryItemButton.setTitle(name, for: .normal)
             categoryItemButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-            categoryItemButton.translatesAutoresizingMaskIntoConstraints = false
-            categoryItemButton.tintColor = .blue
+//            categoryItemButton.translatesAutoresizingMaskIntoConstraints = false
             categoryItemButton.setTitleColor(.gray, for: .normal)
-            categoryItemButton.setTitleColor(.blue, for: .selected)
+            categoryItemButton.setTitleColor(mainPurple, for: .selected)
             categoryItemButton.layer.borderColor = UIColor.gray.cgColor
             categoryItemButton.layer.borderWidth = 1.5
             categoryItemButton.layer.cornerRadius = 15
             categoryItemButton.isEnabled = true
-            //Button 여백 설정
+            
+            // Button 여백 설정
             categoryItemButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 12, bottom: 2, right: 12)
             categoryItemButton.addTarget(self, action: #selector(clickCategoryButton(_:)), for: .touchUpInside)
+            
+            
             self.categoryStackView.addArrangedSubview(categoryItemButton)
+            self.categoryButtonList.append(categoryItemButton)
         }
+
+
     }
     
+    func setButtonGradientBorder(button: UIButton){
+        // 버튼 그라데이션 도저어어어어어어언
+        
+        button.backgroundColor = UIColor.clear
+        button.layoutIfNeeded()
+        button.layer.borderColor = UIColor.clear.cgColor
+        
+        // 그라디언트 배경(레이어) 생성
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [mainPurple.cgColor,
+                                mainPink.cgColor]
+        
+        // 그라디언트 레이어를 border 모양으로 잘라줌
+        let shape = CAShapeLayer()
+        shape.lineWidth = 1.5
+        //보더만큼 Rect 사이즈를 조정해줘야한다. lineWidth가 1.5이니까 크기는 -3씩, 위치는 1.5씩 이동
+        shape.path = UIBezierPath(roundedRect: CGRect(x: 1.5,
+                                                      y: 1.5,
+                                                      width: button.bounds.width - 3,
+                                                      height: button.bounds.height - 3), cornerRadius: 15).cgPath
+        shape.strokeColor = UIColor.black.cgColor
+        shape.fillColor = UIColor.clear.cgColor
+        gradientLayer.mask = shape
+        
+        // 서브레이어 추가
+        button.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func removeButtonGradientBorder(button: UIButton){
+        button.layer.sublayers?.forEach {
+            if ($0 is CAGradientLayer){
+                $0.removeFromSuperlayer()
+            }
+        }
+        button.layer.borderColor = UIColor.gray.cgColor
+    }
+
+    
     @objc func clickCategoryButton(_ sender: UIButton){
-        print("button clicked! \(sender.titleLabel?.text)")
         sender.isSelected = sender.isSelected ? false : true
+        setButtonGradientBorder(button: sender)
+        for button in categoryButtonList{
+            if ( button == sender ){
+                continue
+            }
+            
+            if button.isSelected{
+                button.isSelected = false
+                removeButtonGradientBorder(button: button)
+            }
+        }
         
     }
     

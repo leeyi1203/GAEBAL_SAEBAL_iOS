@@ -17,9 +17,12 @@ class GithubEventViewController: UIViewController{
         self.tableView.dataSource = self
         
         self.tableView.backgroundColor = UIColor.clear
-        
-
-        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        print("ViewController의 view가 사라짐")
     }
     
 
@@ -48,6 +51,14 @@ extension GithubEventViewController : UITableViewDelegate, UITableViewDataSource
         return cell
     }
     
+    // 터치 이벤트
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+
+    }
 
     
 }

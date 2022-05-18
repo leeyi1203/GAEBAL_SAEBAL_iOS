@@ -60,6 +60,7 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
         
         // 이벤트 선택 페이지로 이동
         self.performSegue(withIdentifier: "showGithubEventListView", sender: nil)
+        
 
 //        switch indexPath.row {
 //

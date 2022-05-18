@@ -267,19 +267,19 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="5ad-v9-5w4" id="sck-7o-FhD"/>
-                        <segue destination="mDT-rN-sNk" kind="custom" identifier="showGithubEventListView" customClass="right" customModule="GaebalSaebal" customModuleProvider="target" id="Add-s3-khC"/>
+                        <segue destination="mDT-rN-sNk" kind="show" identifier="showGithubEventListView" id="Add-s3-khC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wAp-tO-F6Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2702.898550724638" y="93.75"/>
+            <point key="canvasLocation" x="2628" y="94"/>
         </scene>
         <!--Github Event View Controller-->
         <scene sceneID="D5g-2I-VRy">
             <objects>
                 <viewController id="mDT-rN-sNk" customClass="GithubEventViewController" customModule="GaebalSaebal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BCh-k3-86L">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GitHub-Mark" translatesAutoresizingMaskIntoConstraints="NO" id="hxx-fV-dBI">
@@ -289,7 +289,7 @@
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="96" estimatedRowHeight="-1" sectionHeaderHeight="84" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Ah-Fb-5wX">
-                                <rect key="frame" x="0.0" y="70" width="414" height="792"/>
+                                <rect key="frame" x="0.0" y="70" width="414" height="772"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <inset key="scrollIndicatorInsets" minX="20" minY="20" maxX="20" maxY="20"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="zyD-IR-Thf"/>
