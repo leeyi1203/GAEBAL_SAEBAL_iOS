@@ -7,13 +7,47 @@
 
 import UIKit
 
-class categorySetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+
+class categorySetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,AddCategoryDelegate{
+    var addCategoryname = ""
+    
+    
+    func AddCategory() {
+        let alert = UIAlertController(title: "카테고리명 입력", message: "추가할 카테고리명을 입력하세요", preferredStyle: .alert)
+
+                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+
+                    self.addCategoryname = alert.textFields?[0].text ?? ""
+                    print(self.addCategoryname)
+                    self.categoryList.append(self.addCategoryname)
+                    print(self.categoryList)
+                    self.categorySet.beginUpdates()
+                    self.categorySet.insertRows(at: [IndexPath(row: self.categoryList.count-1, section: 0)], with: .none)
+                    self.categorySet.endUpdates()
+
+                }
+
+                let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+
+                     //code
+
+                }
+
+                alert.addAction(cancel)
+
+                alert.addAction(ok)
+                alert.addTextField ()
+
+                self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
     // MARK: - Declaration
-    let categoryList = ["기본","백준","자료구조"]
+    var categoryList = ["기본","백준","자료구조"]
     
     @IBOutlet weak var categorySet: UITableView!
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.topItem?.title = ""
@@ -23,7 +57,6 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(categoryList.count)
         return categoryList.count+1
     }
 
@@ -37,6 +70,7 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
         }else {
             cell.textLabel?.text = "추가하기"
             cell.categoryButton.isHidden=false
+            cell.cellDelegate=self
         }
         return cell
     }
@@ -45,13 +79,19 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
             // 오른쪽에 만들기
             let edit = UIContextualAction(style: .normal, title: "edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
                         print("edit")
+                
                         success(true)
                     }
                     edit.backgroundColor = UIColor(displayP3Red: 52/255, green: 95/255, blue: 207/255, alpha: 1)
                     edit.image = UIImage(named: "PencilSquare.png")
                     
                     let delete = UIContextualAction(style: .normal, title: "delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                        self.categoryList.remove(at: indexPath.row)
                         print("delete")
+                        print(self.categoryList)
+                        self.categorySet.beginUpdates()
+                        self.categorySet.deleteRows(at: [indexPath], with:.fade)
+                        self.categorySet.endUpdates()
                         success(true)
                     }
             delete.backgroundColor = UIColor(displayP3Red: 194/255, green: 62/255, blue: 62/255, alpha: 1)
@@ -61,7 +101,6 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
         }else {return UISwipeActionsConfiguration(actions:[])}
         
     }
-
 
    
     /*
@@ -75,9 +114,4 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     */
 
 }
-extension categorySetViewController: ContentsMainTextDelegate {
-    func categoryButtonTapped() {
-    // --ToDo--
-    print("사용하고 싶은 기능들 추가") }
-    
-}
+

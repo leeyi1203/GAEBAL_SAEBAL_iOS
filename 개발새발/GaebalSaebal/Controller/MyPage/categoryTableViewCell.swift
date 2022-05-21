@@ -6,34 +6,30 @@
 //
 
 import UIKit
-protocol ContentsMainTextDelegate: AnyObject {
-    func categoryButtonTapped()
-    
+protocol AddCategoryDelegate {
+    func AddCategory()
 }
+
 class categoryTableViewCell: UITableViewCell {
     
-    var cellDelegate: ContentsMainTextDelegate?
+    
+    var cellDelegate : AddCategoryDelegate?
     
     @IBOutlet weak var categoryButton: UIButton!
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier) // 여기서 버튼에 액션 추
-        self.categoryButton.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.categoryButton.isHidden=true
+
     }
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.categoryClicked()
     }
-    
-    
-//    let categoryButton: UIButton = {
-//        let bt = UIButton()
-//        bt.backgroundColor=UIColor.lightGray
-//        return bt }() // 위임해줄 기능을 미리 구현해두어 버튼에 액션 추가
-    
-    @objc func categoryClicked() { cellDelegate?.categoryButtonTapped() }
+
+    @objc func plusbtnClicked(sender:UIGestureRecognizer){
+        cellDelegate?.AddCategory()
 
 
+    }
 
    
     override func awakeFromNib() {
@@ -43,8 +39,9 @@ class categoryTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(plusbtnClicked(sender:)))
+        categoryButton.addGestureRecognizer(tapGesture)
     }
 
 }
