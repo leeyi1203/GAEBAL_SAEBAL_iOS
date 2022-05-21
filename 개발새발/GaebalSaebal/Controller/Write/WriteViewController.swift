@@ -140,7 +140,6 @@ class WriteViewController: UIViewController {
     // 상속된 write 버튼 없애기
     func removeNagationBarWriteButton(){
         self.navigationController!.navigationBar.subviews.forEach{
-            print($0)
             if ( $0 is UIImageView ) {
                 $0.isHidden = true
                 navigationbarWriteButton = $0 as? UIButton

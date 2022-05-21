@@ -7,9 +7,15 @@
 
 import UIKit
 
-var repoNames:[String] = []
+
 
 class GithubReposViewController: UIViewController {
+    
+    var repoFullNames: [String] = []
+    var repoNames: [String] = []
+    var repo: String = ""
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -17,6 +23,10 @@ class GithubReposViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        
+        self.repoNames.removeAll()
+        self.tableView.reloadData()
         
         // 유저의 레포들 가져오기
         getUserRepos()
@@ -47,7 +57,7 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "githubRepoCell", for: indexPath)
         
         if let cell = cell as? GithubRepoTableViewCell {
-            cell.repoNameLabel.text = repoNames[indexPath.section]
+            cell.repoNameLabel.text = repoFullNames[indexPath.section]
         }
         
         return cell
@@ -58,21 +68,19 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
 
         tableView.deselectRow(at: indexPath, animated: true)
         
+        self.repo = self.repoNames[indexPath.section]
+
+        
         // 이벤트 선택 페이지로 이동
         self.performSegue(withIdentifier: "showGithubEventListView", sender: nil)
-        
 
-//        switch indexPath.row {
-//
-//        case 0: self.performSegue(withIdentifier: "photoObjectDetection", sender: nil)
-//        case 1: self.performSegue(withIdentifier: "realTimeObjectDetection", sender: nil)
-//        case 2: self.performSegue(withIdentifier: "facialAnalysis", sender: nil)
-//        default:
-//
-//            return
-//
-//        }
-
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if (segue.identifier == "showGithubEventListView") {
+          let secondView = segue.destination as! GithubEventViewController
+           secondView.repo = self.repo
+       }
     }
 
 }
@@ -113,11 +121,12 @@ extension GithubReposViewController{
                 }
                 print("##\(rsData[0])")
                 for rsItem in rsData {
-                    repoNames.append(rsItem.full_name)
+                    self.repoFullNames.append(rsItem.full_name)
+                    self.repoNames.append(rsItem.name)
 
                 }
             }
-            print(repoNames)
+            print(self.repoNames)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -145,7 +154,7 @@ import UIKit
                                     options: UIView.AnimationOptions.curveEaseInOut,
                                      animations: {
                                       dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                                      src.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width/3, y: 0)
+                                      src.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width/1, y: 0)
           },
                                      completion: { finished in
                                       src.present(dst, animated: false, completion: nil)

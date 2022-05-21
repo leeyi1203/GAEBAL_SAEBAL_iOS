@@ -9,7 +9,10 @@ import UIKit
 
 class GithubEventTableViewCell: UITableViewCell {
     @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var eventTitle: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var repoNameLabel: UILabel!
+    
     
     var originContentWidth:CGFloat = 0.0
     
@@ -19,7 +22,7 @@ class GithubEventTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         customTypeLabel()
-        eventTitle.text = "UI 깨짐 해결하기"
+        titleLabel.text = "UI 깨짐 해결하기"
         
         setupLayout()
         
