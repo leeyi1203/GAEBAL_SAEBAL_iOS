@@ -9,11 +9,22 @@ import UIKit
 
 
 
-class GithubReposViewController: UIViewController {
+class GithubReposViewController: UIViewController, SendSelectedGithubEventDelegate {
+    func sendGithubEvent(event: Event, selectedRepoOwner: String, selectedRepoName: String) {
+      print("repo view \(event)")
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+        delegate?.sendGithubEvent(event: event,
+                                  selectedRepoOwner: selectedRepoOwner,
+                                  selectedRepoName: selectedRepoName)
+    }
     
-    var repoFullNames: [String] = []
-    var repoNames: [String] = []
-    var repo: String = ""
+    
+    var repos: [UserRepoInfo] = []
+    var selectedRepoName: String = ""
+    var selectedRepoOwner: String = ""
+    
+    // 화면 사라질 때 정보 보내려구,,
+    var delegate: SendSelectedGithubEventDelegate?
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -25,7 +36,7 @@ class GithubReposViewController: UIViewController {
         self.tableView.dataSource = self
         
         
-        self.repoNames.removeAll()
+        self.repos.removeAll()
         self.tableView.reloadData()
         
         // 유저의 레포들 가져오기
@@ -39,7 +50,7 @@ class GithubReposViewController: UIViewController {
 extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return repoNames.count
+        return repos.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,7 +68,10 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "githubRepoCell", for: indexPath)
         
         if let cell = cell as? GithubRepoTableViewCell {
-            cell.repoNameLabel.text = repoFullNames[indexPath.section]
+            cell.repoNameLabel.text = repos[indexPath.section].full_name
+            
+            // 셀렉트 될 때 뒷배경 어두워지는거 삭제
+            cell.selectionStyle = .none
         }
         
         return cell
@@ -68,19 +82,26 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
 
         tableView.deselectRow(at: indexPath, animated: true)
         
-        self.repo = self.repoNames[indexPath.section]
+        self.selectedRepoName = self.repos[indexPath.section].name
+        self.selectedRepoOwner = self.repos[indexPath.section].owner.login
 
         
         // 이벤트 선택 페이지로 이동
         self.performSegue(withIdentifier: "showGithubEventListView", sender: nil)
+        
 
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "showGithubEventListView") {
           let secondView = segue.destination as! GithubEventViewController
-           secondView.repo = self.repo
+           secondView.selectedRepoName = self.selectedRepoName
+           secondView.selectedRepoOwner = self.selectedRepoOwner
+           
+           secondView.delegate = self
        }
+        
+        
     }
 
 }
@@ -121,12 +142,9 @@ extension GithubReposViewController{
                 }
                 print("##\(rsData[0])")
                 for rsItem in rsData {
-                    self.repoFullNames.append(rsItem.full_name)
-                    self.repoNames.append(rsItem.name)
-
+                    self.repos.append(rsItem)
                 }
             }
-            print(self.repoNames)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

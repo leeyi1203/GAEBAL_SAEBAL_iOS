@@ -7,9 +7,51 @@
 
 import UIKit
 
+protocol SendSelectedGithubEventDelegate{
+    func sendGithubEvent(event: Event,
+                         selectedRepoOwner: String,
+                         selectedRepoName: String)
+}
+
+// MARK: - ✅ Structure
+public struct Issues: Codable {
+    public let number: Int
+    public let title: String
+    public let node_id: String
+    public let created_at: String
+}
+
+public struct PullRequests: Codable {
+    public let number: Int
+    public let title: String
+    public let node_id: String
+    public let created_at: String
+}
+public struct Commits: Codable {
+    public let commit: Commit
+    public let sha: String
+    public let node_id: String
+}
+public struct Commit: Codable {
+    public let author: Author
+    public let message: String
+}
+
+public struct Author: Codable {
+    public let date: String
+}
+
+public struct Event{
+    public let type: String
+    // 커밋 번호에 영문이 포함되므로 number string으로 변경
+    public let number: String
+    public let title: String
+    public let node_id: String
+    public let created_at: String
+}
+
 class GithubEventViewController: UIViewController{
     // MARK: - ✅ IBOutlets
-    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,45 +72,13 @@ class GithubEventViewController: UIViewController{
     
 
     //깃허브
-    var gitID = "leedoyeon849"
-    var repo = ""
+    var selectedRepoOwner = ""
+    var selectedRepoName = ""
+    var selectedEvent: Event = Event(type: "", number: "", title: "", node_id: "", created_at: "")
     
-    // MARK: - ✅ Structure
-    public struct Issues: Codable {
-        public let number: Int
-        public let title: String
-        public let node_id: String
-        public let created_at: String
-    }
-
-    public struct PullRequests: Codable {
-        public let number: Int
-        public let title: String
-        public let node_id: String
-        public let created_at: String
-    }
-    public struct Commits: Codable {
-        public let commit: Commit
-        public let sha: String
-        public let node_id: String
-    }
-    public struct Commit: Codable {
-        public let author: Author
-        public let message: String
-    }
-
-    public struct Author: Codable {
-        public let date: String
-    }
+    // 화면 사라질 때 정보 보내려구,,
+    var delegate: SendSelectedGithubEventDelegate?
     
-    public struct Event{
-        public let type: Int
-        // 커밋 번호에 영문이 포함되므로 number string으로 변경
-        public let number: String
-        public let title: String
-        public let node_id: String
-        public let created_at: String
-    }
 
     // MARK: - ✅ View Cycle
     override func viewDidLoad(){
@@ -79,11 +89,11 @@ class GithubEventViewController: UIViewController{
         
         self.tableView.backgroundColor = UIColor.clear
         
-        print("###\(self.repo)")
+        print("###\(self.selectedRepoName)")
+        print("###\(self.selectedRepoOwner)")
         
 
-        
-        getIssues(gitID: self.gitID, repo: self.repo)
+        getIssues(gitID: self.selectedRepoOwner, repo: self.selectedRepoName)
 
     }
     
@@ -91,9 +101,25 @@ class GithubEventViewController: UIViewController{
         super.viewWillDisappear(animated)
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
         print("ViewController의 view가 사라짐")
+
     }
     
     // MARK: - ✅ Custom Function
+    
+    func changeDateFormat(dateStr: String) -> String{
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'" // 2020-08-13 16:30
+                
+        let convertDate = dateFormatter.date(from: dateStr) // Date 타입으로 변환
+                
+        let myDateFormatter = DateFormatter()
+        myDateFormatter.dateFormat = "yyyy.MM.dd a hh:mm" // 2020.08.13 오후 04시 30분
+        let convertStr = myDateFormatter.string(from: convertDate!)
+        
+        return convertStr
+    }
+
     
 
 }
@@ -129,10 +155,10 @@ extension GithubEventViewController : UITableViewDelegate, UITableViewDataSource
             
             // type 라벨 설정 (이슈인지, 풀인지, 커밋인지)
             switch ( userEvents[indexPath.section].type){
-            case 1:
+            case "issue":
                 cell.typeLabel.text = "    issue    "
                 labelColor = redLabelColor
-            case 2:
+            case "pull request":
                 cell.typeLabel.text = "    pull requeset    "
                 labelColor = blueLabelColor
                 
@@ -144,16 +170,21 @@ extension GithubEventViewController : UITableViewDelegate, UITableViewDataSource
             // 라벨 컬러 변경
             cell.typeLabel.layer.borderColor = labelColor.cgColor
             cell.typeLabel.textColor = labelColor
+
             
             // 셀 내용 변경
             cell.titleLabel.text = userEvents[indexPath.section].title
-            cell.dateLabel.text = userEvents[indexPath.section].created_at
-            cell.repoNameLabel.text = self.repo
+            cell.dateLabel.text = changeDateFormat(dateStr: userEvents[indexPath.section].created_at)
+            cell.repoNameLabel.text = self.selectedRepoName
+            
+            // 선택 시 아무 애니메이션 X
+            cell.selectionStyle = .none
             
             
-            
-            
+  
         }
+        
+
         
         return cell
     }
@@ -163,7 +194,17 @@ extension GithubEventViewController : UITableViewDelegate, UITableViewDataSource
 
         tableView.deselectRow(at: indexPath, animated: true)
         
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.selectedEvent = userEvents[indexPath.section]
+        self.delegate?.sendGithubEvent(event: userEvents[indexPath.section],
+                                       selectedRepoOwner: self.selectedRepoOwner,
+                                       selectedRepoName: self.selectedRepoName)
+        
+//        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+
+        delegate?.sendGithubEvent(event: selectedEvent,
+                                  selectedRepoOwner: selectedRepoOwner,
+                                  selectedRepoName: selectedRepoName)
 
     }
 
@@ -259,13 +300,9 @@ extension GithubEventViewController  {
     }
     
     func combineAllEvents(){
-//        print("### userIssues : \(self.userIssues)")
-//        print("### userCommits : \(self.userCommits)")
-//        print("### userPRs : \(self.userPRs)")
-        
         // issue 통합!
         self.userIssues.forEach{
-            let tempEvent:Event = Event(type: 1,
+            let tempEvent:Event = Event(type: "issue",
                                         number: String($0.number),
                                         title: $0.title,
                                         node_id: $0.node_id,
@@ -276,7 +313,7 @@ extension GithubEventViewController  {
         
         // pull request 통합
         self.userPRs.forEach{
-            let tempEvent:Event = Event(type: 2,
+            let tempEvent:Event = Event(type: "pull request",
                                         number:String($0.number),
                                         title: $0.title,
                                         node_id: $0.node_id,
@@ -294,7 +331,7 @@ extension GithubEventViewController  {
             let sliced_str = str[startIndex ..< endIndex]
             let commitNumber:String = String(sliced_str)
             
-            let tempEvent:Event = Event(type: 3,
+            let tempEvent:Event = Event(type: "commit",
                                         number: commitNumber,
                                         title: $0.commit.message,
                                         node_id: $0.node_id,

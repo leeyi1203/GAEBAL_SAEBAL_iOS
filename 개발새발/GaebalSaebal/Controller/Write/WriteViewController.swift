@@ -8,10 +8,12 @@
 import UIKit
 //import JSONDecoder
 
+
+
 let categoryList = ["미정", "백준", "자료구조", "스터디"]
 
 
-class WriteViewController: UIViewController {
+class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
 
     //MARK: - ✅ Outlets & Actions
     @IBOutlet weak var scrollView: UIScrollView!
@@ -47,6 +49,10 @@ class WriteViewController: UIViewController {
     var keyboardHeight:CGFloat = 0
     
     let bojLink:String = ""
+    
+    var selectedGithubEvent: Event? = nil
+    var selectedRepoOwner: String? = nil
+    var selectedRepoName: String? = nil
     
     let mainPink = UIColor(red: 250/255, green: 0/255, blue: 255/255, alpha: 1)
     let mainPurple = UIColor(red: 178/255, green: 14/255, blue: 255/255, alpha: 1)
@@ -113,6 +119,7 @@ class WriteViewController: UIViewController {
         if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
+            // ⚠️ 아....... 이거 해결해야함 
             self.view.frame.origin.y = -keyboardHeight
         }
     }
@@ -268,16 +275,32 @@ class WriteViewController: UIViewController {
         //모서리 둥글게
         viewButton.layer.cornerRadius = viewButton.frame.height / 2
         
+        // 보더 초기화
+        viewButton.layer.borderWidth = 0
+        viewButton.layer.borderColor = UIColor.clear.cgColor
+        
         // 버튼 뷰 초기화
         viewButton.subviews.forEach({ $0.removeFromSuperview() })
         viewButton.layer.sublayers?.forEach({ $0.removeFromSuperlayer() })
+        
         // 탭 이벤트 삭제
-        if let removeTargetGesture = viewButton.gestureRecognizers?[0] {
-            viewButton.removeGestureRecognizer(removeTargetGesture)
+        if (viewButton.gestureRecognizers?.count != 0){
+            if let removeTargetGesture = viewButton.gestureRecognizers?[0] {
+                viewButton.removeGestureRecognizer(removeTargetGesture)
+            } else { print("tap gesture is nil") }
         }
 
-        //사용 전 / 취소 일시 UI
-        if (isUsed == false){
+        
+        if (isUsed){
+            if viewButton == self.baekjoonView{
+                setUsedBeakjoonView(viewButton: viewButton)
+            }
+            else{
+                setUsedGithubView(viewButton: viewButton)
+            }
+        }
+        // 사용 전(초기) / 취소 일시 UI
+        else{
             // 점선 보더 설정
             let borderLayer = CAShapeLayer()
             borderLayer.strokeColor = dashedBorderGray
@@ -289,32 +312,169 @@ class WriteViewController: UIViewController {
             viewButton.layer.addSublayer(borderLayer)
             
             // 플러스 이미지 넣기
-            let plusImage = UIImage(named: "PlusIcon.png")
+            let plusImage = UIImage(named: "PlusIcon.svg")
             let plusImageView = UIImageView(image: plusImage)
             plusImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
             viewButton.addSubview(plusImageView)
             plusImageView.translatesAutoresizingMaskIntoConstraints = false
             plusImageView.centerXAnchor.constraint(equalTo:viewButton.centerXAnchor).isActive = true
             plusImageView.centerYAnchor.constraint(equalTo:viewButton.centerYAnchor).isActive = true
+            plusImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            plusImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
 
             // 탭 이벤트 추가
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForAdd(sender:)))
             viewButton.addGestureRecognizer(tapGesture)
+
         }
-        else{
-            
-            // 보더 설정
-            viewButton.layer.borderWidth = 1.5
+    }
+    
+    func setUsedBeakjoonView(viewButton: UIView){
+        // 보더 설정
+        viewButton.layer.borderWidth = 1.5
+        viewButton.layer.borderColor = lighterGray
+        
+        // 백준 아이콘 추가
+        let bojLogoImage = UIImage(named: "bojLogo")
+        let bojLogoImageView = UIImageView(image: bojLogoImage)
+        viewButton.addSubview(bojLogoImageView)
+        bojLogoImageView.translatesAutoresizingMaskIntoConstraints = false
+        bojLogoImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
+        bojLogoImageView.leftAnchor.constraint(equalTo: view.leftAnchor
+                , constant: 40).isActive = true // 왼쪽여백
+        
+        // 취소(삭제) 아이콘 추가
+        let cancelIconImage = UIImage(named: "cancelIcon")
+        let cancelIconImageView = UIImageView(image: cancelIconImage)
+        viewButton.addSubview(cancelIconImageView)
+        cancelIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
+        cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
+        cancelIconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        cancelIconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        // 탭 이벤트 (취소) 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
+        cancelIconImageView.addGestureRecognizer(tapGesture)
+        cancelIconImageView.isUserInteractionEnabled = true
+    }
+    
+    func setUsedGithubView(viewButton: UIView){
+        if self.selectedGithubEvent != nil{
             viewButton.layer.borderColor = lighterGray
+            viewButton.layer.borderWidth = 1.5
             
-            // 백준 아이콘 추가
-            let bojLogoImage = UIImage(named: "bojLogo")
-            let bojLogoImageView = UIImageView(image: bojLogoImage)
-            viewButton.addSubview(bojLogoImageView)
-            bojLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-            bojLogoImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
-            bojLogoImageView.leftAnchor.constraint(equalTo: view.leftAnchor
-                    , constant: 40).isActive = true // 왼쪽여백
+            let typeLabel:UILabel = {
+                let label = UILabel()
+                
+                let greenLabelColor = UIColor.init(red: 77/255, green: 168/255, blue: 86/255, alpha: 1)
+                let blueLabelColor = UIColor.init(red: 48/255, green: 141/255, blue: 181/255, alpha: 1)
+                let redLabelColor = UIColor.init(red: 185/255, green: 54/255, blue: 54/255, alpha: 1)
+                
+                var labelColor:UIColor?
+                
+                // type 라벨 설정 (이슈인지, 풀인지, 커밋인지)
+                switch ( self.selectedGithubEvent?.type){
+                case "issue":
+                    label.text = "    issue    "
+                    labelColor = redLabelColor
+                case "pull request":
+                    label.text = "    pull requeset    "
+                    labelColor = blueLabelColor
+                    
+                default:
+                    label.text = "    commit    "
+                    labelColor = greenLabelColor
+                }
+                
+                label.layer.borderWidth = 2
+                
+                // 라벨 컬러 변경
+                label.layer.borderColor = labelColor?.cgColor
+                label.textColor = labelColor
+                
+                // 텍스트 크기 조정
+                label.font = UIFont.boldSystemFont(ofSize: 13.0)
+
+                return label
+                }()
+                
+                // type label 추가하고 제약 설정
+                viewButton.addSubview(typeLabel)
+                typeLabel.translatesAutoresizingMaskIntoConstraints = false
+                typeLabel.topAnchor.constraint(equalTo: viewButton.topAnchor, constant: 15).isActive = true
+                typeLabel.leadingAnchor.constraint(equalTo: viewButton.leadingAnchor, constant: 35).isActive = true
+                // 라벨 높이 설정
+                let typeLabelHeight: CGFloat = 23
+                typeLabel.heightAnchor.constraint(equalToConstant: typeLabelHeight).isActive = true
+                // 모서리 둥글게
+                typeLabel.layer.cornerRadius = typeLabelHeight / 2
+                
+                let eventTitle: UILabel = {
+                    let title = UILabel()
+                    
+                    title.text = self.selectedGithubEvent?.title
+                    // 텍스트 크기 조정
+                    title.font = UIFont.boldSystemFont(ofSize: 16.0)
+                    
+                    return title
+                }()
+                
+                // title label 추가하고 제약 설정
+                viewButton.addSubview(eventTitle)
+                eventTitle.translatesAutoresizingMaskIntoConstraints = false
+                eventTitle.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 8).isActive = true
+                eventTitle.leadingAnchor.constraint(equalTo: viewButton.leadingAnchor, constant: 38).isActive = true
+                eventTitle.trailingAnchor.constraint(equalTo: viewButton.trailingAnchor, constant: -45).isActive = true
+            
+            // 폴더 이미지 넣기
+            let folderImage: UIImageView = {
+                let image = UIImage(named: "file_icon.png")
+                let imageView = UIImageView(image: image)
+                imageView.frame = CGRect(x: 0, y: 0, width: 15, height: 13)
+                
+                return imageView
+            }()
+            
+            viewButton.addSubview(folderImage)
+            folderImage.translatesAutoresizingMaskIntoConstraints = false
+            folderImage.topAnchor.constraint(equalTo: eventTitle.bottomAnchor, constant: 7).isActive = true
+            folderImage.leadingAnchor.constraint(equalTo: viewButton.leadingAnchor, constant: 38).isActive = true
+            
+            
+            // 레포명 넣기
+            let repoNameLable: UILabel = {
+                let label = UILabel()
+                
+                label.text = "\(self.selectedRepoOwner ?? "")/\(self.selectedRepoName ?? "")"
+                label.font = UIFont.systemFont(ofSize: 13)
+                label.textColor = UIColor.gray
+                
+                return label
+            }()
+            
+            viewButton.addSubview(repoNameLable)
+            repoNameLable.translatesAutoresizingMaskIntoConstraints = false
+            repoNameLable.topAnchor.constraint(equalTo: eventTitle.bottomAnchor, constant: 6).isActive = true
+            repoNameLable.leadingAnchor.constraint(equalTo: folderImage.trailingAnchor, constant: 8).isActive = true
+            repoNameLable.widthAnchor.constraint(equalToConstant: 200).isActive = true
+            
+            //날짜 넣기
+            let eventDateLabel:UILabel = {
+                let label = UILabel()
+                
+                let changedDate = changeDateFormat(dateStr: self.selectedGithubEvent!.created_at)
+                label.text = changedDate
+                label.font = UIFont.systemFont(ofSize: 13)
+                label.textColor = UIColor.gray
+                
+                return label
+            }()
+            
+            viewButton.addSubview(eventDateLabel)
+            eventDateLabel.translatesAutoresizingMaskIntoConstraints = false
+            eventDateLabel.topAnchor.constraint(equalTo: viewButton.topAnchor, constant: 15).isActive = true
+            eventDateLabel.trailingAnchor.constraint(equalTo: viewButton.trailingAnchor, constant: -38).isActive = true
             
             // 취소(삭제) 아이콘 추가
             let cancelIconImage = UIImage(named: "cancelIcon")
@@ -323,13 +483,16 @@ class WriteViewController: UIViewController {
             cancelIconImageView.translatesAutoresizingMaskIntoConstraints = false
             cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
             cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
+            cancelIconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            cancelIconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
             
             // 탭 이벤트 (취소) 추가
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
             cancelIconImageView.addGestureRecognizer(tapGesture)
             cancelIconImageView.isUserInteractionEnabled = true
             
-        }
+        }//if문 end
+        
     }
     
     @objc func tapViewButtonForAdd(sender:UIGestureRecognizer){
@@ -351,12 +514,49 @@ class WriteViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           if segue.identifier == "showGithubRepoListView" {
+               let viewController : GithubReposViewController = segue.destination as! GithubReposViewController
+                   viewController.delegate = self
+           }
+       }
+    
     @objc func tapViewButtonForCancel(sender:UIGestureRecognizer){
         if (sender.view == self.baekjoonView){
             print("백준 취소 버튼 실행")
             customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
         }
+        else{
+            customViewButton(viewButton: self.githubView, radius: self.githubView.frame.height / 2, isUsed: false)
+        }
     }
+    
+    func sendGithubEvent(event: Event, selectedRepoOwner: String, selectedRepoName: String){
+        print("####\(event) 전달 완료")
+        self.selectedGithubEvent = event
+        self.selectedRepoOwner = selectedRepoOwner
+        self.selectedRepoName = selectedRepoName
+        // UI update
+        customViewButton(viewButton: self.githubView,
+                         radius: self.githubView.frame.height / 2,
+                         isUsed: true)
+    }
+    
+    func changeDateFormat(dateStr: String) -> String{
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'" // 2020-08-13 16:30
+                
+        let convertDate = dateFormatter.date(from: dateStr) // Date 타입으로 변환
+                
+        let myDateFormatter = DateFormatter()
+        myDateFormatter.dateFormat = "yyyy.MM.dd a hh:mm" // 2020.08.13 오후 04시 30분
+        let convertStr = myDateFormatter.string(from: convertDate!)
+        
+        return convertStr
+    }
+    
+    
 
 }
 
@@ -443,6 +643,4 @@ extension WriteViewController: UITextViewDelegate {
         self.scrollView.contentSize.height = defaultScrollViewHeight + self.bodyTextView.frame.height - minBodyTextViewHeight + self.tagTextView.frame.height - minTagTextViewHeight + self.codeTextView.frame.height - minCodeTextViewHeight
     }
 
-    
 }
-
