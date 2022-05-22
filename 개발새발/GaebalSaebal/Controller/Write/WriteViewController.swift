@@ -10,7 +10,7 @@ import UIKit
 
 
 
-let categoryList = ["미정", "백준", "자료구조", "스터디"]
+let categoryList = ["미정", "백준", "자료구조", "스터디", "ㅁㄴㅁㅇㄹㄴㅇ"]
 
 
 class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
@@ -119,7 +119,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            // ⚠️ 아....... 이거 해결해야함 
+            // ⚠️ 아....... 이거 해결해야함
             self.view.frame.origin.y = -keyboardHeight
         }
     }
