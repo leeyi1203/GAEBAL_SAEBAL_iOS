@@ -73,13 +73,16 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
         
-        //텍스트필드 델리게이트
+        // 텍스트필드 델리게이트
         self.bodyTextView.delegate = self
         self.tagTextView.delegate = self
         self.codeTextView.delegate = self
         
-        //네비게이션 바 디자인
+        // 네비게이션 바 디자인
         customNavgationBar()
+        
+        // 네비게이션바에 완료 버튼 생성
+        addCompleteButton()
         
         //카테고리 버튼 생성
         self.addCategoryButton(categoryList: categoryList)
@@ -161,26 +164,64 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         self.navigationController!.navigationBar.topItem?.backButtonTitle = "취소하기"
         self.navigationController!.navigationBar.tintColor = .gray
         
-        //안됨
-        let completeButton = UIBarButtonItem(title: "완료",
-                                             style: .plain,
-                                             target: self,
-                                             action: nil)
-        self..navigationItem.rightBarButtonItem = completeButton
-        
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료",
-//                                                                 style: .plain,
-//                                                                 target: self,
-//                                                                 action: nil)
-        
-        
         // 스크롤 시 회색되는거 방지
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithTransparentBackground()
 
         self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         
+        // 네비바 height를 늘려보고자하는 시도..
+//        let height: CGFloat = 30 //whatever height you want to add to the existing height
+//        print("## nav frame \(self.navigationController!.navigationBar.frame)")
+//        print("## nav bound \(self.navigationController!.navigationBar.bounds)")
+//        let frame = self.navigationController!.navigationBar.frame
+//        self.navigationController?.navigationBar.frame = CGRect(x: 0, y: frame.origin.y + height, width: frame.width, height: frame.height + height)
+//        self.navigationController?.navigationBar.bounds = CGRect(x: 0, y: 0, width: frame.width, height: frame.height + height)
+//
+//        print("## nav frame \(self.navigationController!.navigationBar.frame)")
+//        print("## nav bound \(self.navigationController!.navigationBar.bounds)")
+        
     }
+    
+    //완료 버튼 생성하기
+    func addCompleteButton(){
+        //그림자 및 글자 설정
+        let completeButton = UIButton()
+        completeButton.frame = CGRect(x:0, y:0, width:80, height:40)
+        completeButton.setTitle("완료", for: .normal)
+        completeButton.setTitle("완료", for: .highlighted)
+        completeButton.backgroundColor = UIColor.clear
+        completeButton.layer.shadowColor = UIColor.black.cgColor
+        completeButton.clipsToBounds = false
+        completeButton.layer.shadowOpacity = 0.2
+        completeButton.layer.shadowRadius = 5
+        completeButton.layer.shadowOffset = CGSize(width: 1, height: 3)
+        completeButton.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+        
+        //그라데이션 배경 설정
+        let contentView = UIView()
+        contentView.frame = completeButton.frame
+        completeButton.addSubview(contentView)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = completeButton.bounds
+        gradientLayer.colors = [mainPurple.cgColor,
+                                mainPink.cgColor]
+        contentView.layer.addSublayer(gradientLayer)
+        contentView.layer.cornerRadius = completeButton.frame.height / 2
+        contentView.clipsToBounds = true
+        
+        // 글자 크기 조정
+        completeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+
+
+        let rightBarButton = UIBarButtonItem(customView: completeButton)
+        self.navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    @objc func buttonAction(_ sender: UIButton) {
+      print("Button tapped")
+    }
+
     
     func addCategoryButton(categoryList: [String]){
         for name in categoryList {
