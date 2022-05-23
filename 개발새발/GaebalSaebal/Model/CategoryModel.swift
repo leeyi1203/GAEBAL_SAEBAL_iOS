@@ -52,4 +52,4 @@ struct MyCategory {
 
 
 let categoryArray = ["가나다라마바사아자차", "자유기록", "개발새발", "자료구조", "백준", "기본보관함", "자유기록", "개발새발", "자료구조", "백준", "dadahae"]
-let contentsArray = [["어쩌구"], ["python 기초문법", "pull request"], ["C언어로 Stack 구현하기", "Python으로 Stack 구현하기", "C: 노드"], ["하단바 구현","홈 view UI 구현", "깃허브 API 연동", "기록 작성 뷰 구현"], [], ["어쩌구"], ["python 기초문법", "pull request"], ["C언어로 Stack 구현하기", "Python으로 Stack 구현하기", "C: 노드"], ["하단바 구현","홈 view UI 구현", "깃허브 API 연동", "기록 작성 뷰 구현"], [],["키체인", "swift", "URLSession", "Vision", "hello", "CoreData"]]
+var contentsArray = [["어쩌구"], ["python 기초문법", "pull request"], ["C언어로 Stack 구현하기,, C언어로 Stack 구현하기 C언어로 Stack 구현하기,, C언어로 Stack 구현하기", "Python으로 Stack 구현하기", "C: 노드"], ["하단바 구현","홈 view UI 구현", "깃허브 API 연동", "기록 작성 뷰 구현"], [], ["어쩌구"], ["python 기초문법", "pull request"], ["C언어로 Stack 구현하기", "Python으로 Stack 구현하기", "C: 노드"], ["하단바 구현","홈 view UI 구현", "깃허브 API 연동", "기록 작성 뷰 구현"], [],["키체인", "swift", "URLSession", "Vision", "hello", "CoreData"]]
