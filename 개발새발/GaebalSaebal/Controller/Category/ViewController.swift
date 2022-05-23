@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+
         setupWriteButton()
 //        setCollectionViewDelegateDataSource()
         configure()
@@ -110,7 +112,6 @@ class ViewController: UIViewController {
 //
 //        if segue.identifier ==
 //    }
-
 
 }
 

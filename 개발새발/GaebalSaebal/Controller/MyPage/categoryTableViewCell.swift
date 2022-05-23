@@ -6,45 +6,59 @@
 //
 
 import UIKit
-protocol ContentsMainTextDelegate: AnyObject {
-    func categoryButtonTapped()
-    
+protocol AddCategoryDelegate {
+    func AddCategory()
 }
+
 class categoryTableViewCell: UITableViewCell {
+    @IBOutlet weak var Content_view: UIView!
     
-    var cellDelegate: ContentsMainTextDelegate?
+    
+    var cellDelegate : AddCategoryDelegate?
     
     @IBOutlet weak var categoryButton: UIButton!
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier) // 여기서 버튼에 액션 추
-        self.categoryButton.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.categoryButton.isHidden=true
+
     }
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        self.categoryClicked()
     }
-    
-    
-//    let categoryButton: UIButton = {
-//        let bt = UIButton()
-//        bt.backgroundColor=UIColor.lightGray
-//        return bt }() // 위임해줄 기능을 미리 구현해두어 버튼에 액션 추가
-    
-    @objc func categoryClicked() { cellDelegate?.categoryButtonTapped() }
+
+    @objc func plusbtnClicked(sender:UIGestureRecognizer){
+        cellDelegate?.AddCategory()
 
 
+    }
 
    
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupLayout()
         // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(plusbtnClicked(sender:)))
+        categoryButton.addGestureRecognizer(tapGesture)
     }
+    func setupLayout() {
+            self.layer.shadowColor = UIColor.black.cgColor
+            self.clipsToBounds = false
+            self.layer.shadowOpacity = 0.1
+            self.layer.shadowRadius = 12
+            self.layer.shadowOffset = CGSize(width: 2, height: 2)
+            
+            self.backgroundColor = UIColor.clear
+            self.Content_view.backgroundColor = UIColor.white
+            
+            self.Content_view.layer.cornerRadius = 20
+            self.Content_view.layer.masksToBounds = true
+            
+            
+        }
 
 }

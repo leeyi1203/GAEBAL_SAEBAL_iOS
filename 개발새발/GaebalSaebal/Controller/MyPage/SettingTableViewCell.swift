@@ -10,20 +10,19 @@ import UIKit
 class SettingTableViewCell: UITableViewCell {
     
     @IBOutlet weak var Content_View: UIView!
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        Content_View.layer.borderWidth=0.5
-        Content_View.layer.cornerRadius=10
-        Content_View.layer.masksToBounds = true
-    }
+
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setupLayout()
+        print("## 연결")
+        Content_View.layer.borderWidth=1
+        Content_View.layer.borderColor = UIColor.lightGray.cgColor
+//        Content_View.layer.cornerRadius=10
+        Content_View.layer.masksToBounds = true
       
     }
 
@@ -32,5 +31,20 @@ class SettingTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    func setupLayout() {
+            self.layer.shadowColor = UIColor.black.cgColor
+            self.clipsToBounds = false
+            self.layer.shadowOpacity = 0.1
+            self.layer.shadowRadius = 12
+            self.layer.shadowOffset = CGSize(width: 3, height: 3)
+            
+            self.backgroundColor = UIColor.clear
+            self.Content_View.backgroundColor = UIColor.white
+            
+            self.Content_View.layer.cornerRadius = 20
+            self.Content_View.layer.masksToBounds = true
+            
+            
+        }
 
 }
