@@ -10,13 +10,14 @@ import UIKit
 
 
 
-let categoryList = ["미정", "백준", "자료구조", "스터디", "ㅁㄴㅁㅇㄹㄴㅇ"]
+let categoryList = ["미정", "백준", "자료구조", "스터디", "ㅁㄴㅁㅇㅜㅡ,.ㅏㅓㅗㅎㄹ호ㅓㅏㄹㄴㅇ"]
 
 
 class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
 
     //MARK: - ✅ Outlets & Actions
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var categoryScrollView: UIScrollView!
     @IBOutlet weak var categoryStackView: UIStackView!
     @IBOutlet weak var bodyTextView: UITextView!
     @IBOutlet weak var bodyTextCountLabel: UILabel!
@@ -27,7 +28,9 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     @IBOutlet weak var imageAddView: UIView!
     @IBOutlet weak var codeTextView: UITextView!
     //MARK: - ✅ Variables
-    var navigationbarWriteButton: UIButton! = nil;
+    var navigationbarWriteButton: UIButton! = nil
+    
+    var categoryStackViewWidth:CGFloat = 30
     
     let lighterGray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
     
@@ -99,6 +102,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
                                                 name: UIResponder.keyboardWillShowNotification,
                                                 object: nil)
         
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -190,15 +194,24 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
             categoryItemButton.isEnabled = true
             
             // Button 여백 설정
-            categoryItemButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 12, bottom: 2, right: 12)
+            categoryItemButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 15, bottom: 2, right: 15)
             categoryItemButton.addTarget(self, action: #selector(clickCategoryButton(_:)), for: .touchUpInside)
             
             
             self.categoryStackView.addArrangedSubview(categoryItemButton)
             self.categoryButtonList.append(categoryItemButton)
+            
+            // 버튼 넓이 계산 위해 텍스트 넓이 계산
+            let buttonTextWidth = NSString(string: name).size().width
+            print("### button width \(buttonTextWidth)")
+            self.categoryStackViewWidth += /* button inset */ 30 + buttonTextWidth + /* stackview gap */ 10
         }
-
-
+        
+        // 카테고리 스택뷰 길이 늘려주기 😡 안됨 왜 안될까?? 메인 scroll view는 되는데??
+        self.categoryScrollView.contentSize.width = self.categoryStackViewWidth
+//        self.categoryStackView.widthAnchor.constraint(equalToConstant: self.categoryStackViewWidth).isActive = true
+//        self.categoryStackView.frame.size.width = equalToConstant: self.categoryStackViewWidth).isActive = true
+        print("### stack scroll veiw size \(self.categoryScrollView.contentSize)")
     }
     
     func setButtonGradientBorder(button: UIButton){
@@ -639,6 +652,7 @@ extension WriteViewController: UITextViewDelegate {
         }
         
         // 텍스트 뷰가 길이가 길어진 상태일 경우 scroll view 높이도 조정
+        print("### main scroll view size \(self.scrollView.contentSize.height)")
         textView.isScrollEnabled = false
         self.scrollView.contentSize.height = defaultScrollViewHeight + self.bodyTextView.frame.height - minBodyTextViewHeight + self.tagTextView.frame.height - minTagTextViewHeight + self.codeTextView.frame.height - minCodeTextViewHeight
     }

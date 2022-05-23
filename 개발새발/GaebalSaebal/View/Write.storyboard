@@ -26,30 +26,38 @@
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56J-wc-EKT">
                                                 <rect key="frame" x="0.0" y="8" width="414" height="40"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J2g-Ln-aC7">
-                                                        <rect key="frame" x="0.0" y="5" width="457" height="30"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="54K-hu-mqV" userLabel="Content View">
+                                                        <rect key="frame" x="0.0" y="5" width="500" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTw-4y-lZz">
-                                                                <rect key="frame" x="0.0" y="0.0" width="457" height="30"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J2g-Ln-aC7">
+                                                                <rect key="frame" x="0.0" y="5" width="13.5" height="20.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTw-4y-lZz">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="13.5" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="tintColor" name="AccentColor"/>
+                                                            </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <color key="tintColor" name="AccentColor"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="457" id="aIf-AU-VMg"/>
+                                                            <constraint firstAttribute="width" constant="500" id="DKH-NA-Mju"/>
+                                                            <constraint firstItem="J2g-Ln-aC7" firstAttribute="leading" secondItem="54K-hu-mqV" secondAttribute="leading" id="HJQ-QX-2dn"/>
+                                                            <constraint firstItem="J2g-Ln-aC7" firstAttribute="centerY" secondItem="54K-hu-mqV" secondAttribute="centerY" id="wSn-fl-SHs"/>
                                                         </constraints>
-                                                    </stackView>
+                                                    </view>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="iiI-ph-oCv" firstAttribute="leading" secondItem="J2g-Ln-aC7" secondAttribute="leading" id="00n-3O-f6Y"/>
-                                                    <constraint firstAttribute="trailing" secondItem="J2g-Ln-aC7" secondAttribute="trailing" id="CtP-DR-DOx"/>
-                                                    <constraint firstItem="J2g-Ln-aC7" firstAttribute="top" secondItem="zqj-Rn-caB" secondAttribute="top" constant="5" id="S5N-PN-ncn"/>
-                                                    <constraint firstItem="J2g-Ln-aC7" firstAttribute="centerY" secondItem="iiI-ph-oCv" secondAttribute="centerY" id="asv-fT-3NZ"/>
+                                                    <constraint firstItem="54K-hu-mqV" firstAttribute="height" secondItem="iiI-ph-oCv" secondAttribute="height" id="5II-6K-UDh"/>
+                                                    <constraint firstItem="54K-hu-mqV" firstAttribute="top" secondItem="zqj-Rn-caB" secondAttribute="top" constant="5" id="A1j-YP-YyR"/>
+                                                    <constraint firstItem="54K-hu-mqV" firstAttribute="leading" secondItem="iiI-ph-oCv" secondAttribute="leading" id="ayl-H2-64g"/>
                                                     <constraint firstAttribute="height" constant="40" id="fbK-fE-5LF"/>
-                                                    <constraint firstItem="J2g-Ln-aC7" firstAttribute="centerY" secondItem="56J-wc-EKT" secondAttribute="centerY" id="gqn-ig-kp8"/>
+                                                    <constraint firstItem="54K-hu-mqV" firstAttribute="centerY" secondItem="56J-wc-EKT" secondAttribute="centerY" id="rU9-GM-DKe"/>
+                                                    <constraint firstAttribute="trailing" secondItem="54K-hu-mqV" secondAttribute="trailing" id="uWB-y9-NLd"/>
                                                 </constraints>
                                                 <viewLayoutGuide key="contentLayoutGuide" id="iiI-ph-oCv"/>
                                                 <viewLayoutGuide key="frameLayoutGuide" id="zqj-Rn-caB"/>
@@ -206,6 +214,7 @@
                         <outlet property="baekjoonView" destination="W04-hf-TPO" id="mNh-fS-M7l"/>
                         <outlet property="bodyTextCountLabel" destination="nhn-X9-CNe" id="Dk4-sG-m7E"/>
                         <outlet property="bodyTextView" destination="tE0-1o-0tC" id="LDa-wd-v7H"/>
+                        <outlet property="categoryScrollView" destination="56J-wc-EKT" id="3vC-he-wDf"/>
                         <outlet property="categoryStackView" destination="J2g-Ln-aC7" id="ojL-JF-7pn"/>
                         <outlet property="codeTextView" destination="sGu-49-cLi" id="8Tr-5x-ee3"/>
                         <outlet property="githubView" destination="Iz5-LF-U1i" id="oRI-sE-nwL"/>
