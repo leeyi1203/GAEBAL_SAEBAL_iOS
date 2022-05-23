@@ -32,11 +32,25 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     @IBOutlet weak var contexMenu: UIView!
     @IBOutlet weak var contents_label: UILabel!
     @IBOutlet weak var ed_button: UIButton!
+    
+    @IBOutlet weak var D_img: UIImageView!
+    @IBOutlet weak var git_type_view: UIView!
+    @IBOutlet weak var git_repo: UILabel!
+    @IBOutlet weak var git_Date: UILabel!
+    @IBOutlet weak var git_type: UILabel!
+    @IBOutlet weak var git_label: UILabel!
+    @IBOutlet weak var git_contents: UIView!
     //temporary data
+    var git_link=""
     var category_name = "백준"
     var log_cate_id = 2
     var boj_link = ""
-    let body_ex = "dsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksa"
+    var Github_num = "385732af"
+    var Github_title = "디테일 페이지 완료"
+    var Github_type = "Commit"
+    var Github_date = "2022-03-24 15:30PM"
+    var Github_repo = "13wjdgk/GaebalSaebal"
+    let body_ex = "dsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksa"
     struct Log {
         var id : Int
         var body : String
@@ -66,7 +80,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             self.image = image
         }
     }
-    var D_data : Log = Log(id : 1,body : "dsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksa" ,BOJ_num : "4949",category_id : 1,tag : "Python;백준;",date : "2020-11-18",Github_num : "648632ad",Github_title : "commit함",Github_type : "commit",Github_date : "2020/3/13",Github_repo : "repo contents",image : "/")
+    var D_data : Log = Log(id : 1,body :"dsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksa",BOJ_num : "4949",category_id : 1,tag : "Python;백준;",date : "2020-11-18",Github_num : "648632ad",Github_title : "commit함",Github_type : "commit",Github_date : "2020/3/13",Github_repo : "repo contents",image : "/")
     
 
     override func viewDidLoad() {
@@ -84,29 +98,57 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
         
         let interaction = UIContextMenuInteraction(delegate: self)
         ed_button.addInteraction(interaction)
-        
-        
+        D_img.image=UIImage(named: "exampleimage")
+        git_contents.isHidden=false
     }
     
     //데이터 로드 및 세팅 함수
     func DataLoad (){
         D_title.text = "\(category_name)의 \(log_cate_id)번째 기록"
-        D_tag.text = D_data.tag
-        D_date.text=D_data.date
+        
         print("#DataLoad")
         
+        D_tag.text = D_data.tag
+        D_date.text=D_data.date
     }
     //view custom
     func Make_contents(){
-        D_contents.layer.borderWidth = 0.3
-        D_contents.layer.borderColor = UIColor.lightGray.cgColor
-        D_contents.layer.cornerRadius=40
-        D_contents.layer.shadowColor = UIColor.gray.cgColor
-        D_contents.layer.shadowRadius = 8
-        D_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
-        D_contents.layer.shadowOpacity = 0.3
-        contents_label.text = "\(D_data.BOJ_num)번  -   "
-        boj_link = "https://www.acmicpc.net/problem/\(D_data.BOJ_num)"
+        if (category_name != ""){
+            D_contents.layer.borderWidth = 0.3
+            D_contents.layer.borderColor = UIColor.lightGray.cgColor
+            D_contents.layer.cornerRadius=40
+            D_contents.layer.shadowColor = UIColor.gray.cgColor
+            D_contents.layer.shadowRadius = 8
+            D_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
+            D_contents.layer.shadowOpacity = 0.3
+            contents_label.text = "\(D_data.BOJ_num)번  -   "
+            
+            boj_link = "https://www.acmicpc.net/problem/\(D_data.BOJ_num)"
+        }
+        if (Github_num != ""){git_contents.layer.borderWidth = 0.3
+            git_contents.layer.borderColor = UIColor.lightGray.cgColor
+            git_contents.layer.cornerRadius=40
+            git_contents.layer.shadowColor = UIColor.gray.cgColor
+            git_contents.layer.shadowRadius = 8
+            git_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
+            git_contents.layer.shadowOpacity = 0.3
+            git_label.text = "\(D_data.Github_title)"
+            git_repo.text = "\(D_data.Github_repo)"
+            git_type.text = "\(D_data.Github_type)"
+            git_Date.text = "\(D_data.Github_date)"
+            git_link = "https://www.acmicpc.net/problem/\(D_data.BOJ_num)"
+            git_type_view.layer.borderWidth = 0.3
+            if (D_data.Github_type=="commit"){
+                git_type_view.layer.borderColor = UIColor.green.cgColor
+            }else if(D_data.Github_type=="issue"){
+                git_type_view.layer.borderColor = UIColor.red.cgColor
+            }else if(D_data.Github_type=="pull request"){
+                git_type_view.layer.borderColor = UIColor.blue.cgColor
+            }
+            git_type_view.layer.cornerRadius=10
+        }
+       
+        
     }
     //D_contents 터치시 링크로 이동
     @objc func goLink(sender:UIGestureRecognizer){

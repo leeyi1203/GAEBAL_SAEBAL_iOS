@@ -8,19 +8,43 @@
 import UIKit
 
 class GitadminViewController: UIViewController {
-
+    var githubID = ""
+    var Token = ""
+    @IBOutlet weak var githubIDInp: UITextField!
+    @IBOutlet weak var TokenInp: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let testButton = UIButton()
-                testButton.setTitle("클릭해주세요!", for: .normal)
-                testButton.backgroundColor = .purple
-                testButton.translatesAutoresizingMaskIntoConstraints = false
-                
-                view.addSubview(testButton)
         // Do any additional setup after loading the view.
+        
+        if (githubID == "") {
+            githubIDInp.placeholder = "ID 값이 저장 되지 않았습니다."
+        }else{
+            githubIDInp.placeholder = githubID
+        }
+        if (Token == "") {
+            TokenInp.placeholder = "Token 값이 저장 되지 않았습니다."
+        }else{
+            TokenInp.placeholder = "Token 값이 저장 되었습니다."
+        }
+        githubID = githubIDInp.text ?? ""
+        Token = TokenInp.text ?? ""
     }
     
+    @IBAction func SaveInfo(_ sender: Any) {
+        githubID = githubIDInp.text ?? ""
+        Token = TokenInp.text ?? ""
+        let alert = UIAlertController(title: "저장완료", message: "저장되었습니다.", preferredStyle: .alert)
 
+                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+                }
+
+
+
+                alert.addAction(ok)
+
+                self.present(alert, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

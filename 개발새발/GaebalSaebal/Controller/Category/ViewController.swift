@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+
         setupWriteButton()
         configure()
         setupDataSource()
@@ -32,7 +34,6 @@ class ViewController: UIViewController {
         barbuttonItem.customView?.heightAnchor.constraint(equalToConstant: 45).isActive = true
         barbuttonItem.customView?.widthAnchor.constraint(equalToConstant: 45).isActive = true
         self.navigationItem.rightBarButtonItem = barbuttonItem
-        
     }
     
     //MARK: - CollectionView 설정
@@ -64,7 +65,6 @@ class ViewController: UIViewController {
         let backbutton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = backbutton
     }
-
 
 }
 
