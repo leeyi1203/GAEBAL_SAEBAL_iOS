@@ -8,16 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Write-->
-        <scene sceneID="bdr-4J-6Eh">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Write" id="DAa-Ts-z1c" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="uHq-hl-9g8"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="abk-dp-egf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2282" y="-1379"/>
-        </scene>
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -29,9 +19,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="개발새발" id="VAT-O4-Tp7"/>
-                    <connections>
-                        <segue destination="DAa-Ts-z1c" kind="show" identifier="showWirteView" id="8vN-wm-lHt"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
