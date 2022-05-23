@@ -70,7 +70,7 @@ extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.CategoryDetailTableView.dequeueReusableCell(withIdentifier: "categoryContentsCell", for: indexPath) as! CategoryDetailTableViewCell
-        cell.contentTitleLabel.text = contentsArray[categoryIndex][indexPath.section]
+        cell.contentLabel.text = contentsArray[categoryIndex][indexPath.section]
         
         
         return cell

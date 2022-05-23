@@ -11,9 +11,10 @@ import UIKit
 
 class CategoryDetailTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var contentTitleLabel: UILabel!
+    
     var originContentWidth:CGFloat = 0.0
     
+    @IBOutlet weak var contentLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         
