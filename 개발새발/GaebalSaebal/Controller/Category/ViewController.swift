@@ -34,6 +34,15 @@ class ViewController: UIViewController {
         barbuttonItem.customView?.heightAnchor.constraint(equalToConstant: 45).isActive = true
         barbuttonItem.customView?.widthAnchor.constraint(equalToConstant: 45).isActive = true
         self.navigationItem.rightBarButtonItem = barbuttonItem
+        
+        //클릭이벤트
+        writeBtn.addTarget(self, action: #selector(tapWriteButton), for: .touchUpInside)
+
+    }
+    
+    @objc func tapWriteButton(sender:UIGestureRecognizer){
+            //클릭시 실행할 동작
+          performSegue(withIdentifier: "showWriteView", sender: nil)
     }
     
     //MARK: - CollectionView 설정

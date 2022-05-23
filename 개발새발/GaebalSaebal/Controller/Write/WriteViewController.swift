@@ -66,7 +66,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         super.viewDidLoad()
         
         // 상속된 write 버튼 없애기
-        removeNagationBarWriteButton()
+//        removeNagationBarWriteButton()
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
