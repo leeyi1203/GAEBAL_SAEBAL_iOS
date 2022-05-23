@@ -10,7 +10,7 @@ import UIKit
 
 
 
-let categoryList = ["미정", "백준", "자료구조", "스터디", "ㅁㄴㅁㅇㅜㅡ,.ㅏㅓㅗㅎㄹ호ㅓㅏㄹㄴㅇ"]
+let categoryList = ["미정", "백준", "자료구조", "스터디", "조금 긴 버튼을 추가하자", "짧🤪"]
 
 
 class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
@@ -18,6 +18,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     //MARK: - ✅ Outlets & Actions
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var categoryScrollView: UIScrollView!
+    @IBOutlet weak var categoryContentView: UIView!
     @IBOutlet weak var categoryStackView: UIStackView!
     @IBOutlet weak var bodyTextView: UITextView!
     @IBOutlet weak var bodyTextCountLabel: UILabel!
@@ -65,8 +66,9 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 상속된 write 버튼 없애기
-//        removeNagationBarWriteButton()
+        // 네비 높이 줄이기
+        removeLargeTitle()
+
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
@@ -113,7 +115,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-
+        self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     //MARK: - ✅ Custom Function
@@ -148,14 +150,9 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         self.codeTextView.resignFirstResponder()
         }
    
-    // 상속된 write 버튼 없애기
-    func removeNagationBarWriteButton(){
-        self.navigationController!.navigationBar.subviews.forEach{
-            if ( $0 is UIImageView ) {
-                $0.isHidden = true
-                navigationbarWriteButton = $0 as? UIButton
-            }
-        }
+    // 네비 높이 줄이기
+    func removeLargeTitle() {
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     func customNavgationBar(){
@@ -169,8 +166,15 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
                                              style: .plain,
                                              target: self,
                                              action: nil)
-        self.navigationController!.navigationItem.rightBarButtonItem = completeButton
+        self..navigationItem.rightBarButtonItem = completeButton
         
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료",
+//                                                                 style: .plain,
+//                                                                 target: self,
+//                                                                 action: nil)
+        
+        
+        // 스크롤 시 회색되는거 방지
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithTransparentBackground()
 
@@ -201,17 +205,14 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
             self.categoryStackView.addArrangedSubview(categoryItemButton)
             self.categoryButtonList.append(categoryItemButton)
             
-            // 버튼 넓이 계산 위해 텍스트 넓이 계산
-            let buttonTextWidth = NSString(string: name).size().width
-            print("### button width \(buttonTextWidth)")
+            // 버튼 넓이 계산 위해 텍스트 넓이 계산 (완벽하게 계산하는법 못찾아서 야매로)
+            let buttonTextWidth = (NSString(string: name).size().width + 3.5 * CGFloat(name.count))
             self.categoryStackViewWidth += /* button inset */ 30 + buttonTextWidth + /* stackview gap */ 10
         }
         
-        // 카테고리 스택뷰 길이 늘려주기 😡 안됨 왜 안될까?? 메인 scroll view는 되는데??
-        self.categoryScrollView.contentSize.width = self.categoryStackViewWidth
-//        self.categoryStackView.widthAnchor.constraint(equalToConstant: self.categoryStackViewWidth).isActive = true
-//        self.categoryStackView.frame.size.width = equalToConstant: self.categoryStackViewWidth).isActive = true
-        print("### stack scroll veiw size \(self.categoryScrollView.contentSize)")
+        // 카테고리 content view 길이 늘려주기 😡 안됨 왜 안될까?? 메인 scroll view는 되는데?? 😌 해결함 편-안
+        self.categoryContentView.widthAnchor.constraint(equalToConstant: self.categoryStackViewWidth).isActive = true
+
     }
     
     func setButtonGradientBorder(button: UIButton){
