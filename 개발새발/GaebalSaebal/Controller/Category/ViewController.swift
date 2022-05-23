@@ -21,6 +21,22 @@ class ViewController: UIViewController {
         setupDataSource()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController!.navigationBar.subviews.forEach{
+            print($0)
+            if ( $0 is UIImageView ) {
+                $0.isHidden = false
+            }
+        }
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
     //MARK: - 글 작성 버튼 생성 및 크기, 위치 조정
     private let imageView = UIImageView(image: UIImage(named: "write"))
     
@@ -50,6 +66,17 @@ class ViewController: UIViewController {
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
             ])
         navigationItem.largeTitleDisplayMode = .always
+        
+        //클릭이벤트
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapWriteButton(sender:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+
+    }
+    
+    @objc func tapWriteButton(sender:UIGestureRecognizer){
+            //클릭시 실행할 동작
+          performSegue(withIdentifier: "showWirteView", sender: nil)
     }
     
     private func configure() {
