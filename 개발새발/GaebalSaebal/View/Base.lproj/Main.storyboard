@@ -21,9 +21,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="기록작성 임시버튼"/>
-                                <connections>
-                                    <segue destination="SLV-xR-u6L" kind="showDetail" id="fXa-Ke-8v7"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -34,14 +31,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2005.7971014492755" y="-897.32142857142856"/>
-        </scene>
-        <!--DetailStoryboard-->
-        <scene sceneID="T9R-ea-YL4">
-            <objects>
-                <viewControllerPlaceholder storyboardName="DetailStoryboard" id="SLV-xR-u6L" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PFL-uw-vmb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2537" y="-1174"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="YRw-Rf-5hn">
@@ -152,31 +141,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="1xB-g7-aCf" kind="relationship" relationship="rootViewController" id="8Ec-gH-Etb"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="757" y="1051"/>
-        </scene>
-        <!--SettingStoryboard-->
-        <scene sceneID="1Iq-Ke-xXB">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="Setting" storyboardName="SettingStoryboard" id="1xB-g7-aCf" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Ju9-jK-P0E"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c9L-ai-5hc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1308" y="800"/>
-        </scene>
-        <!--Storyboard Reference-->
-        <scene sceneID="Cd2-f9-aH5">
-            <objects>
-                <viewControllerPlaceholder id="B2Z-Jk-cmF" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cwY-Id-gnw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="927" y="-564"/>
         </scene>
     </scenes>
     <resources>

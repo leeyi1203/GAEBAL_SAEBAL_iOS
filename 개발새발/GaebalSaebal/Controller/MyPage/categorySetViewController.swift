@@ -21,9 +21,12 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
                     print(self.addCategoryname)
                     self.categoryList.append(self.addCategoryname)
                     print(self.categoryList)
-                    self.categorySet.beginUpdates()
-                    self.categorySet.insertRows(at: [IndexPath(row: self.categoryList.count-1, section: 0)], with: .none)
-                    self.categorySet.endUpdates()
+                    if(self.addCategoryname != ""){
+                        self.categorySet.beginUpdates()
+                        self.categorySet.insertSections(IndexSet(self.categoryList.count-1...self.categoryList.count-1),with: UITableView.RowAnimation.automatic)
+                        self.categorySet.endUpdates()
+                    }
+                   
 
                 }
 
@@ -57,15 +60,15 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryList.count+1
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryTableViewCell",for: indexPath) as! categoryTableViewCell
 
-        if (indexPath.row <= categoryList.count-1){
-            print(indexPath.row)
-            cell.textLabel?.text = categoryList[indexPath.row]
+        if (indexPath.section <= categoryList.count-1){
+            print(indexPath.section)
+            cell.textLabel?.text = categoryList[indexPath.section]
             cell.categoryButton.isHidden=true
         }else {
             cell.textLabel?.text = "추가하기"
@@ -74,12 +77,52 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         return cell
     }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return categoryList.count+1
+    }
+    //섹션 높이
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.9
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if ((indexPath.row<categoryList.count)&&( 0 < indexPath.row)){
+        if ((indexPath.section<categoryList.count)&&( 0 < indexPath.section)){
             // 오른쪽에 만들기
             let edit = UIContextualAction(style: .normal, title: "edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
                         print("edit")
-                
+                let alert = UIAlertController(title: "카테고리명 입력", message: "수정할 카테고리명을 입력하세요", preferredStyle: .alert)
+
+                        let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+
+                            self.addCategoryname = alert.textFields?[0].text ?? ""
+                            self.categoryList[indexPath.section] = self.addCategoryname
+                            self.categorySet.beginUpdates()
+                            self.categorySet.reloadSections(IndexSet((indexPath.section)...(indexPath.section)), with: UITableView.RowAnimation.automatic)
+                            self.categorySet.endUpdates()
+
+                        }
+
+                        let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+
+                             //code
+
+                        }
+
+                        alert.addAction(cancel)
+
+                        alert.addAction(ok)
+                        alert.addTextField ()
+
+                        self.present(alert, animated: true, completion: nil)
                         success(true)
                     }
                     edit.backgroundColor = UIColor(displayP3Red: 52/255, green: 95/255, blue: 207/255, alpha: 1)

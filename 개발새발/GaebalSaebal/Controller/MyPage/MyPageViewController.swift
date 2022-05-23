@@ -28,20 +28,21 @@ class MyPageViewController: UIViewController,UITableViewDataSource,UITableViewDe
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.topItem?.title = ""
     }
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
     //테이블 뷰 한 섹션 당 몇개의 셀을 담을 것인지
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
+    }
+    //섹션 높이
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.9
     }
     //각 row에 해당하는 cell을 return
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "mycell")
-        if (indexPath.row==0){
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell",for: indexPath) as! SettingTableViewCell
+        if (indexPath.section==0){
             cell.textLabel?.text="카테고리  추가 / 관리"
         }
         else{
@@ -56,7 +57,7 @@ class MyPageViewController: UIViewController,UITableViewDataSource,UITableViewDe
 
             tableView.deselectRow(at: indexPath, animated: true)
 
-            switch indexPath.row {
+            switch indexPath.section {
 
             case 0: self.performSegue(withIdentifier: "GoCategory", sender: nil)
 
