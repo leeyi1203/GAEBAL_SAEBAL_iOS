@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 //import JSONDecoder
 
 
@@ -61,6 +62,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     let mainPink = UIColor(red: 250/255, green: 0/255, blue: 255/255, alpha: 1)
     let mainPurple = UIColor(red: 178/255, green: 14/255, blue: 255/255, alpha: 1)
 
+    var itemArray:[Any] = []
     
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
@@ -171,15 +173,25 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         self.navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         
         // 네비바 height를 늘려보고자하는 시도..
-//        let height: CGFloat = 30 //whatever height you want to add to the existing height
+//        let height: CGFloat = 20 //whatever height you want to add to the existing height
 //        print("## nav frame \(self.navigationController!.navigationBar.frame)")
 //        print("## nav bound \(self.navigationController!.navigationBar.bounds)")
 //        let frame = self.navigationController!.navigationBar.frame
 //        self.navigationController?.navigationBar.frame = CGRect(x: 0, y: frame.origin.y + height, width: frame.width, height: frame.height + height)
 //        self.navigationController?.navigationBar.bounds = CGRect(x: 0, y: 0, width: frame.width, height: frame.height + height)
+//        self.navigationController?.navigationBar.backgroundColor = UIColor.white
+//
+//        print("##\(self.navigationController?.navigationBar.subviews[2])")
+//        let navigationBarContentView = self.navigationController?.navigationBar.subviews[2] ?? UIView()
+//        navigationBarContentView.topAnchor.constraint(equalTo: (self.navigationController?.navigationBar.topAnchor)!,
+//                                                      constant: height / 2 - 20).isActive = true
+//        navigationBarContentView.frame = CGRect(x: 100, y: 0, width: frame.width, height: frame.height + height)
+//        print("##\(self.navigationController?.navigationBar.subviews[2])")
+//
 //
 //        print("## nav frame \(self.navigationController!.navigationBar.frame)")
 //        print("## nav bound \(self.navigationController!.navigationBar.bounds)")
+        
         
     }
     
@@ -187,16 +199,15 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     func addCompleteButton(){
         //그림자 및 글자 설정
         let completeButton = UIButton()
-        completeButton.frame = CGRect(x:0, y:0, width:80, height:40)
+        completeButton.frame = CGRect(x:0, y:0, width:70, height:35)
         completeButton.setTitle("완료", for: .normal)
         completeButton.setTitle("완료", for: .highlighted)
         completeButton.backgroundColor = UIColor.clear
         completeButton.layer.shadowColor = UIColor.black.cgColor
         completeButton.clipsToBounds = false
         completeButton.layer.shadowOpacity = 0.2
-        completeButton.layer.shadowRadius = 5
-        completeButton.layer.shadowOffset = CGSize(width: 1, height: 3)
-        completeButton.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+        completeButton.layer.shadowRadius = 4
+        completeButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         //그라데이션 배경 설정
         let contentView = UIView()
@@ -209,6 +220,10 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         contentView.layer.addSublayer(gradientLayer)
         contentView.layer.cornerRadius = completeButton.frame.height / 2
         contentView.clipsToBounds = true
+        //클릭이벤트
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapCompleteButton))
+        contentView.addGestureRecognizer(tapGesture)
+        
         
         // 글자 크기 조정
         completeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
@@ -217,9 +232,53 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         let rightBarButton = UIBarButtonItem(customView: completeButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
     }
+
+    @objc func tapCompleteButton(){
+        //클릭시 실행할 동작
+        print("### Button tapped")
+        
+        // 본문 글자수 1자 이상인지 확인 (플레이스홀더이거나 or focus된 상태면 플레이스홀더가 없으므로 count도 체크)
+        if (bodyTextView.text == "본문을 입력해주세요" || bodyTextView.text.count < 1){
+            let alert = UIAlertController(title: "본문은 1자 이상 작성하여야합니다", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default)
+            alert.addAction(okAction)
+
+            //alert 실행
+            present(alert, animated: true, completion: nil)
+        }
+        else{
+            // save core data
+            let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+            let context = container.viewContext
+            let newRecord = Record(context: context)
+            newRecord.body = self.bodyTextView.text
+    //        self.itemArray.append(newRecord)
+            
+            do {
+                try context.save()
+            } catch {
+                print("Error saving contet \(error)")
+            }
+            
+            loadItems()
+            print("### core data \(itemArray)")
+            
+            // 메인으로 이동
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
     
-    @objc func buttonAction(_ sender: UIButton) {
-      print("Button tapped")
+    // core data 확인용
+    func loadItems() {
+        let request: NSFetchRequest<Record> = Record.fetchRequest()
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("error fetching data from context \(error)")
+        }
     }
 
     
@@ -278,7 +337,8 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         shape.path = UIBezierPath(roundedRect: CGRect(x: borderWidth,
                                                       y: borderWidth,
                                                       width: button.bounds.width - borderWidth * 2,
-                                                      height: button.bounds.height - borderWidth * 2), cornerRadius: 15).cgPath
+                                                      height: button.bounds.height - borderWidth * 2),
+                                  cornerRadius: 15).cgPath
         shape.strokeColor = UIColor.black.cgColor
         shape.fillColor = UIColor.clear.cgColor
         gradientLayer.mask = shape
@@ -610,8 +670,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         
         return convertStr
     }
-    
-    
+
 
 }
 
@@ -640,6 +699,8 @@ extension WriteViewController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
+        
+        // set place holder
         if (textView.text.count == 0) {
             if (textView == bodyTextView) {
                 textView.text = bodyTextViewPlaceHolder
@@ -652,6 +713,9 @@ extension WriteViewController: UITextViewDelegate {
             }
             textView.textColor = .gray
         }
+        
+        // tag 유효성 검사
+        // 귀찮
     }
     
     func textViewDidChange(_ textView: UITextView) {
@@ -694,9 +758,18 @@ extension WriteViewController: UITextViewDelegate {
         }
         
         // 텍스트 뷰가 길이가 길어진 상태일 경우 scroll view 높이도 조정
-        print("### main scroll view size \(self.scrollView.contentSize.height)")
         textView.isScrollEnabled = false
         self.scrollView.contentSize.height = defaultScrollViewHeight + self.bodyTextView.frame.height - minBodyTextViewHeight + self.tagTextView.frame.height - minTagTextViewHeight + self.codeTextView.frame.height - minCodeTextViewHeight
+        
+        if (bodyTextView.text.count > 1000){
+            let alert = UIAlertController(title: "본문은 1000자를 초과할 수 없습니다.",  message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .default)
+            alert.addAction(okAction)
+
+            //alert 실행
+            present(alert, animated: true, completion: nil)
+        }
+
     }
 
 }
