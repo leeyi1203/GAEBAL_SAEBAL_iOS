@@ -83,6 +83,13 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        DispatchQueue.main.async { [self] in
+            //백준, 깃허브, 이미지 버튼 디자인
+            self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
+            self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
+            self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
+        }
+        
         // 네비 높이 줄이기
         removeLargeTitle()
 
@@ -110,10 +117,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         customTextView(textView:self.tagTextView, placeHolder:tagTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
         customTextView(textView:self.codeTextView, placeHolder: codeTextViewPlaceHolder, bgColor: lighterGray)
         
-        //백준, 깃허브 버튼 디자인
-        customViewButton(viewButton:baekjoonView, radius:baekjoonView.frame.height / 2, isUsed: false)
-        customViewButton(viewButton:githubView, radius:baekjoonView.frame.height / 2, isUsed: false)
-        customViewButton(viewButton:imageAddView, radius: CGFloat(15), isUsed: false)
         
         // 키보드가 텍스트필드 가리지 않도록 옵저버 설정
         NotificationCenter.default.addObserver(self,
@@ -128,11 +131,19 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         /// button bounds가 view가 다 그려졌을 때 바인딩되는 것 같다... 그래서 그라데이션 보더는 뷰가 다 나타나고 지정해줘야한다,,,
         // 일단 미정 버튼 활성화
         self.categoryButtonList[0].isSelected = true
         setButtonGradientBorder(button: self.categoryButtonList[0])
+        
+
+        
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -268,16 +279,17 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         }
         else{
             // 선택된 카테고리 추출
-            let selectedCategoryButton: UIButton = categoryButtonList[0]
+            var selectedCategoryButton: UIButton = categoryButtonList[0]
             for btn in categoryButtonList{
-                if (btn.isSelected == true) selectedCategoryButton = btn
+                if (btn.isSelected == true) { selectedCategoryButton = btn }
             }
             
             // save core data
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             let context = container.viewContext
             let newRecord = Record(context: context)
-            newRecord.category = selectedCategoryButton.titleLabel.text
+            
+            newRecord.category = selectedCategoryButton.titleLabel?.text
             newRecord.body = self.bodyTextView.text
             newRecord.tag = self.tagTextView.text
             newRecord.bojNumber = self.bojNumber
@@ -481,16 +493,20 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         }
         // 사용 전(초기) / 취소 일시 UI
         else{
+            
             // 점선 보더 설정
             let borderLayer = CAShapeLayer()
             borderLayer.strokeColor = dashedBorderGray
             borderLayer.lineDashPattern = [5, 5]
-            borderLayer.frame = view.bounds
+            borderLayer.frame = viewButton.bounds
             borderLayer.fillColor = nil
-            borderLayer.path = UIBezierPath(roundedRect: viewButton.bounds, cornerRadius: radius).cgPath
-            
+            borderLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: viewButton.frame.width, height: viewButton.frame.height), cornerRadius: radius).cgPath
+            print("view Button layer \(borderLayer.bounds), \(viewButton.bounds)")
+
+            viewButton.layer.bounds = viewButton.bounds
+
             viewButton.layer.addSublayer(borderLayer)
-            
+
             // 플러스 이미지 넣기
             let plusImage = UIImage(named: "PlusIcon.svg")
             let plusImageView = UIImageView(image: plusImage)
@@ -671,7 +687,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         // 백준 뷰 클릭시 실행할 동작
         if(sender.view == self.baekjoonView){
             let alert = UIAlertController(title: "백준 문제 번호 입력", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default){ _ in
+            let okAction = UIAlertAction(title: "확인", style: .default){_ in
                 print(alert.textFields?[0].text ?? "")
                 self.bojNumber = alert.textFields?[0].text ?? ""
                 // 백준 번호 유효한지 확인하고 확인되면 ui update
@@ -713,6 +729,8 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     func getBojInfo() {
         let baseURL = "http://203.255.3.246:7072/api/product/"
         let urlString = baseURL + String(self.bojNumber)
+        
+        print("## start getBojInfo")
         
         if let url = URL(string: urlString) {
             var requestURL = URLRequest(url: url)

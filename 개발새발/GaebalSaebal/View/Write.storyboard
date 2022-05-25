@@ -270,7 +270,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="repoNameLabel" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHk-K8-S1m">
-                                                    <rect key="frame" x="60" y="15.5" width="314" height="19.5"/>
+                                                    <rect key="frame" x="60" y="15.5" width="314" height="19"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
