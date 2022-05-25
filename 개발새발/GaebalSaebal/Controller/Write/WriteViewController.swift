@@ -14,7 +14,7 @@ import CoreData
 let categoryList = ["미정", "백준", "자료구조", "스터디", "조금 긴 버튼을 추가하자", "짧🤪"]
 
 
-class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
+class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UINavigationControllerDelegate {
 
     //MARK: - ✅ Outlets & Actions
     @IBOutlet weak var scrollView: UIScrollView!
@@ -30,6 +30,11 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     @IBOutlet weak var imageAddView: UIView!
     @IBOutlet weak var codeTextView: UITextView!
     //MARK: - ✅ Variables
+    
+    // 메인 컬러
+    let mainPink = UIColor(red: 250/255, green: 0/255, blue: 255/255, alpha: 1)
+    let mainPurple = UIColor(red: 178/255, green: 14/255, blue: 255/255, alpha: 1)
+    
     var navigationbarWriteButton: UIButton! = nil
     
     var categoryStackViewWidth:CGFloat = 30
@@ -38,31 +43,40 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     
     var categoryButtonList: [UIButton] = []
     
+    // 점선 보더 색상
     let dashedBorderGray = UIColor(red: 215/255, green: 215/255, blue: 215/255, alpha: 1).cgColor
 
-    let minBodyTextViewHeight:CGFloat = 128
-    let minTagTextViewHeight:CGFloat = 50
-    let minCodeTextViewHeight:CGFloat = 128
-    
-    
     let defaultScrollViewHeight:CGFloat = 1096
     
+    // 텍스트필드 플레이스 홀더
     let bodyTextViewPlaceHolder = "본문을 입력해주세요"
     let tagTextViewPlaceHolder = "태그는 ;으로 구분해서 적어주세요. ex) 백준;"
     let codeTextViewPlaceHolder = "ex) #include <stdio.h>"
     
-    var keyboardHeight:CGFloat = 0
+    // 텍스트 필드 최소 높이
+    let minBodyTextViewHeight:CGFloat = 128
+    let minTagTextViewHeight:CGFloat = 50
+    let minCodeTextViewHeight:CGFloat = 128
     
+    // 백준 변수
     let bojLink:String = ""
     
+    // 깃허브 변수
     var selectedGithubEvent: Event? = nil
     var selectedRepoOwner: String? = nil
     var selectedRepoName: String? = nil
     
-    let mainPink = UIColor(red: 250/255, green: 0/255, blue: 255/255, alpha: 1)
-    let mainPurple = UIColor(red: 178/255, green: 14/255, blue: 255/255, alpha: 1)
 
+    // 사진선택 관련 변수
+    let picker = UIImagePickerController()
+    var selectedImage: UIImage?
+
+    // 코더데이터 담을 변수
     var itemArray:[Any] = []
+    
+    // 키보드 높이 담을 변수
+    var keyboardHeight:CGFloat = 0
+    
     
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
@@ -75,10 +89,11 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
         
-        // 텍스트필드 델리게이트
+        // 델리게이트
         self.bodyTextView.delegate = self
         self.tagTextView.delegate = self
         self.codeTextView.delegate = self
+        self.picker.delegate = self
         
         // 네비게이션 바 디자인
         customNavgationBar()
@@ -130,8 +145,12 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            // ⚠️ 아....... 이거 해결해야함
+            
+            let viewHeight = self.scrollView.bounds.origin.y
+            // 위쪽 텍스트필드가 키보드에 의해 올라가지 않게
+            if (viewHeight - keyboardHeight > 0 ){
             self.view.frame.origin.y = -keyboardHeight
+            }
         }
     }
     //키보드 내려갔다는 알림을 받으면 실행되는 메서드
@@ -388,7 +407,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     // 백준, 깃허브 입력란 커스텀
     func customViewButton(viewButton: UIView, radius: CGFloat, isUsed: Bool){
         //모서리 둥글게
-        viewButton.layer.cornerRadius = viewButton.frame.height / 2
+        viewButton.layer.cornerRadius = radius
         
         // 보더 초기화
         viewButton.layer.borderWidth = 0
@@ -407,12 +426,42 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
 
         
         if (isUsed){
+            // 보더 실선으로 설정
+            viewButton.layer.borderWidth = 1.5
+            viewButton.layer.borderColor = lighterGray
+            
             if viewButton == self.baekjoonView{
                 setUsedBeakjoonView(viewButton: viewButton)
             }
-            else{
+            else if (viewButton == self.githubView){
                 setUsedGithubView(viewButton: viewButton)
             }
+            else{
+                setUsedImageView(viewButton: viewButton)
+            }
+            
+            // 취소(삭제) 아이콘 추가
+            let cancelIconImage = UIImage(named: "cancelIcon")
+            let cancelIconImageView = UIImageView(image: cancelIconImage)
+            viewButton.addSubview(cancelIconImageView)
+            cancelIconImageView.translatesAutoresizingMaskIntoConstraints = false
+            // 이미지 뷰만 X버튼 위로
+            if (viewButton == self.imageAddView){
+                cancelIconImageView.topAnchor.constraint(equalTo: viewButton.topAnchor,
+                                                         constant: 10).isActive = true
+            }
+            else{
+                cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
+            }
+            cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
+            cancelIconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            cancelIconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            
+            // 탭 이벤트 (취소) 추가
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
+            cancelIconImageView.addGestureRecognizer(tapGesture)
+            cancelIconImageView.isUserInteractionEnabled = true
+            
         }
         // 사용 전(초기) / 취소 일시 UI
         else{
@@ -445,10 +494,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
     }
     
     func setUsedBeakjoonView(viewButton: UIView){
-        // 보더 설정
-        viewButton.layer.borderWidth = 1.5
-        viewButton.layer.borderColor = lighterGray
-        
         // 백준 아이콘 추가
         let bojLogoImage = UIImage(named: "bojLogo")
         let bojLogoImageView = UIImageView(image: bojLogoImage)
@@ -457,27 +502,10 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         bojLogoImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
         bojLogoImageView.leftAnchor.constraint(equalTo: view.leftAnchor
                 , constant: 40).isActive = true // 왼쪽여백
-        
-        // 취소(삭제) 아이콘 추가
-        let cancelIconImage = UIImage(named: "cancelIcon")
-        let cancelIconImageView = UIImageView(image: cancelIconImage)
-        viewButton.addSubview(cancelIconImageView)
-        cancelIconImageView.translatesAutoresizingMaskIntoConstraints = false
-        cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
-        cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
-        cancelIconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        cancelIconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        // 탭 이벤트 (취소) 추가
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
-        cancelIconImageView.addGestureRecognizer(tapGesture)
-        cancelIconImageView.isUserInteractionEnabled = true
     }
     
     func setUsedGithubView(viewButton: UIView){
         if self.selectedGithubEvent != nil{
-            viewButton.layer.borderColor = lighterGray
-            viewButton.layer.borderWidth = 1.5
             
             let typeLabel:UILabel = {
                 let label = UILabel()
@@ -591,23 +619,21 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
             eventDateLabel.topAnchor.constraint(equalTo: viewButton.topAnchor, constant: 15).isActive = true
             eventDateLabel.trailingAnchor.constraint(equalTo: viewButton.trailingAnchor, constant: -38).isActive = true
             
-            // 취소(삭제) 아이콘 추가
-            let cancelIconImage = UIImage(named: "cancelIcon")
-            let cancelIconImageView = UIImageView(image: cancelIconImage)
-            viewButton.addSubview(cancelIconImageView)
-            cancelIconImageView.translatesAutoresizingMaskIntoConstraints = false
-            cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
-            cancelIconImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
-            cancelIconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-            cancelIconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            
-            // 탭 이벤트 (취소) 추가
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapViewButtonForCancel(sender:)))
-            cancelIconImageView.addGestureRecognizer(tapGesture)
-            cancelIconImageView.isUserInteractionEnabled = true
-            
         }//if문 end
         
+    }
+    
+    func setUsedImageView(viewButton: UIView){
+        print("### setUsedImageView function run ")
+        
+        viewButton.clipsToBounds = true
+        
+        if ( self.selectedImage != nil ){
+            let imageView = UIImageView(image: self.selectedImage)
+            // 비율유지되게 바꿔야함
+            imageView.frame = viewButton.bounds
+            viewButton.addSubview(imageView)
+        }
     }
     
     @objc func tapViewButtonForAdd(sender:UIGestureRecognizer){
@@ -627,6 +653,25 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
         else if (sender.view == self.githubView){
             performSegue(withIdentifier: "showGithubRepoListView", sender: githubView)
         }
+        else if (sender.view == self.imageAddView){
+            let alert = UIAlertController(title: "사진 추가", message: nil, preferredStyle: .actionSheet)
+            
+            let library = UIAlertAction(title: "갤러리", style: .default) {
+                (action) in self.openLibrary()
+            }
+            
+            let camera = UIAlertAction(title: "카메라", style: .default) {
+                (action) in self.openCamera()
+            }
+            
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            
+            alert.addAction(library)
+            alert.addAction(camera)
+            alert.addAction(cancel)
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -636,13 +681,16 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate {
            }
        }
     
-    @objc func tapViewButtonForCancel(sender:UIGestureRecognizer){
-        if (sender.view == self.baekjoonView){
+    @objc func tapViewButtonForCancel(sender: UITapGestureRecognizer){
+        if ( sender.view?.superview == self.baekjoonView ){
             print("백준 취소 버튼 실행")
             customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
         }
-        else{
+        else if ( sender.view?.superview == self.githubView ){
             customViewButton(viewButton: self.githubView, radius: self.githubView.frame.height / 2, isUsed: false)
+        }
+        else{
+            customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
         }
     }
     
@@ -772,4 +820,31 @@ extension WriteViewController: UITextViewDelegate {
 
     }
 
+}
+
+// MARK: - ✅ camera & gallery
+
+extension WriteViewController : UIImagePickerControllerDelegate {
+    func openLibrary() {
+        picker.sourceType = .photoLibrary
+        present(picker, animated: false, completion: nil)
+    }
+    
+    func openCamera() {
+        picker.sourceType = .camera
+        present(picker, animated: false, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.selectedImage = image
+            dismiss(animated: true, completion: nil)
+            // update image UI
+            self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: true)
+        }
+        
+
+
+    }
 }
