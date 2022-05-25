@@ -73,7 +73,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     var selectedImage: UIImage?
 
     // 코더데이터 담을 변수
-    var itemArray:[Any] = []
+    var itemArray:[Record] = []
     
     // 키보드 높이 담을 변수
     var keyboardHeight:CGFloat = 0
@@ -142,7 +142,10 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         setButtonGradientBorder(button: self.categoryButtonList[0])
         
         self.loadItems()
-        print("### core data \(self.itemArray[self.itemArray.count - 1]) count \(self.itemArray.count)")
+        for item in self.itemArray {
+            print("## 왜 안댐 \(item.value(forKey: "category"))")
+        }
+        print("### core data \(self.itemArray) count \(self.itemArray.count)")
         
 
         
@@ -295,7 +298,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
 
             if let newRecord = newRecord{
                 let myRecord = NSManagedObject(entity: newRecord, insertInto: context)
-                myRecord.setValue("백준", forKey: "category")
+                myRecord.setValue(selectedCategoryButton.titleLabel?.text, forKey: "category")
                 myRecord.setValue(self.bodyTextView.text, forKey: "body")
                 myRecord.setValue(self.tagTextView.text, forKey: "tag")
                 myRecord.setValue(self.bojNumber, forKey: "bojNumber")
