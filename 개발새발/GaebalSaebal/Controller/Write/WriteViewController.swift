@@ -100,7 +100,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         customNavgationBar()
         
         // 네비게이션바에 완료 버튼 생성
-        addCompleteButton()
+        addSaveButton()
         
         //카테고리 버튼 생성
         self.addCategoryButton(categoryList: categoryList)
@@ -216,44 +216,44 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     }
     
     //완료 버튼 생성하기
-    func addCompleteButton(){
+    func addSaveButton(){
         //그림자 및 글자 설정
-        let completeButton = UIButton()
-        completeButton.frame = CGRect(x:0, y:0, width:70, height:35)
-        completeButton.setTitle("완료", for: .normal)
-        completeButton.setTitle("완료", for: .highlighted)
-        completeButton.backgroundColor = UIColor.clear
-        completeButton.layer.shadowColor = UIColor.black.cgColor
-        completeButton.clipsToBounds = false
-        completeButton.layer.shadowOpacity = 0.2
-        completeButton.layer.shadowRadius = 4
-        completeButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        let saveButton = UIButton()
+        saveButton.frame = CGRect(x:0, y:0, width:70, height:35)
+        saveButton.setTitle("완료", for: .normal)
+        saveButton.setTitle("완료", for: .highlighted)
+        saveButton.backgroundColor = UIColor.clear
+        saveButton.layer.shadowColor = UIColor.black.cgColor
+        saveButton.clipsToBounds = false
+        saveButton.layer.shadowOpacity = 0.2
+        saveButton.layer.shadowRadius = 4
+        saveButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         //그라데이션 배경 설정
         let contentView = UIView()
-        contentView.frame = completeButton.frame
-        completeButton.addSubview(contentView)
+        contentView.frame = saveButton.frame
+        saveButton.addSubview(contentView)
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = completeButton.bounds
+        gradientLayer.frame = saveButton.bounds
         gradientLayer.colors = [mainPurple.cgColor,
                                 mainPink.cgColor]
         contentView.layer.addSublayer(gradientLayer)
-        contentView.layer.cornerRadius = completeButton.frame.height / 2
+        contentView.layer.cornerRadius = saveButton.frame.height / 2
         contentView.clipsToBounds = true
         //클릭이벤트
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapCompleteButton))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapSaveButton))
         contentView.addGestureRecognizer(tapGesture)
         
         
         // 글자 크기 조정
-        completeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        saveButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
 
 
-        let rightBarButton = UIBarButtonItem(customView: completeButton)
+        let rightBarButton = UIBarButtonItem(customView: saveButton)
         self.navigationItem.rightBarButtonItem = rightBarButton
     }
 
-    @objc func tapCompleteButton(){
+    @objc func tapSaveButton(){
         //클릭시 실행할 동작
         print("### Button tapped")
         
@@ -267,13 +267,28 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             present(alert, animated: true, completion: nil)
         }
         else{
+            // 선택된 카테고리 추출
+            let selectedCategoryButton: UIButton = categoryButtonList[0]
+            for btn in categoryButtonList{
+                if (btn.isSelected == true) selectedCategoryButton = bun
+            }
+            
             // save core data
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             let context = container.viewContext
             let newRecord = Record(context: context)
+            newRecord.category = selectedCategoryButton
             newRecord.body = self.bodyTextView.text
-    //        self.itemArray.append(newRecord)
-            
+            newRecord.tag = self.tagTextView.text
+            newRecord.bojNumber = self.bojNumber
+            newRecord.bojTitle = self.bojTitle
+            newRecord.gitType = self.selectedGithubEvent?.type
+            newRecord.gitTitle = self.selectedGithubEvent?.title
+            newRecord.gitRepoName = "\(self.selectedRepoOwner)/\(self.selectedRepoName)"
+            newRecord.gitDate = changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? "")
+            newRecord.image = self.selectedImage?.jpegData(compressionQuality: 1.0)
+            newRecord.code = self.codeTextView.text
+
             do {
                 try context.save()
             } catch {
