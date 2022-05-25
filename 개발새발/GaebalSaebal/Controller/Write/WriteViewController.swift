@@ -270,14 +270,14 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             // 선택된 카테고리 추출
             let selectedCategoryButton: UIButton = categoryButtonList[0]
             for btn in categoryButtonList{
-                if (btn.isSelected == true) selectedCategoryButton = bun
+                if (btn.isSelected == true) selectedCategoryButton = btn
             }
             
             // save core data
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             let context = container.viewContext
             let newRecord = Record(context: context)
-            newRecord.category = selectedCategoryButton
+            newRecord.category = selectedCategoryButton.titleLabel.text
             newRecord.body = self.bodyTextView.text
             newRecord.tag = self.tagTextView.text
             newRecord.bojNumber = self.bojNumber
