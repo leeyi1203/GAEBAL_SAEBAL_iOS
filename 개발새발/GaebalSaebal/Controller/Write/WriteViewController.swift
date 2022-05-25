@@ -141,6 +141,9 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         self.categoryButtonList[0].isSelected = true
         setButtonGradientBorder(button: self.categoryButtonList[0])
         
+        self.loadItems()
+        print("### core data \(self.itemArray[self.itemArray.count - 1]) count \(self.itemArray.count)")
+        
 
         
 
@@ -287,28 +290,50 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             // save core data
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             let context = container.viewContext
-            let newRecord = Record(context: context)
+//            let newRecord = Record(context: context)
+            let newRecord = NSEntityDescription.entity(forEntityName: "Record", in: context)
+
+            if let newRecord = newRecord{
+                let myRecord = NSManagedObject(entity: newRecord, insertInto: context)
+                myRecord.setValue("백준", forKey: "category")
+                myRecord.setValue(self.bodyTextView.text, forKey: "body")
+                myRecord.setValue(self.tagTextView.text, forKey: "tag")
+                myRecord.setValue(self.bojNumber, forKey: "bojNumber")
+                myRecord.setValue(self.bojTitle, forKey: "bojTitle")
+                myRecord.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
+                myRecord.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
+                myRecord.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
+                myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
+                myRecord.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
+                myRecord.setValue(self.codeTextView.text ?? "", forKey: "code")
+                
+                print("## new record \(newRecord)")
+            }
             
-            newRecord.category = selectedCategoryButton.titleLabel?.text
-            newRecord.body = self.bodyTextView.text
-            newRecord.tag = self.tagTextView.text
-            newRecord.bojNumber = self.bojNumber
-            newRecord.bojTitle = self.bojTitle
-            newRecord.gitType = self.selectedGithubEvent?.type
-            newRecord.gitTitle = self.selectedGithubEvent?.title
-            newRecord.gitRepoName = "\(self.selectedRepoOwner)/\(self.selectedRepoName)"
-            newRecord.gitDate = changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? "")
-            newRecord.image = self.selectedImage?.jpegData(compressionQuality: 1.0)
-            newRecord.code = self.codeTextView.text
+            
+            print(selectedCategoryButton.titleLabel?.text)
+//            newRecord.category = selectedCategoryButton.titleLabel?.text
+//            newRecord.body = self.bodyTextView.text
+//            newRecord.tag = self.tagTextView.text
+//            newRecord.bojNumber = self.bojNumber
+//            newRecord.bojTitle = self.bojTitle
+//            newRecord.gitType = self.selectedGithubEvent?.type
+//            newRecord.gitTitle = self.selectedGithubEvent?.title
+//            newRecord.gitRepoName = "\(self.selectedRepoOwner)/\(self.selectedRepoName)"
+//            newRecord.gitDate = changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? "")
+//            newRecord.image = self.selectedImage?.jpegData(compressionQuality: 1.0)
+//            newRecord.code = self.codeTextView.text ?? ""
 
             do {
                 try context.save()
+                print("## save 완료")
             } catch {
                 print("Error saving contet \(error)")
             }
             
-            loadItems()
-            print("### core data \(itemArray)")
+//                self.loadItems()
+//                print("### core data \(self.itemArray[self.itemArray.count - 1]) count \(self.itemArray.count)")
+           
             
             // 메인으로 이동
             self.navigationController?.popViewController(animated: true)
@@ -323,6 +348,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         
         do {
             itemArray = try context.fetch(request)
+
         } catch {
             print("error fetching data from context \(error)")
         }
@@ -806,7 +832,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 
         let myDateFormatter = DateFormatter()
         myDateFormatter.dateFormat = "yyyy.MM.dd a hh:mm" // 2020.08.13 오후 04시 30분
-        let convertStr = myDateFormatter.string(from: convertDate!)
+        let convertStr = myDateFormatter.string(from: convertDate ?? Date())
         
         return convertStr
     }
