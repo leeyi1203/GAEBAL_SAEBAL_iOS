@@ -59,7 +59,8 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     let minCodeTextViewHeight:CGFloat = 128
     
     // 백준 변수
-    let bojLink:String = ""
+    var bojNumber:String = ""
+    var bojTitle:String = ""
     
     // 깃허브 변수
     var selectedGithubEvent: Event? = nil
@@ -448,7 +449,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             // 이미지 뷰만 X버튼 위로
             if (viewButton == self.imageAddView){
                 cancelIconImageView.topAnchor.constraint(equalTo: viewButton.topAnchor,
-                                                         constant: 10).isActive = true
+                                                         constant: 15).isActive = true
             }
             else{
                 cancelIconImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
@@ -502,6 +503,21 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         bojLogoImageView.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
         bojLogoImageView.leftAnchor.constraint(equalTo: view.leftAnchor
                 , constant: 40).isActive = true // 왼쪽여백
+        
+        let typeLabel:UILabel = {
+            let label = UILabel()
+            
+            label.text = "\(self.bojNumber) - \(self.bojTitle)"
+            label.font = UIFont.boldSystemFont(ofSize: 16.0)
+
+            return label
+        }()
+        
+        viewButton.addSubview(typeLabel)
+        typeLabel.translatesAutoresizingMaskIntoConstraints = false
+        typeLabel.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
+        typeLabel.leadingAnchor.constraint(equalTo: bojLogoImageView.trailingAnchor, constant: 10).isActive = true
+        typeLabel.trailingAnchor.constraint(equalTo: viewButton.trailingAnchor, constant: -45).isActive = true
     }
     
     func setUsedGithubView(viewButton: UIView){
@@ -642,13 +658,18 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             let alert = UIAlertController(title: "백준 문제 번호 입력", message: nil, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "확인", style: .default){ _ in
                 print(alert.textFields?[0].text ?? "")
-                self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: true)
+                self.bojNumber = alert.textFields?[0].text ?? ""
+                // 백준 번호 유효한지 확인하고 확인되면 ui update
+                self.getBojInfo()
+                
             }
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             alert.addTextField()
             alert.addAction(okAction)
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
+            
+            
         }
         else if (sender.view == self.githubView){
             performSegue(withIdentifier: "showGithubRepoListView", sender: githubView)
@@ -674,6 +695,45 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         }
     }
     
+    func getBojInfo() {
+        let baseURL = "http://203.255.3.246:7072/api/product/"
+        let urlString = baseURL + String(self.bojNumber)
+        
+        if let url = URL(string: urlString) {
+            var requestURL = URLRequest(url: url)
+            requestURL.httpMethod = "GET"
+            requestURL.allHTTPHeaderFields = ["Content-Type":"application/json"]
+            let dataTask = URLSession.shared.dataTask(with: requestURL) { (data, response, error) in
+                if let data = data {
+                    let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String : Any]]
+//                    let jsonData = try? JSONDecoder().decode([Issues].self, from: data)
+                    guard let rsData = jsonData else {
+                        print("error boj url session")
+                        return
+                    }
+                    // call back
+                    self.bojTitle = rsData[0]["Title"] as! String
+                    
+                    DispatchQueue.main.sync{
+                        if ( self.bojTitle == "없음" ){
+                            let alert = UIAlertController(title: "해당 번호의 백준 문제를 찾을 수 없습니다",  message: "", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "ok", style: .default)
+                            alert.addAction(okAction)
+
+                            //alert 실행
+                            self.present(alert, animated: true, completion: nil)
+                        } else{
+                            // 확인되면 뷰 다시그리기
+                            self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: true)
+                        }
+                        
+                    }
+                }
+            }
+            dataTask.resume()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
            if segue.identifier == "showGithubRepoListView" {
                let viewController : GithubReposViewController = segue.destination as! GithubReposViewController
@@ -683,7 +743,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     
     @objc func tapViewButtonForCancel(sender: UITapGestureRecognizer){
         if ( sender.view?.superview == self.baekjoonView ){
-            print("백준 취소 버튼 실행")
             customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
         }
         else if ( sender.view?.superview == self.githubView ){
