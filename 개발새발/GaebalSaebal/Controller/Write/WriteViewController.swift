@@ -78,7 +78,9 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     // 키보드 높이 담을 변수
     var keyboardHeight:CGFloat = 0
     
-    
+   //수정시, CategoryDetailViewController에서 받아오는 변수 값 / 카테고리 name, section 값
+    var categoryName = ""
+    var rowNum = -1
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +106,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         self.picker.delegate = self
         
         // 네비게이션 바 디자인
-        customNavgationBar()
+//        customNavgationBar() 수정가은
         
         // 네비게이션바에 완료 버튼 생성
         addSaveButton()
@@ -127,8 +129,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                                                 selector: #selector(keyboardWillShow(_:)),
                                                 name: UIResponder.keyboardWillShowNotification,
                                                 object: nil)
-        
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,8 +147,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
 //        }
 //        print("### core data \(self.itemArray) count \(self.itemArray.count)")
 //
-
-        
 
     }
     
@@ -333,8 +331,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             self.navigationController?.popViewController(animated: true)
         }
     }
-
-    
+  
     func addCategoryButton(categoryList: [String]){
         for name in categoryList {
             let categoryItemButton = UIButton()

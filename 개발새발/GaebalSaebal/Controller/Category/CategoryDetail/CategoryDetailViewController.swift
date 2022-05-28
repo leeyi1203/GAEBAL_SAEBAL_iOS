@@ -7,9 +7,25 @@
 
 import UIKit
 
-class CategoryDetailViewController: UIViewController {
-    var receiveCategoryTitle: String?
+class CategoryDetailViewController: UIViewController,EditLogDelegate {
+    
+    //EditLog func
+    func goEditLog(name : String ,section_row : Int) {
+        let desStroyboard = UIStoryboard(name: "Write", bundle: nil)
+        let pushVC = desStroyboard.instantiateViewController(withIdentifier: "WriteLog") as! WriteViewController
+        pushVC.categoryName = name
+        pushVC.rowNum = section_row
+        self.navigationController?.pushViewController(pushVC, animated: true)
+//        let newVC = self.storyboard?.instantiateViewController(identifier: "WriteLog")
+//            newVC?.modalTransitionStyle = .coverVertical
+//            newVC?.modalPresentationStyle = .automatic
+//        self.present(newVC!, animated: true, completion: nil)
 
+        
+    }
+    
+    var receiveCategoryTitle: String?
+    
     @IBOutlet weak var CategoryDetailTableView: UITableView!
     var categoryIndex: Int = 0
     override func viewDidLoad() {
@@ -18,6 +34,10 @@ class CategoryDetailViewController: UIViewController {
         setUpNaviTitle()
 //        print(categoryIndex)
         CategoryDetailTableView.layer.borderColor = UIColor.clear.cgColor
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     private func setUpNaviTitle() {
@@ -99,6 +119,21 @@ extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSour
         self.CategoryDetailTableView.delegate = self
         self.CategoryDetailTableView.dataSource = self
     }
+    //디테일 페이지로 데이터 전달
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "goDetail" {
+            
+            let CategoryDetailTableViewIndexPath = CategoryDetailTableView.indexPath(for: sender as! UITableViewCell)!
+            let VCDest = segue.destination as! DetailViewController
+
+            VCDest.DetailData = CategoryDetailTableViewIndexPath.section
+            
+            VCDest.goEditLogDelegate = self
+
+        }
+    }
+    // - 가은
     
     
 }
