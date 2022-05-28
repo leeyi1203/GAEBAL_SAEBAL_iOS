@@ -42,6 +42,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZUi-1S-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2006" y="54"/>
+        </scene>
         <!--My Page View Controller-->
         <scene sceneID="mF0-Iq-ym4">
             <objects>
@@ -254,6 +255,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifb-EX-OGa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1512" y="987"/>
+        </scene>
         <!--DetailStoryboard-->
         <scene sceneID="Z1G-bY-5WO">
             <objects>
