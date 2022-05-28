@@ -12,7 +12,7 @@
         <!--Write View Controller-->
         <scene sceneID="4Z5-os-24b">
             <objects>
-                <viewController id="Yr3-Kl-jAd" userLabel="Write View Controller" customClass="WriteViewController" customModule="GaebalSaebal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WriteLog" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Yr3-Kl-jAd" userLabel="Write View Controller" customClass="WriteViewController" customModule="GaebalSaebal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="se0-3j-b2Z" customClass="Write">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
