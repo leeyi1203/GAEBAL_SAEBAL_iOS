@@ -11,7 +11,7 @@ import CoreData
 
 
 
-let categoryList = ["미정", "백준", "자료구조", "스터디", "조금 긴 버튼을 추가하자", "짧🤪"]
+//let categoryList = ["기본", "백준", "자료구조", "스터디", "조금 긴 버튼을 추가하자", "짧🤪"]
 
 
 class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UINavigationControllerDelegate {
@@ -112,7 +112,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         addSaveButton()
         
         //카테고리 버튼 생성
-        self.addCategoryButton(categoryList: categoryList)
+        self.addCategoryButton(categoryList: categoryArray1)
         
         //본문, 태그 TextView 디자인
         customTextView(textView:self.bodyTextView, placeHolder:bodyTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
@@ -141,14 +141,12 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         self.categoryButtonList[0].isSelected = true
         setButtonGradientBorder(button: self.categoryButtonList[0])
         
-//        self.loadItems()  수정가은
-        for item in self.itemArray {
-            print("## 왜 안댐 \(item.value(forKey: "category"))")
-        }
-        print("### core data \(self.itemArray) count \(self.itemArray.count)")
-        
-
-        
+//        self.loadItems()
+//        for item in self.itemArray {
+//            print("## 왜 안댐 \(item.value(forKey: "category"))")
+//        }
+//        print("### core data \(self.itemArray) count \(self.itemArray.count)")
+//
 
     }
     
@@ -293,71 +291,47 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             // save core data
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             let context = container.viewContext
-//            let newRecord = Record(context: context)
             let newRecord = NSEntityDescription.entity(forEntityName: "Record", in: context)
 
             if let newRecord = newRecord{
                 let myRecord = NSManagedObject(entity: newRecord, insertInto: context)
                 myRecord.setValue(selectedCategoryButton.titleLabel?.text, forKey: "category")
                 myRecord.setValue(self.bodyTextView.text, forKey: "body")
-                myRecord.setValue(self.tagTextView.text, forKey: "tag")
+                if self.tagTextView.text == tagTextViewPlaceHolder {
+                    myRecord.setValue("", forKey: "tag")
+                } else { myRecord.setValue(self.tagTextView.text, forKey: "tag")}
                 myRecord.setValue(self.bojNumber, forKey: "bojNumber")
                 myRecord.setValue(self.bojTitle, forKey: "bojTitle")
                 myRecord.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
                 myRecord.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
                 myRecord.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
                 myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
+                myRecord.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
                 myRecord.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
-                myRecord.setValue(self.codeTextView.text ?? "", forKey: "code")
+//                let png = self.selectedImage?.pngData()
+//                myRecord.setValue(png, forKey: <#T##String#>)
+                if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
+                    myRecord.setValue("", forKey: "code")
+                } else { myRecord.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
                 
-                print("## new record \(newRecord)")
+                
+                print("## new record \(myRecord)")
             }
             
             
-            print(selectedCategoryButton.titleLabel?.text)
-//            newRecord.category = selectedCategoryButton.titleLabel?.text
-//            newRecord.body = self.bodyTextView.text
-//            newRecord.tag = self.tagTextView.text
-//            newRecord.bojNumber = self.bojNumber
-//            newRecord.bojTitle = self.bojTitle
-//            newRecord.gitType = self.selectedGithubEvent?.type
-//            newRecord.gitTitle = self.selectedGithubEvent?.title
-//            newRecord.gitRepoName = "\(self.selectedRepoOwner)/\(self.selectedRepoName)"
-//            newRecord.gitDate = changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? "")
-//            newRecord.image = self.selectedImage?.jpegData(compressionQuality: 1.0)
-//            newRecord.code = self.codeTextView.text ?? ""
-
+            
             do {
                 try context.save()
                 print("## save 완료")
             } catch {
                 print("Error saving contet \(error)")
             }
-            
-//                self.loadItems()
-//                print("### core data \(self.itemArray[self.itemArray.count - 1]) count \(self.itemArray.count)")
-           
-            
+
             // 메인으로 이동
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
-    // core data 확인용
-//    func loadItems() {
-//        let request: NSFetchRequest<Record> = Record.fetchRequest()
-//
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//
-//        do {
-//            itemArray = try context.fetch(request)
-//
-//        } catch {
-//            print("error fetching data from context \(error)")
-//        }
-//    }
-
-    
+  
     func addCategoryButton(categoryList: [String]){
         for name in categoryList {
             let categoryItemButton = UIButton()

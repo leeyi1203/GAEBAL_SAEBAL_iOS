@@ -38,7 +38,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
-//        label.preferredMaxLayoutWidth = self.bounds.width - 50
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
 
@@ -91,13 +90,14 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         containerView.layer.borderWidth = 2
         containerView.layer.cornerRadius = 50
         titleLabel.text = myCategory?.commentString
-        
-        createContentsLabel(contentText: myCategory?.contentString ?? ["비어있음"])
+        if let contentString = myCategory!.contentString {
+            createContentsLabel(contentText: contentString)
+        }
         setupContentsView(labels: contentsList)
         print("setup contents View")
     }
     
-    private func createContentsLabel(contentText: [String]) {
+    private func createContentsLabel(contentText: [MyRecord]) {
         contentsList = []
         for text in contentText {
             //기록은 5개까지만! 최신순으로 보여줘야하긴 하는데 일단,,,,, 아무튼!
@@ -109,7 +109,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
             contentLabel.numberOfLines = 1
             contentLabel.lineBreakMode = .byTruncatingTail
             contentLabel.textColor = .darkGray
-            contentLabel.text = text
+            contentLabel.text = text.body
             contentsList.append(contentLabel)
         }
     }

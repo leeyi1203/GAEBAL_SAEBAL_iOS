@@ -27,6 +27,21 @@
             </objects>
             <point key="canvasLocation" x="2005.7971014492755" y="-897.32142857142856"/>
         </scene>
+        <!--Search View Controller-->
+        <scene sceneID="YRw-Rf-5hn">
+            <objects>
+                <viewController title="Search View Controller" id="JD2-pw-kwY" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OtM-zE-70n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="SGK-9I-0tw"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="iAA-dR-HHZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZUi-1S-gy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2006" y="54"/>
         <!--My Page View Controller-->
         <scene sceneID="mF0-Iq-ym4">
             <objects>
@@ -121,7 +136,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="PXV-Ft-cwf" kind="relationship" relationship="rootViewController" id="bIU-zK-Mqf"/>
+                        <segue destination="BTe-6A-zoF" kind="relationship" relationship="rootViewController" id="PPC-Vg-q7A"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -203,6 +218,8 @@
                                         <inset key="separatorInset" minX="30" minY="0.0" maxX="30" maxY="0.0"/>
                                         <connections>
                                             <outlet property="contentLabel" destination="avy-qX-Oan" id="YPF-8c-Pxp"/>
+                                            <outlet property="dateLabel" destination="Iyi-CB-OgW" id="XLw-bv-VNz"/>
+                                            <outlet property="tagLabel" destination="kyr-Zh-fKU" id="82R-DZ-uS4"/>
                                             <segue destination="lhF-kE-hTF" kind="presentation" identifier="goDetail" modalPresentationStyle="fullScreen" id="lPH-Wd-QcO"/>
                                         </connections>
                                     </tableViewCell>
@@ -227,6 +244,16 @@
             </objects>
             <point key="canvasLocation" x="3432" y="-942"/>
         </scene>
+
+        <!--SettingStoryboard-->
+        <scene sceneID="cTt-w1-zdX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SettingStoryboard" id="BTe-6A-zoF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BTX-sR-jiV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifb-EX-OGa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1512" y="987"/>
         <!--DetailStoryboard-->
         <scene sceneID="Z1G-bY-5WO">
             <objects>
