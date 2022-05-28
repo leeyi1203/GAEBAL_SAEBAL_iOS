@@ -15,6 +15,8 @@ class CategoryDetailTableViewCell: UITableViewCell {
     var originContentWidth:CGFloat = 0.0
     
     @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var tagLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         

@@ -43,22 +43,6 @@
             </objects>
             <point key="canvasLocation" x="2006" y="54"/>
         </scene>
-        <!--My Page View Controller-->
-        <scene sceneID="mF0-Iq-ym4">
-            <objects>
-                <viewController title="My Page View Controller" id="PXV-Ft-cwf" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="AMg-9O-84Q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="0IL-5z-aN2"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Ujn-RU-QsC"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="v37-3r-3uh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2006" y="1051"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="I3L-Mo-Jgg">
             <objects>
@@ -137,7 +121,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="PXV-Ft-cwf" kind="relationship" relationship="rootViewController" id="bIU-zK-Mqf"/>
+                        <segue destination="BTe-6A-zoF" kind="relationship" relationship="rootViewController" id="PPC-Vg-q7A"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -219,6 +203,8 @@
                                         <inset key="separatorInset" minX="30" minY="0.0" maxX="30" maxY="0.0"/>
                                         <connections>
                                             <outlet property="contentLabel" destination="avy-qX-Oan" id="YPF-8c-Pxp"/>
+                                            <outlet property="dateLabel" destination="Iyi-CB-OgW" id="XLw-bv-VNz"/>
+                                            <outlet property="tagLabel" destination="kyr-Zh-fKU" id="82R-DZ-uS4"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -241,6 +227,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMy-W9-RgW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3432" y="-942"/>
+        </scene>
+        <!--SettingStoryboard-->
+        <scene sceneID="cTt-w1-zdX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SettingStoryboard" id="BTe-6A-zoF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BTX-sR-jiV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifb-EX-OGa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1512" y="987"/>
         </scene>
     </scenes>
     <resources>

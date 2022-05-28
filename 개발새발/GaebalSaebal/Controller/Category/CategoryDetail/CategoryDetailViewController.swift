@@ -23,7 +23,7 @@ class CategoryDetailViewController: UIViewController {
     private func setUpNaviTitle() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.sizeToFit()
-        navigationController?.navigationBar.topItem?.title = categoryArray[categoryIndex]
+        navigationController?.navigationBar.topItem?.title = categoryArray1[categoryIndex]
         let buttonImg = UIImage(named: "write")
         let writeBtn = UIButton()
         writeBtn.setImage(buttonImg, for: .normal)
@@ -40,7 +40,7 @@ class CategoryDetailViewController: UIViewController {
         let alert = UIAlertController(title: nil, message: "이 기록을 삭제하시겠습니까?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (_) in
 //            let object = contentsArray[self.categoryIndex][deleteIndex.section]
-            contentsArray[self.categoryIndex].remove(at: deleteIndex.section)
+            recordArray[self.categoryIndex].remove(at: deleteIndex.section)
             self.CategoryDetailTableView.deleteRows(at: [deleteIndex], with: .fade)
             }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -57,7 +57,7 @@ class CategoryDetailViewController: UIViewController {
 extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return contentsArray[categoryIndex].count
+        return recordArray[categoryIndex].count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,8 +69,14 @@ extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let index = recordArray[categoryIndex]
+        print("\(index)")
+        let body = index[indexPath.section].body
+//        let date = index[indexPath.section]
+        let tag = index[indexPath.section].tag
         let cell = self.CategoryDetailTableView.dequeueReusableCell(withIdentifier: "categoryContentsCell", for: indexPath) as! CategoryDetailTableViewCell
-        cell.contentLabel.text = contentsArray[categoryIndex][indexPath.section]
+        cell.contentLabel.text = body
+        cell.tagLabel.text = tag
         
         
         return cell

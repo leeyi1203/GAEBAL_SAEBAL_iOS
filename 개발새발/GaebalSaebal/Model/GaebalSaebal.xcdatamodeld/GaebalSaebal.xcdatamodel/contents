@@ -9,6 +9,7 @@
         <attribute name="bojTitle" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="category" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="code" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="eventNumber" optional="YES" attributeType="String"/>
         <attribute name="gitDate" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="gitRepoName" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="gitTitle" optional="YES" attributeType="String" defaultValueString=""/>
@@ -18,6 +19,6 @@
     </entity>
     <elements>
         <element name="Category" positionX="-54" positionY="81" width="128" height="58"/>
-        <element name="Record" positionX="235.79296875" positionY="-17.77734375" width="128" height="208"/>
+        <element name="Record" positionX="235.79296875" positionY="-17.77734375" width="128" height="209"/>
     </elements>
 </model>
