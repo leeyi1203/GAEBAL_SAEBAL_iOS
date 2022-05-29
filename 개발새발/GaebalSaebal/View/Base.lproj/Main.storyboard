@@ -239,13 +239,13 @@
                     <navigationItem key="navigationItem" title="개발" id="4ud-ly-Qer"/>
                     <connections>
                         <outlet property="CategoryDetailTableView" destination="QVa-yG-vIV" id="f3j-oH-8dc"/>
+                        <segue destination="tvk-l5-2t7" kind="show" identifier="showWriteViewinCategory" id="2Kb-4g-xL9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMy-W9-RgW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3432" y="-942"/>
+            <point key="canvasLocation" x="3349" y="-959"/>
         </scene>
-
         <!--SettingStoryboard-->
         <scene sceneID="cTt-w1-zdX">
             <objects>
@@ -264,14 +264,6 @@
             </objects>
             <point key="canvasLocation" x="4089" y="-1171"/>
         </scene>
-        <!--Write-->
-        <scene sceneID="YgG-3U-ltq">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Write" id="xr7-LJ-67P" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iB1-7p-PnT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4373" y="-1020"/>
-        </scene>
         <!--Search-->
         <scene sceneID="bex-4z-1mh">
             <objects>
@@ -283,6 +275,9 @@
             <point key="canvasLocation" x="1569" y="-163"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wFx-iI-0Xy"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="My_information" width="30" height="30"/>
         <image name="My_information_activate" width="30" height="30"/>

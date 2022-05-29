@@ -28,6 +28,22 @@ class CoreDataFunc {
         return result
     }
     
+    //데이터 삭제
+    static func delete(object: NSManagedObject) -> Bool {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        context.delete(object)
+        
+        do {
+            try context.save()
+            return true
+        } catch {
+            context.rollback()
+            return false
+        }
+    }
+    
     //카테고리 entity -> array
     static func setupCategoryData(categoryList:[NSManagedObject]) {
         categoryArray1.removeAll()
@@ -60,8 +76,9 @@ class CoreDataFunc {
                     let gitType: String? = recordList[j].value(forKey: "gitType") as? String
                     let eventNumber: String? = recordList[j].value(forKey: "eventNumber") as? String
                     let code: String? = recordList[j].value(forKey: "code") as? String
+                    let recordDate: String = (recordList[j].value(forKey: "recordDate") as? String)!
 //                    record?.image = recordList[j].value(forKey: "image") as! Data
-                    let record: MyRecord? = MyRecord(category: category , body: body, tag: tag, bojNumber: bojNumber, bojTitle: bojTitle, gitDate: gitDate, gitTitle: gitTitle, gitRepoName: gitRepoName, gitType: gitType, eventNumber: eventNumber, code: code)
+                    let record: MyRecord? = MyRecord(category: category , body: body, tag: tag, bojNumber: bojNumber, bojTitle: bojTitle, gitDate: gitDate, gitTitle: gitTitle, gitRepoName: gitRepoName, gitType: gitType, eventNumber: eventNumber, code: code, recordDate: recordDate)
 //                    print("개 잘 나오죠? \(recordList[j].value(forKey: "category"))")
 //                    print(record?.category)
                     array.append(record!)
