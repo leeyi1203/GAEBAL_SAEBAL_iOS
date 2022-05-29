@@ -19,18 +19,24 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     func AddCategory() {
         let alert = UIAlertController(title: "카테고리명 입력", message: "추가할 카테고리명을 입력하세요", preferredStyle: .alert)
 
-                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+            let ok = UIAlertAction(title: "확인", style: .default) { (ok) in
 
-                    self.addCategoryname = alert.textFields?[0].text ?? ""
-                    print(self.addCategoryname)
-                    
+                self.addCategoryname = alert.textFields?[0].text ?? ""
+                print(self.addCategoryname)
+                if (self.addCategoryname.count > 10) {
+                    let alert = UIAlertController(title: "카테고리 제목은 10자를 초과할 수 없습니다.", message: "", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(ok)
+                    self.present(alert, animated: true, completion: nil)
+                } else {
                     let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
                     let context = container.viewContext
                     let entity = NSEntityDescription.entity(forEntityName: "Category", in: context)
-                    
+                
                     if let entity = entity {
                         let category = NSManagedObject(entity: entity, insertInto: context)
                         category.setValue(self.addCategoryname, forKey: "categoryName")
+                        
                     }
                     do {
                         try context.save()
@@ -42,33 +48,28 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
                         print("Error saving contet \(error)")
                     }
                     
-                    
-                    
-                    
-//                    self.categoryList.append(self.addCategoryname)
-//                    print(self.categoryList)
                     if(self.addCategoryname != ""){
                         self.categorySet.beginUpdates()
                         self.categorySet.insertSections(IndexSet(categoryArray1.count-1...categoryArray1.count-1),with: UITableView.RowAnimation.automatic)
                         self.categorySet.endUpdates()
                     }
-                   
-
                 }
+                
+            }
 
-                let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+            let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
 
-                     //code
+                 //code
 
-                }
+            }
 
-                alert.addAction(cancel)
+            alert.addAction(cancel)
 
-                alert.addAction(ok)
-                alert.addTextField ()
+            alert.addAction(ok)
+            alert.addTextField ()
 
-                self.present(alert, animated: true, completion: nil)
-        
+            self.present(alert, animated: true, completion: nil)
+    
     }
     
     
