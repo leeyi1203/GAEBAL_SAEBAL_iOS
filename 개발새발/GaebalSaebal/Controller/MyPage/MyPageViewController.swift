@@ -22,11 +22,11 @@ class MyPageViewController: UIViewController,UITableViewDataSource,UITableViewDe
         // Do any additional setup after loading the view.
         SettingTable.dataSource=self
         SettingTable.delegate=self
-        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.topItem?.title = "설정"
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = ""
+
     }
     //테이블 뷰 한 섹션 당 몇개의 셀을 담을 것인지
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,7 +43,7 @@ class MyPageViewController: UIViewController,UITableViewDataSource,UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell",for: indexPath) as! SettingTableViewCell
         if (indexPath.section==0){
-            cell.textLabel?.text="카테고리  추가 / 관리"
+            cell.textLabel?.text="카테고리  추가 / 삭제"
         }
         else{
             cell.textLabel?.text="깃허브 사용자 설정"

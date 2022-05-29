@@ -118,11 +118,13 @@ class GithubEventViewController: UIViewController{
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'" // 2020-08-13 16:30
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
                 
         let convertDate = dateFormatter.date(from: dateStr) // Date 타입으로 변환
                 
         let myDateFormatter = DateFormatter()
         myDateFormatter.dateFormat = "yyyy.MM.dd a hh:mm" // 2020.08.13 오후 04시 30분
+        myDateFormatter.locale = Locale(identifier: Locale.current.identifier)
         let convertStr = myDateFormatter.string(from: convertDate!)
         
         return convertStr
