@@ -125,7 +125,7 @@ extension GithubReposViewController{
 //        NetworkHandler.getData(resource: url)
 //        print("getUserRepos 실행됨")
 
-        let auth = "Token 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"
+        let auth = "Token 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"
 
 //        let url:URL = URL(string: "https://api.github.com/users/\(userName)/repos")!
         let url:URL = URL(string: "https://api.github.com/user/repos")!

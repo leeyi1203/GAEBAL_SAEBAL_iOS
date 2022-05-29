@@ -15,7 +15,8 @@ class GitadminViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        navigationItem.title = "깃허브 사용자 설정"
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         if (githubID == "") {
             githubIDInp.placeholder = "ID 값이 저장 되지 않았습니다."
         }else{

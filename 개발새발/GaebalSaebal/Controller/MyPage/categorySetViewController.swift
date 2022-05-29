@@ -78,7 +78,9 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var categorySet: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.topItem?.title = ""
+//        self.navigationController?.navigationBar.topItem?.title = "카테고리 추가 / 삭제"
+        navigationItem.title = "카테고리 추가 / 삭제"
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         // Do any additional setup after loading the view.
         categorySet.dataSource=self
         categorySet.delegate=self

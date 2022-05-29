@@ -110,11 +110,13 @@ class GithubEventViewController: UIViewController{
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'" // 2020-08-13 16:30
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
                 
         let convertDate = dateFormatter.date(from: dateStr) // Date 타입으로 변환
                 
         let myDateFormatter = DateFormatter()
         myDateFormatter.dateFormat = "yyyy.MM.dd a hh:mm" // 2020.08.13 오후 04시 30분
+        myDateFormatter.locale = Locale(identifier: Locale.current.identifier)
         let convertStr = myDateFormatter.string(from: convertDate!)
         
         return convertStr
@@ -217,7 +219,7 @@ extension GithubEventViewController  {
 
     
     func getIssues(gitID:String, repo:String) {
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/issues?state=all&page=1&per_page=15"
         
@@ -247,7 +249,7 @@ extension GithubEventViewController  {
     }
 
     func getPRs(gitID:String, repo:String){
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/pulls?state=all&page=1&per_page=10"
         if let url = URL(string: urlString) {
@@ -274,7 +276,7 @@ extension GithubEventViewController  {
     }
 
     func getCommits(gitID:String, repo:String){
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/commits?page=1&per_page=10"
         if let url = URL(string: urlString) {
