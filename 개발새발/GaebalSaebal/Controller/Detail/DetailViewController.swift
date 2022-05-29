@@ -55,7 +55,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
                                 self.present(alert, animated: true, completion: nil)
                     }
                     
-                    return UIMenu(children: [btn1])
+                    return UIMenu(children: [btn1,btn2])
                 }
     }
     // MARK: - Declaration
@@ -116,7 +116,8 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
         //수정 삭제버튼 생성
         let interaction = UIContextMenuInteraction(delegate: self)
         ed_button.addInteraction(interaction)
-//        D_img.image=UIImage(named: "exampleimage")
+        D_img.image=UIImage(named: "exampleimage")
+        
         
         codeTextViewCustom()
         setupImage()
@@ -161,7 +162,6 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             let gitEventRepo = recordData.gitRepoName!
             let gitEventType = recordData.gitType
             let gitEventDate = recordData.gitDate
-            let gitEventNumber = recordData.eventNumber!
             git_contents.layer.borderWidth = 0.3
             git_contents.layer.borderColor = UIColor.lightGray.cgColor
             git_contents.layer.cornerRadius = 50
@@ -186,15 +186,15 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
                 git_type_view.layer.borderColor = greenLabelColor.cgColor
                 git_type.textColor = greenLabelColor
         
-                git_link = "https://github.com/" + gitEventRepo + "/commits/" + gitEventNumber
+                git_link = "https://github.com" + gitEventRepo + "/commits"
             } else if(gitEventType == "issue") {
                 git_type_view.layer.borderColor = redLabelColor.cgColor
-                git_link = "https://github.com" + gitEventRepo + "/issues" + gitEventNumber
+                git_link = "https://github.com" + gitEventRepo + "/issues"
                 git_type.textColor = redLabelColor
 
             } else if(gitEventType == "pull request") {
                 git_type_view.layer.borderColor = blueLabelColor.cgColor
-                git_link = "https://github.com" + gitEventRepo + "pulls" + gitEventNumber
+                git_link = "https://github.com" + gitEventRepo + "pulls"
                 git_type.textColor = blueLabelColor
             }
 //            git_type_view.layer.cornerRadius=15
@@ -222,7 +222,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     //github 터치시 링크로 이동
     @objc func goGitLink(sender:UIGestureRecognizer){
         let contentsUrl = NSURL(string: git_link)
-        let LinkSafariView: SFSafariViewController = SFSafariViewController(url: contentsUrl! as URL)
+        let LinkSafariView: SFSafariViewController = SFSafariViewController(url: contentsUrl as! URL)
         self.present(LinkSafariView, animated: true, completion: nil)
     }
     //스크롤뷰

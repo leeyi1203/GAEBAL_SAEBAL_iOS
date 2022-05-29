@@ -148,6 +148,15 @@ extension GithubReposViewController{
 
                 let jsonData = try? JSONDecoder().decode([UserRepoInfo].self, from: data)
                 guard let rsData = jsonData else {
+                    let alert = UIAlertController(title: "토큰 값이 만료되었거나 저장된 토큰 값이 없습니다.", message: "", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
+                        self.presentingViewController?.dismiss(animated: true, completion: nil)
+                    })
+                    alert.addAction(okAction)
+
+                    //alert 실행
+                    self.present(alert, animated: true, completion: nil)
+//                    self.presentingViewController?.dismiss(animated: true, completion: nil)
                     return
                 }
                 print("##\(rsData[0])")

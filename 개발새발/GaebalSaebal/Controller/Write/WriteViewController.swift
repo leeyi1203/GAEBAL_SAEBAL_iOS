@@ -84,15 +84,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.async { [self] in
-            // 네비 높이 줄이기
-            removeLargeTitle()
-        }
-        
-        DispatchQueue.main.async { [self] in
-            //백준, 깃허브, 이미지 버튼 디자인
-            self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
-            self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
-            self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
             
             if writeORedit == false {
                 //백준, 깃허브, 이미지 버튼 디자인
@@ -141,6 +132,10 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 
             }
         }
+        
+        // 네비 높이 줄이기
+        removeLargeTitle()
+
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
@@ -340,11 +335,8 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                     myRecord.setValue(self.bojTitle, forKey: "bojTitle")
                     myRecord.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
                     myRecord.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
-                    if self.selectedRepoOwner?.isEmpty != true {
-                        myRecord.setValue(self.selectedRepoOwner! + "/" + self.selectedRepoName!, forKey: "gitRepoName")
-                    } else {myRecord.setValue(nil, forKey: "gitRepoName")}
-                    myRecord.setValue(self.selectedGithubEvent?.created_at ?? "", forKey: "gitDate")
-                    print("날짜 확인! \(self.selectedGithubEvent?.created_at)")
+                    myRecord.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
+                    myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
                     myRecord.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
                     myRecord.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
     //                let png = self.selectedImage?.pngData()
@@ -379,9 +371,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                     objectUpdate.setValue(self.bojTitle, forKey: "bojTitle")
                     objectUpdate.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
                     objectUpdate.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
-                    if self.selectedRepoOwner?.isEmpty != true {
-                        objectUpdate.setValue(self.selectedRepoOwner! + "/" + self.selectedRepoName!, forKey: "gitRepoName")
-                    } else {objectUpdate.setValue(nil, forKey: "gitRepoName")}
+                    objectUpdate.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
                     objectUpdate.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
                     objectUpdate.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
                     objectUpdate.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
@@ -413,7 +403,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             self.navigationController?.popViewController(animated: true)
         }
     }
-
+  
     func addCategoryButton(categoryList: [String]){
         for name in categoryList {
             let categoryItemButton = UIButton()
@@ -769,8 +759,8 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 let label = UILabel()
                 
                 if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType == nil)) {
-                    let gitDate = self.selectedGithubEvent!.created_at
-                    label.text = gitDate
+                    let changedDate = changeDateFormat(dateStr: self.selectedGithubEvent!.created_at)
+                    label.text = changedDate
                 }
                 else if (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType != nil) {
                     label.text = recordArray[categoryIndex][recordIdx].gitDate
@@ -927,7 +917,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 
         let myDateFormatter = DateFormatter()
         myDateFormatter.dateFormat = "yyyy.MM.dd a hh:mm" // 2020.08.13 오후 04시 30분
-        myDateFormatter.locale = Locale(identifier: Locale.current.identifier)
         let convertStr = myDateFormatter.string(from: convertDate ?? Date())
         
         return convertStr
@@ -1055,12 +1044,30 @@ extension WriteViewController : UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+
+        let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
+        var imageSize: Int = imgData.count
+        print("sizee:\(imageSize)")
+        if(imageSize>5242880){
+            dismiss(animated: true, completion: nil)
+            let alert = UIAlertController(title: "사진 크기가 5MB를 초과했습니다!", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
+                self.presentingViewController?.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(okAction)
+
+            //alert 실행
+            self.present(alert, animated: true, completion: nil)
+            return
+//                    self.presentingViewController?.dismiss(animated: true, completion: nil)
+        }else{
             self.selectedImage = image
             dismiss(animated: true, completion: nil)
             // update image UI
             self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: true)
         }
+            
         
 
 
