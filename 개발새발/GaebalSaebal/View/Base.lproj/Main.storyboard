@@ -187,7 +187,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19.5" id="x01-1F-BQW"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -204,7 +204,7 @@
                                                         <constraint firstAttribute="width" constant="141" id="Ld5-za-tjJ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" systemColor="systemPinkColor"/>
+                                                    <color key="textColor" red="0.69803921568627447" green="0.054901960784313725" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -276,7 +276,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wFx-iI-0Xy"/>
+        <segue reference="2Kb-4g-xL9"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="My_information" width="30" height="30"/>
@@ -290,9 +290,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

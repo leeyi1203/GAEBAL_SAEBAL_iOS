@@ -342,7 +342,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                     myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
                     myRecord.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
                     myRecord.setValue(self.selectedImage?.pngData(), forKey: "image")
-                    print("## image chekcing \(self.selectedImage?.pngData())")
+//                    print("## image chekcing \(self.selectedImage?.pngData())")
                     if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
                         myRecord.setValue("", forKey: "code")
                     } else { myRecord.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
@@ -787,13 +787,23 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         print("### setUsedImageView function run ")
         
         viewButton.clipsToBounds = true
+        let image:UIImage
+        let imageView:UIImageView
         
-        if ( self.selectedImage != nil ){
-            let imageView = UIImageView(image: self.selectedImage)
-            // 비율유지되게 바꿔야함
+        if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].image == nil)) {
+            imageView = UIImageView(image: self.selectedImage)
+            // 비율유지되게 바꿔야함z
             imageView.frame = viewButton.bounds
             viewButton.addSubview(imageView)
         }
+        else if (writeORedit == true && recordArray[categoryIndex][recordIdx].image != nil) {
+            image = UIImage(data: recordArray[categoryIndex][recordIdx].image!)!
+            imageView = UIImageView(image: image)
+            // 비율유지되게 바꿔야함z
+            imageView.frame = viewButton.bounds
+            viewButton.addSubview(imageView)
+        }
+        
     }
     
     @objc func tapViewButtonForAdd(sender:UIGestureRecognizer){
