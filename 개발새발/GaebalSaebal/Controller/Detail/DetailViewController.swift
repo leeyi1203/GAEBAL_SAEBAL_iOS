@@ -117,6 +117,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
         let interaction = UIContextMenuInteraction(delegate: self)
         ed_button.addInteraction(interaction)
 //        D_img.image=UIImage(named: "exampleimage")
+        
         codeTextViewCustom()
         setupImage()
     }
@@ -140,7 +141,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             let bojContentsLabel = recordData.bojNumber!+"번 -"+recordData.bojTitle!
             D_contents.layer.borderWidth = 0.3
             D_contents.layer.borderColor = UIColor.lightGray.cgColor
-            D_contents.layer.cornerRadius=40
+            D_contents.layer.cornerRadius=50
             D_contents.layer.shadowColor = UIColor.gray.cgColor
             D_contents.layer.shadowRadius = 8
             D_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -162,7 +163,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             let gitEventDate = recordData.gitDate
             git_contents.layer.borderWidth = 0.3
             git_contents.layer.borderColor = UIColor.lightGray.cgColor
-            git_contents.layer.cornerRadius=40
+            git_contents.layer.cornerRadius = 50
             git_contents.layer.shadowColor = UIColor.gray.cgColor
             git_contents.layer.shadowRadius = 8
             git_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -171,21 +172,31 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             git_repo.text = gitEventRepo
             git_type.text = gitEventType
             git_Date.text = gitEventDate
-            
-            git_type_view.layer.borderWidth = 0.3
+            let greenLabelColor = UIColor.init(red: 77/255, green: 168/255, blue: 86/255, alpha: 1)
+            let blueLabelColor = UIColor.init(red: 48/255, green: 141/255, blue: 181/255, alpha: 1)
+            let redLabelColor = UIColor.init(red: 185/255, green: 54/255, blue: 54/255, alpha: 1)
+            git_type_view.layer.borderWidth = 2
+            git_type.font = UIFont.boldSystemFont(ofSize: 13.0)
+            let typeLabelHeight: CGFloat = 30
+            git_type_view.heightAnchor.constraint(equalToConstant: typeLabelHeight).isActive = true
+            // 모서리 둥글게
+            git_type_view.layer.cornerRadius = git_type_view.frame.height / 2
             if (gitEventType == "commit"){
-                git_type_view.layer.borderColor = UIColor.green.cgColor
+                git_type_view.layer.borderColor = greenLabelColor.cgColor
+                git_type.textColor = greenLabelColor
         
                 git_link = "https://github.com" + gitEventRepo + "/commits"
             } else if(gitEventType == "issue") {
-                git_type_view.layer.borderColor = UIColor.red.cgColor
+                git_type_view.layer.borderColor = redLabelColor.cgColor
                 git_link = "https://github.com" + gitEventRepo + "/issues"
+                git_type.textColor = redLabelColor
 
             } else if(gitEventType == "pull request") {
-                git_type_view.layer.borderColor = UIColor.blue.cgColor
+                git_type_view.layer.borderColor = blueLabelColor.cgColor
                 git_link = "https://github.com" + gitEventRepo + "pulls"
+                git_type.textColor = blueLabelColor
             }
-            git_type_view.layer.cornerRadius=10
+//            git_type_view.layer.cornerRadius=15
         }
         else {
             print("git 비었엄")
@@ -239,6 +250,10 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     }
  
     func codeTextViewCustom(){
+        if (codeTextView.text == ""){
+            codeTextView.isHidden = true
+        }
+        print("%%%\(codeTextView.text)")
         codeTextView.layer.cornerRadius = 20
         codeTextView.layer.backgroundColor =  UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
         codeTextView.layer.borderWidth = 1.5

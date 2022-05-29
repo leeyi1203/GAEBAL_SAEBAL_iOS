@@ -8,37 +8,36 @@
 import UIKit
 
 class GitadminViewController: UIViewController {
-    var githubID = ""
+
     var Token = ""
-    @IBOutlet weak var githubIDInp: UITextField!
+    var flag = true
     @IBOutlet weak var TokenInp: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        if (githubID == "") {
-            githubIDInp.placeholder = "ID 값이 저장 되지 않았습니다."
-        }else{
-            githubIDInp.placeholder = githubID
-        }
-        if (Token == "") {
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if (flag) {
             TokenInp.placeholder = "Token 값이 저장 되지 않았습니다."
         }else{
             TokenInp.placeholder = "Token 값이 저장 되었습니다."
         }
-        githubID = githubIDInp.text ?? ""
         Token = TokenInp.text ?? ""
     }
     
     @IBAction func SaveInfo(_ sender: Any) {
-        githubID = githubIDInp.text ?? ""
         Token = TokenInp.text ?? ""
         let alert = UIAlertController(title: "저장완료", message: "저장되었습니다.", preferredStyle: .alert)
 
                 let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
                 }
-
-
+        
+        TokenInp.text=""
+        TokenInp.placeholder = "Token 값이 저장 되었습니다."
+        flag = false
+        
 
                 alert.addAction(ok)
 
