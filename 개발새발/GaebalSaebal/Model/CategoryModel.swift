@@ -74,6 +74,6 @@ struct MyRecord {
     var eventNumber: String?
     var code: String?
     var image: Data?
-    var recordDate: String
+    var recordDate: String?
     
 }

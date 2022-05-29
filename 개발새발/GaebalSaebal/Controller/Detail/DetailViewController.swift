@@ -68,6 +68,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     var boj_link = ""
     
     
+    @IBOutlet weak var codeTextView: UITextView!
     @IBOutlet weak var D_title: UILabel!
     @IBOutlet weak var D_contents: UIView!
     @IBOutlet weak var D_body: UITextView!
@@ -91,9 +92,14 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
         DataLoad()
         setupGitEvent()
         setupBoj()
+        codeTextView.text=recordArray[categoryIndex][recordIndex].code
+        D_body.text = recordArray[categoryIndex][recordIndex].body
         D_body.delegate = self
+        codeTextView.delegate = self
         D_body.delegate?.textViewDidChange?(D_body)
+        codeTextView.delegate?.textViewDidChange?(codeTextView)
         D_body.isScrollEnabled = false
+        codeTextView.isScrollEnabled = true
         
         // Do any additional setup after loading the view.
         scrollview.contentSize = CGSize(width: scrollview.frame.width, height: 20000)
@@ -103,18 +109,16 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
         let tapGesture_bj = UITapGestureRecognizer(target: self, action: #selector(goBjLink(sender:)))
         D_contents.addGestureRecognizer(tapGesture_bj)
         
-        //git 누르면 웹뷰아동
+        //git 누르면 웹뷰이동
         let tapGesture_git = UITapGestureRecognizer(target: self, action: #selector(goGitLink(sender:)))
         git_contents.addGestureRecognizer(tapGesture_git)
         
         //수정 삭제버튼 생성
         let interaction = UIContextMenuInteraction(delegate: self)
         ed_button.addInteraction(interaction)
-        
 //        D_img.image=UIImage(named: "exampleimage")
-        
-        
-
+        codeTextViewCustom()
+        setupImage()
     }
    
     
@@ -128,7 +132,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
         
     }
     //view custom
-    
+ 
     
     func setupBoj(){
         let recordData = recordArray[categoryIndex][recordIndex]
@@ -167,9 +171,11 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             git_repo.text = gitEventRepo
             git_type.text = gitEventType
             git_Date.text = gitEventDate
+            
             git_type_view.layer.borderWidth = 0.3
             if (gitEventType == "commit"){
                 git_type_view.layer.borderColor = UIColor.green.cgColor
+        
                 git_link = "https://github.com" + gitEventRepo + "/commits"
             } else if(gitEventType == "issue") {
                 git_type_view.layer.borderColor = UIColor.red.cgColor
@@ -232,7 +238,21 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
 //        D_body.topAnchor.constraint(equalTo:D_contents.bottomAnchor, constant: 140.0).isActive = true
     }
  
+    func codeTextViewCustom(){
+        codeTextView.layer.cornerRadius = 20
+        codeTextView.layer.backgroundColor =  UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
+        codeTextView.layer.borderWidth = 1.5
+        codeTextView.layer.borderColor =  UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
+        codeTextView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
 
+        codeTextView.textColor = .gray
+        D_body.layer.cornerRadius = 20
+        D_body.layer.borderWidth = 0.5
+        D_body.layer.borderColor =  UIColor.lightGray.cgColor
+        D_body.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
+
+
+    }
     
     
     //디테일 뷰 모달창 닫는 함수
@@ -257,15 +277,16 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
 }
 extension DetailViewController : UITextViewDelegate{
     //동적으로 textview 크기 늘리기
+    
     func textViewDidChange(_ D_body: UITextView) {
-        let bodyText = recordArray[categoryIndex][recordIndex].body
-        D_body.text = bodyText
+        
         let size = CGSize(width: view.frame.width, height: .infinity)
         let estimatedSize = D_body.sizeThatFits(size)
         D_body.constraints.forEach{(constraint) in
             if constraint.firstAttribute == .height {
-                constraint.constant = estimatedSize.height
+                constraint.constant = estimatedSize.height+50.0
             }
         }
     }
+//
 }

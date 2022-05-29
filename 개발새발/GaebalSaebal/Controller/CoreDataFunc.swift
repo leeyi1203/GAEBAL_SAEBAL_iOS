@@ -76,7 +76,7 @@ class CoreDataFunc {
                     let gitType: String? = recordList[j].value(forKey: "gitType") as? String
                     let eventNumber: String? = recordList[j].value(forKey: "eventNumber") as? String
                     let code: String? = recordList[j].value(forKey: "code") as? String
-                    let recordDate: String = (recordList[j].value(forKey: "recordDate") as? String)!
+                    let recordDate: String? = (recordList[j].value(forKey: "recordDate") as? String)
 //                    record?.image = recordList[j].value(forKey: "image") as! Data
                     let record: MyRecord? = MyRecord(category: category , body: body, tag: tag, bojNumber: bojNumber, bojTitle: bojTitle, gitDate: gitDate, gitTitle: gitTitle, gitRepoName: gitRepoName, gitType: gitType, eventNumber: eventNumber, code: code, recordDate: recordDate)
 //                    print("개 잘 나오죠? \(recordList[j].value(forKey: "category"))")
