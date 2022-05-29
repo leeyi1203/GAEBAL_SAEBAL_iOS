@@ -229,7 +229,7 @@ extension GithubEventViewController  {
 
     
     func getIssues(gitID:String, repo:String) {
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/issues?state=all&page=1&per_page=15"
         
@@ -259,7 +259,7 @@ extension GithubEventViewController  {
     }
 
     func getPRs(gitID:String, repo:String){
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/pulls?state=all&page=1&per_page=10"
         if let url = URL(string: urlString) {
@@ -286,7 +286,7 @@ extension GithubEventViewController  {
     }
 
     func getCommits(gitID:String, repo:String){
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/commits?page=1&per_page=10"
         if let url = URL(string: urlString) {

@@ -335,12 +335,14 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                     myRecord.setValue(self.bojTitle, forKey: "bojTitle")
                     myRecord.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
                     myRecord.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
-                    myRecord.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
+                    if self.selectedRepoOwner?.isEmpty != true {
+                        myRecord.setValue((self.selectedRepoOwner ?? "") + "/" + (self.selectedRepoName ?? ""), forKey: "gitRepoName")
+                        
+                    }
                     myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
                     myRecord.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
-                    myRecord.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
-    //                let png = self.selectedImage?.pngData()
-    //                myRecord.setValue(png, forKey: <#T##String#>)
+                    myRecord.setValue(self.selectedImage?.pngData(), forKey: "image")
+                    print("## image chekcing \(self.selectedImage?.pngData())")
                     if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
                         myRecord.setValue("", forKey: "code")
                     } else { myRecord.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
@@ -1060,7 +1062,6 @@ extension WriteViewController : UIImagePickerControllerDelegate {
             //alert 실행
             self.present(alert, animated: true, completion: nil)
             return
-//                    self.presentingViewController?.dismiss(animated: true, completion: nil)
         }else{
             self.selectedImage = image
             dismiss(animated: true, completion: nil)

@@ -55,7 +55,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
                                 self.present(alert, animated: true, completion: nil)
                     }
                     
-                    return UIMenu(children: [btn1,btn2])
+                    return UIMenu(children: [btn1])
                 }
     }
     // MARK: - Declaration
@@ -207,7 +207,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     func setupImage() {
         let recordData = recordArray[categoryIndex][recordIndex]
         if recordData.image != nil {
-            print("이미지 있움~~~")
+            D_img.image = UIImage(data: recordData.image!)
         }
         else {
             D_img.isHidden = true

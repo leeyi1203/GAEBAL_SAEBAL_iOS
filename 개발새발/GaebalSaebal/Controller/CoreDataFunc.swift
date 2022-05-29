@@ -101,8 +101,9 @@ class CoreDataFunc {
                     let eventNumber: String? = recordList[j].value(forKey: "eventNumber") as? String
                     let code: String? = recordList[j].value(forKey: "code") as? String
                     let recordDate: String? = (recordList[j].value(forKey: "recordDate") as? String)
+                    let image: Data? = recordList[j].value(forKey: "image") as? Data
 //                    record?.image = recordList[j].value(forKey: "image") as! Data
-                    let record: MyRecord? = MyRecord(category: category , body: body, tag: tag, bojNumber: bojNumber, bojTitle: bojTitle, gitDate: gitDate, gitTitle: gitTitle, gitRepoName: gitRepoName, gitType: gitType, eventNumber: eventNumber, code: code, recordDate: recordDate)
+                    let record: MyRecord? = MyRecord(category: category , body: body, tag: tag, bojNumber: bojNumber, bojTitle: bojTitle, gitDate: gitDate, gitTitle: gitTitle, gitRepoName: gitRepoName, gitType: gitType, eventNumber: eventNumber, code: code, image:image, recordDate: recordDate)
 //                    print("개 잘 나오죠? \(recordList[j].value(forKey: "category"))")
 //                    print(record?.category)
                     array.append(record!)
