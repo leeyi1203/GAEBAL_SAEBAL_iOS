@@ -79,10 +79,18 @@ class GithubEventViewController: UIViewController{
     // 화면 사라질 때 정보 보내려구,,
     var delegate: SendSelectedGithubEventDelegate?
     
+    // 화면 넓이 바인딩
+    var originViewWidth: CGFloat = 0.0
+    
 
     // MARK: - ✅ View Cycle
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        DispatchQueue.main.async { [self] in
+            print("### main view frame width : \(self.view.frame.width)")
+            self.originViewWidth = self.view.frame.width
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -146,6 +154,8 @@ extension GithubEventViewController : UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "githubEventCell", for: indexPath)
         
         if let cell = cell as? GithubEventTableViewCell {
+            
+            cell.originContentWidth = self.originViewWidth
             
             let greenLabelColor = UIColor.init(red: 77/255, green: 168/255, blue: 86/255, alpha: 1)
             let blueLabelColor = UIColor.init(red: 48/255, green: 141/255, blue: 181/255, alpha: 1)
@@ -217,7 +227,7 @@ extension GithubEventViewController  {
 
     
     func getIssues(gitID:String, repo:String) {
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/issues?state=all&page=1&per_page=15"
         
@@ -247,7 +257,7 @@ extension GithubEventViewController  {
     }
 
     func getPRs(gitID:String, repo:String){
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/pulls?state=all&page=1&per_page=10"
         if let url = URL(string: urlString) {
@@ -274,7 +284,7 @@ extension GithubEventViewController  {
     }
 
     func getCommits(gitID:String, repo:String){
-        let auth = "Token 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"
+        let auth = "Token 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"
         let baseURL = "https://api.github.com/repos"
         let urlString = baseURL + "/" + gitID + "/" + repo + "/commits?page=1&per_page=10"
         if let url = URL(string: urlString) {

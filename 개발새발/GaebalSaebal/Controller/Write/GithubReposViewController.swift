@@ -26,11 +26,19 @@ class GithubReposViewController: UIViewController, SendSelectedGithubEventDelega
     // 화면 사라질 때 정보 보내려구,,
     var delegate: SendSelectedGithubEventDelegate?
     
+    var originViewWidth: CGFloat = 0.0
+    
+    // MARK: - ✅ View Cycle
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.main.async { [self] in
+            print("### main view frame width : \(self.view.frame.width)")
+            self.originViewWidth = self.view.frame.width
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -72,6 +80,8 @@ extension GithubReposViewController : UITableViewDelegate, UITableViewDataSource
             
             // 셀렉트 될 때 뒷배경 어두워지는거 삭제
             cell.selectionStyle = .none
+            
+            cell.originContentWidth = self.originViewWidth
         }
         
         return cell
@@ -125,7 +135,7 @@ extension GithubReposViewController{
 //        NetworkHandler.getData(resource: url)
 //        print("getUserRepos 실행됨")
 
-        let auth = "Token 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"
+        let auth = "Token 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"
 
 //        let url:URL = URL(string: "https://api.github.com/users/\(userName)/repos")!
         let url:URL = URL(string: "https://api.github.com/user/repos")!

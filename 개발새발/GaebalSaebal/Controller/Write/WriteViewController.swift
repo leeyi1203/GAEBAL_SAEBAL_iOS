@@ -73,7 +73,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     var selectedImage: UIImage?
 
     // 코더데이터 담을 변수
-    var itemArray:[Record] = []
+    var itemArray:[NSManagedObject] = []
     
     // 키보드 높이 담을 변수
     var keyboardHeight:CGFloat = 0
@@ -84,15 +84,17 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         super.viewDidLoad()
         
         DispatchQueue.main.async { [self] in
+            // 네비 높이 줄이기
+            removeLargeTitle()
+        }
+        
+        DispatchQueue.main.async { [self] in
             //백준, 깃허브, 이미지 버튼 디자인
             self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
             self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
             self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
-        }
-        
-        // 네비 높이 줄이기
-        removeLargeTitle()
 
+        }
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
@@ -345,12 +347,12 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     
     // core data 확인용
     func loadItems() {
-        let request: NSFetchRequest<Record> = Record.fetchRequest()
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         do {
-            itemArray = try context.fetch(request)
+            itemArray = try context.fetch(fetchRequest)
 
         } catch {
             print("error fetching data from context \(error)")
