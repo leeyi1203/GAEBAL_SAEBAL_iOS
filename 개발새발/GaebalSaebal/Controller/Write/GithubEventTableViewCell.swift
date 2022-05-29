@@ -27,7 +27,8 @@ class GithubEventTableViewCell: UITableViewCell {
         setupLayout()
         
         // 원래 contetnView 넓이 기억하기
-        originContentWidth = self.contentView.frame.size.width
+        print("### cell view frame width : \(self.originContentWidth)")
+//        originContentWidth = self.contentView.frame.size.width
 
     }
 
