@@ -77,15 +77,14 @@ class CategoryDetailViewController: UIViewController,EditLogDelegate {
     
     
     
-    func logWillDelete(deleteIndex:IndexPath) {
+    func logWillDelete(categoryIdx:Int, recordIdx:IndexPath) {
         let alert = UIAlertController(title: nil, message: "이 기록을 삭제하시겠습니까?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (_) in
-            let object = self.recordList[deleteIndex.section]
-            if CoreDataFunc.delete(object: object) {
-
+            if CoreDataFunc.deleteRecord(categoryIdx: categoryIdx, recordIdx: recordIdx) {
+                recordArray[self.categoryIndex].remove(at: recordIdx.section)
+                self.CategoryDetailTableView.deleteSections(IndexSet(integersIn: recordIdx.section...recordIdx.section), with: .fade)
             }
-            recordArray[self.categoryIndex].remove(at: deleteIndex.section)
-            self.CategoryDetailTableView.deleteRows(at: [deleteIndex], with: .fade)
+            
         }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -94,7 +93,6 @@ class CategoryDetailViewController: UIViewController,EditLogDelegate {
         alert.addAction(cancelAction)
 
         present(alert, animated: true, completion: nil)
-
     }
 
 }
@@ -133,7 +131,7 @@ extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSour
             
             let delete = UIContextualAction(style: .normal, title: "삭제", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
                 print("delete!!")
-                self.logWillDelete(deleteIndex: indexPath)
+                self.logWillDelete(categoryIdx: self.categoryIndex, recordIdx: indexPath)
                 success(true)
             })
         

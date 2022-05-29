@@ -71,24 +71,6 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    // MARK: - 데이터 fetch
-//    func fetchCategoryList() -> [NSManagedObject] {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Category")
-//        let result = try! context.fetch(fetchRequest)
-//        return result
-//    }
-    
-    //카테고리 entity -> array
-//    func setupCategoryData() {
-//        for i in 0..<categoryList.count {
-//            let index = categoryList[i]
-//            let category = index.value(forKey: "categoryName") as? String
-//            categoryArray1.append(category!)
-//        }
-//    }
-    
     
     // MARK: - Declaration
 //    var categoryList = ["기본"]
@@ -130,9 +112,9 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
         return 0.9
     }
     
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        if ((indexPath.section<categoryList.count)&&( 0 < indexPath.section)){
-//            // 오른쪽에 만들기
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if ((indexPath.section<categoryList.count)&&( 0 < indexPath.section)){
+            // 오른쪽에 만들기
 //            let edit = UIContextualAction(style: .normal, title: "edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
 //                        print("edit")
 //                let alert = UIAlertController(title: "카테고리명 입력", message: "수정할 카테고리명을 입력하세요", preferredStyle: .alert)
@@ -163,23 +145,47 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
 //                    }
 //                    edit.backgroundColor = UIColor(displayP3Red: 52/255, green: 95/255, blue: 207/255, alpha: 1)
 //                    edit.image = UIImage(named: "PencilSquare.png")
-//
-//                    let delete = UIContextualAction(style: .normal, title: "delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-//                        self.categoryList.remove(at: indexPath.row)
-//                        print("delete")
-//                        print(self.categoryList)
-//                        self.categorySet.beginUpdates()
-//                        self.categorySet.deleteRows(at: [indexPath], with:.fade)
-//                        self.categorySet.endUpdates()
-//                        success(true)
-//                    }
-//            delete.backgroundColor = UIColor(displayP3Red: 194/255, green: 62/255, blue: 62/255, alpha: 1)
-//                delete.image = UIImage(named: "Trash.png")
-//                    //actions배열 인덱스 0이 왼쪽에 붙어서 나옴
-//                    return UISwipeActionsConfiguration(actions:[delete,edit])
-//        }else {return UISwipeActionsConfiguration(actions:[])}
+
+                    let delete = UIContextualAction(style: .normal, title: "delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                        if recordArray[indexPath.section].isEmpty == true {
+                            self.categoryWillDelete(categoryIdx: indexPath)
+                            success(true)
+                        } else {
+                            let alert = UIAlertController(title: "기록이 1개 이상 저장되어 있는 카테고리는 삭제할 수 없습니다.", message: "", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "ok", style: .default)
+                            alert.addAction(okAction)
+
+                            //alert 실행
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        
+                    }
+            delete.backgroundColor = UIColor(displayP3Red: 194/255, green: 62/255, blue: 62/255, alpha: 1)
+                delete.image = UIImage(named: "Trash.png")
+                    //actions배열 인덱스 0이 왼쪽에 붙어서 나옴
+                    return UISwipeActionsConfiguration(actions:[delete])
+        }else {return UISwipeActionsConfiguration(actions:[])}
         
-//    }
+    }
+    
+    func categoryWillDelete(categoryIdx:IndexPath) {
+        let alert = UIAlertController(title: nil, message: "이 카테고리를 삭제하시겠습니까?", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (_) in
+            if CoreDataFunc.deleteCategory(categoryIdx: categoryIdx) {
+                categoryArray1.remove(at: categoryIdx.section)
+                self.categorySet.deleteSections(IndexSet(integer: categoryIdx.section), with: .fade)
+                
+            }
+            
+        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true, completion: nil)
+    }
 
    
     /*

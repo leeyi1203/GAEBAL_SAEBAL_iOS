@@ -28,20 +28,44 @@ class CoreDataFunc {
         return result
     }
     
-    //데이터 삭제
-    static func delete(object: NSManagedObject) -> Bool {
+    //기록 삭제
+    static func deleteRecord(categoryIdx:Int, recordIdx:IndexPath) -> Bool {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        
-        context.delete(object)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Record")
+        // 선택된 cell의 본문 내용으로 삭제할 record 검색
+        fetchRequest.predicate = NSPredicate(format: "body = %@", recordArray[categoryIdx][recordIdx.section].body)
         
         do {
-            try context.save()
-            return true
-        } catch {
-            context.rollback()
-            return false
-        }
+                let result = try context.fetch(fetchRequest)
+                let objectToDelete = result[0] as! NSManagedObject
+                context.delete(objectToDelete)
+                try context.save()
+                return true
+            } catch let error as NSError {
+                print("Could not update. \(error), \(error.userInfo)")
+                return false
+            }
+    }
+    
+    //카테고리 삭제
+    static func deleteCategory(categoryIdx:IndexPath) -> Bool {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Category")
+        // 선택된 cell의 본문 내용으로 삭제할 record 검색
+        fetchRequest.predicate = NSPredicate(format: "categoryName = %@", categoryArray1[categoryIdx.section])
+        
+        do {
+                let result = try context.fetch(fetchRequest)
+                let objectToDelete = result[0] as! NSManagedObject
+                context.delete(objectToDelete)
+                try context.save()
+                return true
+            } catch let error as NSError {
+                print("Could not update. \(error), \(error.userInfo)")
+                return false
+            }
     }
     
     //카테고리 entity -> array
