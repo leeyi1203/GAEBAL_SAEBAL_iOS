@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import CoreData
 
 
 class categorySetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,AddCategoryDelegate{
     var addCategoryname = ""
     
+    lazy var categoryList:[NSManagedObject] = {
+        return CoreDataFunc.fetchCategoryList()
+    }()
     
     func AddCategory() {
         let alert = UIAlertController(title: "카테고리명 입력", message: "추가할 카테고리명을 입력하세요", preferredStyle: .alert)
@@ -19,11 +23,33 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
 
                     self.addCategoryname = alert.textFields?[0].text ?? ""
                     print(self.addCategoryname)
-                    self.categoryList.append(self.addCategoryname)
-                    print(self.categoryList)
+                    
+                    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    let context = container.viewContext
+                    let entity = NSEntityDescription.entity(forEntityName: "Category", in: context)
+                    
+                    if let entity = entity {
+                        let category = NSManagedObject(entity: entity, insertInto: context)
+                        category.setValue(self.addCategoryname, forKey: "categoryName")
+                    }
+                    do {
+                        try context.save()
+                        self.categoryList = CoreDataFunc.fetchCategoryList()
+                        CoreDataFunc.setupCategoryData(categoryList: self.categoryList)
+                        print(categoryArray1)
+                        print("## 새 카테고리 추가 ~!")
+                    } catch {
+                        print("Error saving contet \(error)")
+                    }
+                    
+                    
+                    
+                    
+//                    self.categoryList.append(self.addCategoryname)
+//                    print(self.categoryList)
                     if(self.addCategoryname != ""){
                         self.categorySet.beginUpdates()
-                        self.categorySet.insertSections(IndexSet(self.categoryList.count-1...self.categoryList.count-1),with: UITableView.RowAnimation.automatic)
+                        self.categorySet.insertSections(IndexSet(categoryArray1.count-1...categoryArray1.count-1),with: UITableView.RowAnimation.automatic)
                         self.categorySet.endUpdates()
                     }
                    
@@ -46,9 +72,8 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     
-    
     // MARK: - Declaration
-    var categoryList = ["기본","백준","자료구조"]
+//    var categoryList = ["기본"]
     
     @IBOutlet weak var categorySet: UITableView!
     override func viewDidLoad() {
@@ -66,9 +91,9 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryTableViewCell",for: indexPath) as! categoryTableViewCell
 
-        if (indexPath.section <= categoryList.count-1){
+        if (indexPath.section <= categoryArray1.count-1){
             print(indexPath.section)
-            cell.textLabel?.text = categoryList[indexPath.section]
+            cell.textLabel?.text = categoryArray1[indexPath.section]
             cell.categoryButton.isHidden=true
         }else {
             cell.textLabel?.text = "추가하기"
@@ -80,69 +105,86 @@ class categorySetViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return categoryList.count+1
+        return categoryArray1.count+1
     }
     //섹션 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.9
     }
     
-    
-    
-    
-    
-    
-    
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if ((indexPath.section<categoryList.count)&&( 0 < indexPath.section)){
             // 오른쪽에 만들기
-            let edit = UIContextualAction(style: .normal, title: "edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-                        print("edit")
-                let alert = UIAlertController(title: "카테고리명 입력", message: "수정할 카테고리명을 입력하세요", preferredStyle: .alert)
+//            let edit = UIContextualAction(style: .normal, title: "edit") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+//                        print("edit")
+//                let alert = UIAlertController(title: "카테고리명 입력", message: "수정할 카테고리명을 입력하세요", preferredStyle: .alert)
+//
+//                        let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+//
+//                            self.addCategoryname = alert.textFields?[0].text ?? ""
+//                            self.categoryList[indexPath.section] = self.addCategoryname
+//                            self.categorySet.beginUpdates()
+//                            self.categorySet.reloadSections(IndexSet((indexPath.section)...(indexPath.section)), with: UITableView.RowAnimation.automatic)
+//                            self.categorySet.endUpdates()
+//
+//                        }
+//
+//                        let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+//
+//                             //code
+//
+//                        }
+//
+//                        alert.addAction(cancel)
+//
+//                        alert.addAction(ok)
+//                        alert.addTextField ()
+//
+//                        self.present(alert, animated: true, completion: nil)
+//                        success(true)
+//                    }
+//                    edit.backgroundColor = UIColor(displayP3Red: 52/255, green: 95/255, blue: 207/255, alpha: 1)
+//                    edit.image = UIImage(named: "PencilSquare.png")
 
-                        let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
-
-                            self.addCategoryname = alert.textFields?[0].text ?? ""
-                            self.categoryList[indexPath.section] = self.addCategoryname
-                            self.categorySet.beginUpdates()
-                            self.categorySet.reloadSections(IndexSet((indexPath.section)...(indexPath.section)), with: UITableView.RowAnimation.automatic)
-                            self.categorySet.endUpdates()
-
-                        }
-
-                        let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
-
-                             //code
-
-                        }
-
-                        alert.addAction(cancel)
-
-                        alert.addAction(ok)
-                        alert.addTextField ()
-
-                        self.present(alert, animated: true, completion: nil)
-                        success(true)
-                    }
-                    edit.backgroundColor = UIColor(displayP3Red: 52/255, green: 95/255, blue: 207/255, alpha: 1)
-                    edit.image = UIImage(named: "PencilSquare.png")
-                    
                     let delete = UIContextualAction(style: .normal, title: "delete") { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-                        self.categoryList.remove(at: indexPath.row)
-                        print("delete")
-                        print(self.categoryList)
-                        self.categorySet.beginUpdates()
-                        self.categorySet.deleteRows(at: [indexPath], with:.fade)
-                        self.categorySet.endUpdates()
-                        success(true)
+                        if recordArray[indexPath.section].isEmpty == true {
+                            self.categoryWillDelete(categoryIdx: indexPath)
+                            success(true)
+                        } else {
+                            let alert = UIAlertController(title: "기록이 1개 이상 저장되어 있는 카테고리는 삭제할 수 없습니다.", message: "", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "ok", style: .default)
+                            alert.addAction(okAction)
+
+                            //alert 실행
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        
                     }
             delete.backgroundColor = UIColor(displayP3Red: 194/255, green: 62/255, blue: 62/255, alpha: 1)
                 delete.image = UIImage(named: "Trash.png")
                     //actions배열 인덱스 0이 왼쪽에 붙어서 나옴
-                    return UISwipeActionsConfiguration(actions:[delete,edit])
+                    return UISwipeActionsConfiguration(actions:[delete])
         }else {return UISwipeActionsConfiguration(actions:[])}
         
+    }
+    
+    func categoryWillDelete(categoryIdx:IndexPath) {
+        let alert = UIAlertController(title: nil, message: "이 카테고리를 삭제하시겠습니까?", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (_) in
+            if CoreDataFunc.deleteCategory(categoryIdx: categoryIdx) {
+                categoryArray1.remove(at: categoryIdx.section)
+                self.categorySet.deleteSections(IndexSet(integer: categoryIdx.section), with: .fade)
+                
+            }
+            
+        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true, completion: nil)
     }
 
    

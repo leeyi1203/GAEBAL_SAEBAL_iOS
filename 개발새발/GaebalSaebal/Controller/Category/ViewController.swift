@@ -6,21 +6,47 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     
 //    @IBOutlet weak var collectionView: UICollectionView!
     var collectionView: UICollectionView!
+    var defaultCategory:[String] = ["미정"]
     var dataSource: [MyCategory] = []
+    
+    
+    lazy var categoryList:[NSManagedObject] = {
+        return CoreDataFunc.fetchCategoryList()
+    }()
+    
+    lazy var recordList:[NSManagedObject] = {
+        return CoreDataFunc.fetchRecordList()
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-
+        setupDefaultCategory()
         setupWriteButton()
         configure()
-        setupDataSource()
+        
         setupBackbutton()
+        
+        CoreDataFunc.setupCategoryData(categoryList: categoryList)
+        CoreDataFunc.setupRecordData(recordList: recordList)
+        setupDataSource()
+//        print("*******************\(recordList[1].value(forKey: "body"))")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        categoryList = CoreDataFunc.fetchCategoryList()
+        recordList = CoreDataFunc.fetchRecordList()
+        DispatchQueue.main.async {
+            CoreDataFunc.setupRecordData(recordList: self.recordList)
+            self.setupDataSource()
+            self.collectionView.reloadData()
+        }
     }
     
     //MARK: - 기록 작성 버튼
@@ -45,6 +71,36 @@ class ViewController: UIViewController {
           performSegue(withIdentifier: "showWriteView", sender: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showWriteView" {
+            let nextVC : WriteViewController = segue.destination as! WriteViewController
+            nextVC.writeORedit = false
+        }
+    }
+    
+    
+    //앱 최초 실행 시 기본 카테고리("기본") 설정
+    private func setupDefaultCategory() {
+        // save core data
+        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        let context = container.viewContext
+        let defaultCategory = NSEntityDescription.entity(forEntityName: "Category", in: context)
+
+        if let defaultCategory = defaultCategory {
+            if categoryList.isEmpty {
+                let start = NSManagedObject(entity: defaultCategory, insertInto: context)
+                start.setValue("기본", forKey: "categoryName")
+            }
+        }
+
+        do {
+            try context.save()
+            print("기본 카테고리 설정 완료")
+        } catch {
+            print("Error saving contet \(error)")
+        }
+    }
+    
     //MARK: - CollectionView 설정
     private func configure() {
         let collectionViewLayout = MyLayout()
@@ -67,7 +123,7 @@ class ViewController: UIViewController {
     
     private func setupDataSource() {
         dataSource = MyCategory.getMock()
-//        print(dataSource)
+//        print("hey~\(dataSource)")
     }
     
     private func setupBackbutton() {

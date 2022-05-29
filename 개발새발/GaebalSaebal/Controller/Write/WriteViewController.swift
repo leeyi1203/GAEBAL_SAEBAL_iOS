@@ -7,14 +7,14 @@
 
 import UIKit
 import CoreData
-//import JSONDecoder
-
-
-
-let categoryList = ["미정", "백준", "자료구조", "스터디", "조금 긴 버튼을 추가하자", "짧🤪"]
 
 
 class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UINavigationControllerDelegate {
+    
+    //수정시, CategoryDetailViewController에서 받아오는 변수 값 / 카테고리 인덱스, 레코드 인덱스
+    var recordIdx = -1
+    var writeORedit: Bool = false// write : false, edit : true
+    var categoryIndex = 0
 
     //MARK: - ✅ Outlets & Actions
     @IBOutlet weak var scrollView: UIScrollView!
@@ -78,11 +78,11 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     // 키보드 높이 담을 변수
     var keyboardHeight:CGFloat = 0
     
+   
     
     //MARK: - ✅ View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         DispatchQueue.main.async { [self] in
             // 네비 높이 줄이기
             removeLargeTitle()
@@ -93,7 +93,53 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
             self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
             self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
-
+            
+            if writeORedit == false {
+                //백준, 깃허브, 이미지 버튼 디자인
+                self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
+                self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
+                self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
+                
+                //본문, 태그 TextView 디자인
+                customTextView(textView:self.bodyTextView, placeHolder:bodyTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
+                customTextView(textView:self.tagTextView, placeHolder:tagTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
+                customTextView(textView:self.codeTextView, placeHolder: codeTextViewPlaceHolder, bgColor: lighterGray)
+            }
+            else if (writeORedit == true) {
+                let record = recordArray[categoryIndex][recordIdx]
+                if (record.bojNumber?.isEmpty != true) {
+                    self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: true)
+                } else {
+                    self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
+                }
+                if (record.gitType != nil) {
+                    self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: true)
+                } else {
+                    self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
+                }
+                if (record.image != nil) {
+                    self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: true)
+                } else {
+                    self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
+                }
+                if (record.body.isEmpty != true) {
+                    customTextView(textView:self.bodyTextView, placeHolder:record.body, bgColor: UIColor.white.cgColor)
+                    self.bodyTextView.textColor = .black
+                }
+                if (record.tag?.isEmpty != true) {
+                    customTextView(textView:self.tagTextView, placeHolder:record.tag!, bgColor: UIColor.white.cgColor)
+                    self.tagTextView.textColor = .black
+                } else {
+                    customTextView(textView:self.tagTextView, placeHolder:tagTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
+                }
+                if (record.code?.isEmpty != true) {
+                    customTextView(textView:self.codeTextView, placeHolder:record.code!, bgColor: UIColor.white.cgColor)
+                    self.tagTextView.textColor = .black
+                }else {
+                    customTextView(textView:self.codeTextView, placeHolder:codeTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
+                }
+                
+            }
         }
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
@@ -106,18 +152,13 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         self.picker.delegate = self
         
         // 네비게이션 바 디자인
-        customNavgationBar()
+//        customNavgationBar() 수정가은
         
         // 네비게이션바에 완료 버튼 생성
         addSaveButton()
         
         //카테고리 버튼 생성
-        self.addCategoryButton(categoryList: categoryList)
-        
-        //본문, 태그 TextView 디자인
-        customTextView(textView:self.bodyTextView, placeHolder:bodyTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
-        customTextView(textView:self.tagTextView, placeHolder:tagTextViewPlaceHolder, bgColor: UIColor.white.cgColor)
-        customTextView(textView:self.codeTextView, placeHolder: codeTextViewPlaceHolder, bgColor: lighterGray)
+        self.addCategoryButton(categoryList: categoryArray1)
         
         
         // 키보드가 텍스트필드 가리지 않도록 옵저버 설정
@@ -129,8 +170,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                                                 selector: #selector(keyboardWillShow(_:)),
                                                 name: UIResponder.keyboardWillShowNotification,
                                                 object: nil)
-        
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,17 +179,8 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         /// button bounds가 view가 다 그려졌을 때 바인딩되는 것 같다... 그래서 그라데이션 보더는 뷰가 다 나타나고 지정해줘야한다,,,
         // 일단 미정 버튼 활성화
-        self.categoryButtonList[0].isSelected = true
-        setButtonGradientBorder(button: self.categoryButtonList[0])
-        
-        self.loadItems()
-        for item in self.itemArray {
-            print("## 왜 안댐 \(item.value(forKey: "category"))")
-        }
-        print("### core data \(self.itemArray) count \(self.itemArray.count)")
-        
-
-        
+        self.categoryButtonList[categoryIndex].isSelected = true
+        setButtonGradientBorder(button: self.categoryButtonList[categoryIndex])
 
     }
     
@@ -292,42 +322,80 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 if (btn.isSelected == true) { selectedCategoryButton = btn }
             }
             
-            // save core data
+            
             let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
             let context = container.viewContext
-//            let newRecord = Record(context: context)
             let newRecord = NSEntityDescription.entity(forEntityName: "Record", in: context)
-
-            if let newRecord = newRecord{
-                let myRecord = NSManagedObject(entity: newRecord, insertInto: context)
-                myRecord.setValue(selectedCategoryButton.titleLabel?.text, forKey: "category")
-                myRecord.setValue(self.bodyTextView.text, forKey: "body")
-                myRecord.setValue(self.tagTextView.text, forKey: "tag")
-                myRecord.setValue(self.bojNumber, forKey: "bojNumber")
-                myRecord.setValue(self.bojTitle, forKey: "bojTitle")
-                myRecord.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
-                myRecord.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
-                myRecord.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
-                myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
-                myRecord.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
-                myRecord.setValue(self.codeTextView.text ?? "", forKey: "code")
-                
-                print("## new record \(newRecord)")
+           
+            if writeORedit == false {
+                // save core data
+                if let newRecord = newRecord{
+                    let myRecord = NSManagedObject(entity: newRecord, insertInto: context)
+                    myRecord.setValue(selectedCategoryButton.titleLabel?.text, forKey: "category")
+                    myRecord.setValue(self.bodyTextView.text, forKey: "body")
+                    if self.tagTextView.text == tagTextViewPlaceHolder {
+                        myRecord.setValue("", forKey: "tag")
+                    } else { myRecord.setValue(self.tagTextView.text, forKey: "tag")}
+                    myRecord.setValue(self.bojNumber, forKey: "bojNumber")
+                    myRecord.setValue(self.bojTitle, forKey: "bojTitle")
+                    myRecord.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
+                    myRecord.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
+                    myRecord.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
+                    myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
+                    myRecord.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
+                    myRecord.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
+    //                let png = self.selectedImage?.pngData()
+    //                myRecord.setValue(png, forKey: <#T##String#>)
+                    if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
+                        myRecord.setValue("", forKey: "code")
+                    } else { myRecord.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
+                    let date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+                    dateFormatter.dateFormat = "YY/MM/dd a HH:mm"
+                    let convertDate = dateFormatter.string(from: date)
+                    myRecord.setValue(convertDate, forKey: "recordDate")
+                    
+                    
+                    print("## new record \(myRecord)")
+                }
             }
-            
-            
-            print(selectedCategoryButton.titleLabel?.text)
-//            newRecord.category = selectedCategoryButton.titleLabel?.text
-//            newRecord.body = self.bodyTextView.text
-//            newRecord.tag = self.tagTextView.text
-//            newRecord.bojNumber = self.bojNumber
-//            newRecord.bojTitle = self.bojTitle
-//            newRecord.gitType = self.selectedGithubEvent?.type
-//            newRecord.gitTitle = self.selectedGithubEvent?.title
-//            newRecord.gitRepoName = "\(self.selectedRepoOwner)/\(self.selectedRepoName)"
-//            newRecord.gitDate = changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? "")
-//            newRecord.image = self.selectedImage?.jpegData(compressionQuality: 1.0)
-//            newRecord.code = self.codeTextView.text ?? ""
+            else if writeORedit == true {
+                let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Record")
+                fetchRequest.predicate = NSPredicate(format: "body = %@", recordArray[categoryIndex][recordIdx].body)
+                do {
+                    let test = try context.fetch(fetchRequest)
+                    let objectUpdate = test[0] as! NSManagedObject
+                    
+                    objectUpdate.setValue(selectedCategoryButton.titleLabel?.text, forKey: "category")
+                    objectUpdate.setValue(self.bodyTextView.text, forKey: "body")
+                    if self.tagTextView.text == tagTextViewPlaceHolder {
+                        objectUpdate.setValue("", forKey: "tag")
+                    } else { objectUpdate.setValue(self.tagTextView.text, forKey: "tag")}
+                    objectUpdate.setValue(self.bojNumber, forKey: "bojNumber")
+                    objectUpdate.setValue(self.bojTitle, forKey: "bojTitle")
+                    objectUpdate.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
+                    objectUpdate.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
+                    objectUpdate.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
+                    objectUpdate.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
+                    objectUpdate.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
+                    objectUpdate.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
+    //                let png = self.selectedImage?.pngData()
+    //                objectUpdate.setValue(png, forKey: <#T##String#>)
+                    if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
+                        objectUpdate.setValue("", forKey: "code")
+                    } else { objectUpdate.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
+                    let date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+                    dateFormatter.dateFormat = "YY/MM/dd a HH:mm"
+                    let convertDate = dateFormatter.string(from: date)
+                    objectUpdate.setValue(convertDate, forKey: "recordDate")
+                } catch {
+                    print(error)
+                }
+                
+            }
 
             do {
                 try context.save()
@@ -335,31 +403,12 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             } catch {
                 print("Error saving contet \(error)")
             }
-            
-//                self.loadItems()
-//                print("### core data \(self.itemArray[self.itemArray.count - 1]) count \(self.itemArray.count)")
-           
-            
+
             // 메인으로 이동
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
-    // core data 확인용
-    func loadItems() {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
-        
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        do {
-            itemArray = try context.fetch(fetchRequest)
 
-        } catch {
-            print("error fetching data from context \(error)")
-        }
-    }
-
-    
     func addCategoryButton(categoryList: [String]){
         for name in categoryList {
             let categoryItemButton = UIButton()
@@ -568,13 +617,17 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
         
         let typeLabel:UILabel = {
             let label = UILabel()
+            if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].bojNumber?.isEmpty == true)) {
+                label.text = "\(self.bojNumber) - \(self.bojTitle)"
+            }
+            else if (writeORedit == true && recordArray[categoryIndex][recordIdx].bojNumber?.isEmpty != true) {
+                label.text = "\(recordArray[categoryIndex][recordIdx].bojNumber!) - \(recordArray[categoryIndex][recordIdx].bojTitle!)"
+            }
             
-            label.text = "\(self.bojNumber) - \(self.bojTitle)"
             label.font = UIFont.boldSystemFont(ofSize: 16.0)
 
             return label
         }()
-        
         viewButton.addSubview(typeLabel)
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.centerYAnchor.constraint(equalTo: viewButton.centerYAnchor).isActive = true
@@ -583,7 +636,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     }
     
     func setUsedGithubView(viewButton: UIView){
-        if self.selectedGithubEvent != nil{
+        if self.selectedGithubEvent != nil || recordArray[categoryIndex][recordIdx].gitType != nil {
             
             let typeLabel:UILabel = {
                 let label = UILabel()
@@ -593,21 +646,34 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 let redLabelColor = UIColor.init(red: 185/255, green: 54/255, blue: 54/255, alpha: 1)
                 
                 var labelColor:UIColor?
-                
-                // type 라벨 설정 (이슈인지, 풀인지, 커밋인지)
-                switch ( self.selectedGithubEvent?.type){
-                case "issue":
-                    label.text = "    issue    "
-                    labelColor = redLabelColor
-                case "pull request":
-                    label.text = "    pull requeset    "
-                    labelColor = blueLabelColor
-                    
-                default:
-                    label.text = "    commit    "
-                    labelColor = greenLabelColor
+                if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType == nil)) {
+                    // type 라벨 설정 (이슈인지, 풀인지, 커밋인지)
+                    switch (self.selectedGithubEvent?.type){
+                    case "issue":
+                        label.text = "    issue    "
+                        labelColor = redLabelColor
+                    case "pull request":
+                        label.text = "    pull requeset    "
+                        labelColor = blueLabelColor
+                    default:
+                        label.text = "    commit    "
+                        labelColor = greenLabelColor
+                    }
                 }
-                
+                else if (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType != nil) {
+                    switch (recordArray[categoryIndex][recordIdx].gitType!){
+                    case "issue":
+                        label.text = "    issue    "
+                        labelColor = redLabelColor
+                    case "pull request":
+                        label.text = "    pull requeset    "
+                        labelColor = blueLabelColor
+                    default:
+                        label.text = "    commit    "
+                        labelColor = greenLabelColor
+                    }
+                }
+    
                 label.layer.borderWidth = 2
                 
                 // 라벨 컬러 변경
@@ -634,7 +700,13 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 let eventTitle: UILabel = {
                     let title = UILabel()
                     
-                    title.text = self.selectedGithubEvent?.title
+                    if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType == nil)) {
+                        title.text = self.selectedGithubEvent?.title
+                    }
+                    else if (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType != nil) {
+                        title.text = recordArray[categoryIndex][recordIdx].gitTitle
+                    }
+                    
                     // 텍스트 크기 조정
                     title.font = UIFont.boldSystemFont(ofSize: 16.0)
                     
@@ -667,7 +739,14 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             let repoNameLable: UILabel = {
                 let label = UILabel()
                 
-                label.text = "\(self.selectedRepoOwner ?? "")/\(self.selectedRepoName ?? "")"
+                if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType == nil)) {
+                    label.text = "\(self.selectedRepoOwner ?? "")/\(self.selectedRepoName ?? "")"
+                }
+                else if (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType != nil) {
+                    label.text = recordArray[categoryIndex][recordIdx].gitRepoName
+                }
+                
+                
                 label.font = UIFont.systemFont(ofSize: 13)
                 label.textColor = UIColor.gray
                 
@@ -684,8 +763,14 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             let eventDateLabel:UILabel = {
                 let label = UILabel()
                 
-                let changedDate = changeDateFormat(dateStr: self.selectedGithubEvent!.created_at)
-                label.text = changedDate
+                if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType == nil)) {
+                    let changedDate = changeDateFormat(dateStr: self.selectedGithubEvent!.created_at)
+                    label.text = changedDate
+                }
+                else if (writeORedit == true && recordArray[categoryIndex][recordIdx].gitType != nil) {
+                    label.text = recordArray[categoryIndex][recordIdx].gitDate
+                }
+                
                 label.font = UIFont.systemFont(ofSize: 13)
                 label.textColor = UIColor.gray
                 
@@ -832,7 +917,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'" // 2020-08-13 16:30
-                
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
         let convertDate = dateFormatter.date(from: dateStr) // Date 타입으로 변환
                 
         let myDateFormatter = DateFormatter()
@@ -863,6 +948,10 @@ extension WriteViewController: UITextViewDelegate {
         if textView.textColor == .gray {
             textView.text = ""
             textView.textColor = .black
+        }
+        else {
+            textView.textColor = .black
+            
         }
         
         textView.becomeFirstResponder()

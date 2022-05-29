@@ -8,22 +8,67 @@
 import UIKit
 import SafariServices
 import SwiftUI
+protocol EditLogDelegate : class {
+    func goEditLog(categoryIdx : Int ,recordIdx : Int)
+}
+
 class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
+    // 수정,삭제 버튼
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_: [UIMenuElement]) -> UIMenu? in
                     
                     let btn1 = UIAction(title: "수정", image: UIImage(systemName: "")) { (UIAction) in
-                        print("수정 클릭됨")
+                                                print("수정 클릭됨")
+                        
+                        //수정 버튼 누르면 디테일 페이지 사라지고,goEditLog()이용해서 카테고리 디테일 페이지에서 수정 페이지로 이동
+                        self.goEditLogDelegate?.goEditLog(categoryIdx: self.categoryIndex, recordIdx: self.recordIndex)
+                        self.dismiss(animated: true)
+
+                       
+                        
                     }
                     let btn2 = UIAction(title: "삭제", image: UIImage(systemName: "")) { (UIAction) in
                         print("삭제 클릭됨")
+                        let alert = UIAlertController(title: "기록 삭제", message: "기록을 삭제하시겠습니까?", preferredStyle: .alert)
+
+                                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+
+                                    //DB에서 삭제하는 기능 추가
+                                   //삭제 완료 알림
+                                    let D_alert = UIAlertController(title: "삭제 완료", message: "삭제가 완료되었습니다.", preferredStyle: .alert)
+                                    D_alert.addAction(ok)
+
+                                    self.present(D_alert, animated: true, completion: nil)
+                    
+                                }
+
+                                let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+
+                                     //code
+
+                                }
+
+                                alert.addAction(cancel)
+
+                                alert.addAction(ok)
+
+                                self.present(alert, animated: true, completion: nil)
                     }
                     
                     return UIMenu(children: [btn1,btn2])
                 }
     }
     // MARK: - Declaration
+    var goEditLogDelegate : EditLogDelegate?
     
+    var categoryIndex: Int = 0
+    var recordIndex : Int = 0
+    
+    var git_link = ""
+    var boj_link = ""
+    
+    
+    @IBOutlet weak var codeTextView: UITextView!
     @IBOutlet weak var D_title: UILabel!
     @IBOutlet weak var D_contents: UIView!
     @IBOutlet weak var D_body: UITextView!
@@ -33,6 +78,7 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     @IBOutlet weak var contents_label: UILabel!
     @IBOutlet weak var ed_button: UIButton!
     
+    @IBOutlet weak var scrollview: UIScrollView!
     @IBOutlet weak var D_img: UIImageView!
     @IBOutlet weak var git_type_view: UIView!
     @IBOutlet weak var git_repo: UILabel!
@@ -40,80 +86,58 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
     @IBOutlet weak var git_type: UILabel!
     @IBOutlet weak var git_label: UILabel!
     @IBOutlet weak var git_contents: UIView!
-    //temporary data
-    var git_link=""
-    var category_name = "백준"
-    var log_cate_id = 2
-    var boj_link = ""
-    var Github_num = "385732af"
-    var Github_title = "디테일 페이지 완료"
-    var Github_type = "Commit"
-    var Github_date = "2022-03-24 15:30PM"
-    var Github_repo = "13wjdgk/GaebalSaebal"
-    let body_ex = "dsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksa"
-    struct Log {
-        var id : Int
-        var body : String
-        var BOJ_num : String
-        var category_id : Int
-        var tag : String
-        var date : String
-        var Github_num : String
-        var Github_title : String
-        var Github_type : String
-        var Github_date : String
-        var Github_repo : String
-        var image : String
-        
-        init(id : Int,body : String,BOJ_num : String,category_id : Int,tag : String,date : String,Github_num : String,Github_title : String,Github_type : String,Github_date : String,Github_repo : String,image : String){
-            self.id = id
-            self.body = body
-            self.BOJ_num = BOJ_num
-            self.category_id = category_id
-            self.tag = tag
-            self.date = date
-            self.Github_num = Github_num
-            self.Github_title = Github_title
-            self.Github_type = Github_type
-            self.Github_date = Github_date
-            self.Github_repo = Github_repo
-            self.image = image
-        }
-    }
-    var D_data : Log = Log(id : 1,body :"dsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksadsfdsafadsfjdasfdasjfkndasfnadsnfjkadshfjkahdsjkfhjalksdfhjkadfhjkladhfjkadshjkfadshjklfhadsjklfhjkldasfhjklasdhjfkhasjlkfhjsadkfhjklsdahfjklsdahljkfhsdjklafhjkldsahfjkldsahjkfsahdjkfhladjskhflkjasdhfjklsdahljkfhkjsdlfhkljsdhfkhdskljfhdskhfklsdhfkladhkfjahdsklfhadksjfhkdashfklsdahfkjshdajkfshdajklfhdsaljkfhsdaljkhfjdksahfljkadshfljkadshfjkdshfjklahjkfhadjkfhaslkfhladksfhlakdsjhflkjsdahfjkasdhfjklhdsfjkladshkfjhadskjfhasdkhfklajdshfkjladshfkjladshfjklhadskfjhadsfhdjksa",BOJ_num : "4949",category_id : 1,tag : "Python;백준;",date : "2020-11-18",Github_num : "648632ad",Github_title : "commit함",Github_type : "commit",Github_date : "2020/3/13",Github_repo : "repo contents",image : "/")
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         DataLoad()
-        Make_contents()
+        setupGitEvent()
+        setupBoj()
+        codeTextView.text=recordArray[categoryIndex][recordIndex].code
+        D_body.text = recordArray[categoryIndex][recordIndex].body
         D_body.delegate = self
+        codeTextView.delegate = self
         D_body.delegate?.textViewDidChange?(D_body)
+        codeTextView.delegate?.textViewDidChange?(codeTextView)
         D_body.isScrollEnabled = false
+        codeTextView.isScrollEnabled = true
+        
         // Do any additional setup after loading the view.
+        scrollview.contentSize = CGSize(width: scrollview.frame.width, height: 20000)
+        navigationController?.hidesBarsOnSwipe = true
         
-        //클릭이벤트
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goLink(sender:)))
-        D_contents.addGestureRecognizer(tapGesture)
+        //백준 누르면 웹뷰이동
+        let tapGesture_bj = UITapGestureRecognizer(target: self, action: #selector(goBjLink(sender:)))
+        D_contents.addGestureRecognizer(tapGesture_bj)
         
+        //git 누르면 웹뷰이동
+        let tapGesture_git = UITapGestureRecognizer(target: self, action: #selector(goGitLink(sender:)))
+        git_contents.addGestureRecognizer(tapGesture_git)
+        
+        //수정 삭제버튼 생성
         let interaction = UIContextMenuInteraction(delegate: self)
         ed_button.addInteraction(interaction)
-        D_img.image=UIImage(named: "exampleimage")
-        git_contents.isHidden=false
+//        D_img.image=UIImage(named: "exampleimage")
+        codeTextViewCustom()
+        setupImage()
     }
+   
     
     //데이터 로드 및 세팅 함수
     func DataLoad (){
-        D_title.text = "\(category_name)의 \(log_cate_id)번째 기록"
         
-        print("#DataLoad")
+        let index = recordArray[categoryIndex][recordIndex]
+        D_title.text = "\(categoryArray1[categoryIndex])의 \(recordIndex + 1)번째 기록"
+        D_tag.text = index.tag
+        D_date.text = index.recordDate
         
-        D_tag.text = D_data.tag
-        D_date.text=D_data.date
     }
     //view custom
-    func Make_contents(){
-        if (category_name != ""){
+ 
+    
+    func setupBoj(){
+        let recordData = recordArray[categoryIndex][recordIndex]
+        if (recordData.bojNumber?.isEmpty != true) {
+            let bojContentsLabel = recordData.bojNumber!+"번 -"+recordData.bojTitle!
             D_contents.layer.borderWidth = 0.3
             D_contents.layer.borderColor = UIColor.lightGray.cgColor
             D_contents.layer.cornerRadius=40
@@ -121,46 +145,117 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
             D_contents.layer.shadowRadius = 8
             D_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
             D_contents.layer.shadowOpacity = 0.3
-            contents_label.text = "\(D_data.BOJ_num)번  -   "
-            
-            boj_link = "https://www.acmicpc.net/problem/\(D_data.BOJ_num)"
+            contents_label.text = bojContentsLabel
+            boj_link = "https://www.acmicpc.net/problem/\(recordData.bojNumber!)"
         }
-        if (Github_num != ""){git_contents.layer.borderWidth = 0.3
+        else {
+            D_contents.isHidden = true
+        }
+    }
+    
+    func setupGitEvent(){
+        let recordData = recordArray[categoryIndex][recordIndex]
+        if (recordData.gitTitle != nil) {
+            let gitEventTitle = recordData.gitTitle
+            let gitEventRepo = recordData.gitRepoName!
+            let gitEventType = recordData.gitType
+            let gitEventDate = recordData.gitDate
+            git_contents.layer.borderWidth = 0.3
             git_contents.layer.borderColor = UIColor.lightGray.cgColor
             git_contents.layer.cornerRadius=40
             git_contents.layer.shadowColor = UIColor.gray.cgColor
             git_contents.layer.shadowRadius = 8
             git_contents.layer.shadowOffset = CGSize(width: 0, height: 4)
             git_contents.layer.shadowOpacity = 0.3
-            git_label.text = "\(D_data.Github_title)"
-            git_repo.text = "\(D_data.Github_repo)"
-            git_type.text = "\(D_data.Github_type)"
-            git_Date.text = "\(D_data.Github_date)"
-            git_link = "https://www.acmicpc.net/problem/\(D_data.BOJ_num)"
+            git_label.text = gitEventTitle
+            git_repo.text = gitEventRepo
+            git_type.text = gitEventType
+            git_Date.text = gitEventDate
+            
             git_type_view.layer.borderWidth = 0.3
-            if (D_data.Github_type=="commit"){
+            if (gitEventType == "commit"){
                 git_type_view.layer.borderColor = UIColor.green.cgColor
-            }else if(D_data.Github_type=="issue"){
+        
+                git_link = "https://github.com" + gitEventRepo + "/commits"
+            } else if(gitEventType == "issue") {
                 git_type_view.layer.borderColor = UIColor.red.cgColor
-            }else if(D_data.Github_type=="pull request"){
+                git_link = "https://github.com" + gitEventRepo + "/issues"
+
+            } else if(gitEventType == "pull request") {
                 git_type_view.layer.borderColor = UIColor.blue.cgColor
+                git_link = "https://github.com" + gitEventRepo + "pulls"
             }
             git_type_view.layer.cornerRadius=10
         }
-       
-        
+        else {
+            print("git 비었엄")
+            git_contents.isHidden = true
+        }
     }
-    //D_contents 터치시 링크로 이동
-    @objc func goLink(sender:UIGestureRecognizer){
+    func setupImage() {
+        let recordData = recordArray[categoryIndex][recordIndex]
+        if recordData.image != nil {
+            print("이미지 있움~~~")
+        }
+        else {
+            D_img.isHidden = true
+        }
+    }
+    //백준 터치시 링크로 이동
+    @objc func goBjLink(sender:UIGestureRecognizer){
         let contentsUrl = NSURL(string: boj_link)
         let LinkSafariView: SFSafariViewController = SFSafariViewController(url: contentsUrl as! URL)
         self.present(LinkSafariView, animated: true, completion: nil)
     }
+    //github 터치시 링크로 이동
+    @objc func goGitLink(sender:UIGestureRecognizer){
+        let contentsUrl = NSURL(string: git_link)
+        let LinkSafariView: SFSafariViewController = SFSafariViewController(url: contentsUrl as! URL)
+        self.present(LinkSafariView, animated: true, completion: nil)
+    }
+    //스크롤뷰
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard velocity.y != 0 else { return }
+            if velocity.y < 0 {
+                let height = self?.tabBarController?.tabBar.frame.height ?? 0.0
+                self?.tabBarController?.tabBar.alpha = 1.0
+                self?.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - height)
+            } else {
+                self?.tabBarController?.tabBar.alpha = 0.0
+                self?.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+            }
+        }
+    }
+    //textView 동적 레이아웃
+    func textViewAutoLayout(){
+//        D_body.translatesAutoresizingMaskIntoConstraints = false
+        D_contents.translatesAutoresizingMaskIntoConstraints = true
+        //백준, git 둘다 없을 때
+//        D_body.topAnchor.constraint(equalTo:D_title.bottomAnchor, constant: 40.0).isActive = true
+        //백준, git 하나만 없을 때
+//        D_contents.topAnchor.constraint(equalTo:D_title.bottomAnchor, constant: 30.0).isActive = true
+//        D_body.topAnchor.constraint(equalTo:D_contents.bottomAnchor, constant: 140.0).isActive = true
+    }
  
+    func codeTextViewCustom(){
+        codeTextView.layer.cornerRadius = 20
+        codeTextView.layer.backgroundColor =  UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
+        codeTextView.layer.borderWidth = 1.5
+        codeTextView.layer.borderColor =  UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1).cgColor
+        codeTextView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
 
+        codeTextView.textColor = .gray
+        D_body.layer.cornerRadius = 20
+        D_body.layer.borderWidth = 0.5
+        D_body.layer.borderColor =  UIColor.lightGray.cgColor
+        D_body.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
+
+
+    }
     
     
-    //모달창 닫는 함수
+    //디테일 뷰 모달창 닫는 함수
     @IBAction func close_log(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -181,16 +276,17 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
 
 }
 extension DetailViewController : UITextViewDelegate{
+    //동적으로 textview 크기 늘리기
+    
     func textViewDidChange(_ D_body: UITextView) {
-        print("#deletate")
-        D_body.text=D_data.body
-        print(D_body.text)
+        
         let size = CGSize(width: view.frame.width, height: .infinity)
         let estimatedSize = D_body.sizeThatFits(size)
         D_body.constraints.forEach{(constraint) in
             if constraint.firstAttribute == .height {
-                constraint.constant = estimatedSize.height
+                constraint.constant = estimatedSize.height+50.0
             }
         }
     }
+//
 }

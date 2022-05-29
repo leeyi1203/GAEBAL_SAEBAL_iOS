@@ -116,7 +116,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="JD2-pw-kwY" kind="relationship" relationship="rootViewController" id="2Tk-AS-guq"/>
+                        <segue destination="Kgw-Vw-meY" kind="relationship" relationship="rootViewController" id="Dop-g6-7KS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6I-dd-xT0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -137,7 +137,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="PXV-Ft-cwf" kind="relationship" relationship="rootViewController" id="bIU-zK-Mqf"/>
+                        <segue destination="BTe-6A-zoF" kind="relationship" relationship="rootViewController" id="PPC-Vg-q7A"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxE-mU-AKi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -175,7 +175,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="categoryContentsCell" rowHeight="87" id="zdR-xp-hh1" customClass="CategoryDetailTableViewCell" customModule="GaebalSaebal" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="categoryContentsCell" rowHeight="87" id="zdR-xp-hh1" customClass="CategoryDetailTableViewCell" customModule="GaebalSaebal" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zdR-xp-hh1" id="eYy-Sy-0BX">
@@ -219,6 +219,9 @@
                                         <inset key="separatorInset" minX="30" minY="0.0" maxX="30" maxY="0.0"/>
                                         <connections>
                                             <outlet property="contentLabel" destination="avy-qX-Oan" id="YPF-8c-Pxp"/>
+                                            <outlet property="dateLabel" destination="Iyi-CB-OgW" id="XLw-bv-VNz"/>
+                                            <outlet property="tagLabel" destination="kyr-Zh-fKU" id="82R-DZ-uS4"/>
+                                            <segue destination="lhF-kE-hTF" kind="presentation" identifier="goDetail" modalPresentationStyle="fullScreen" id="lPH-Wd-QcO"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -236,13 +239,45 @@
                     <navigationItem key="navigationItem" title="개발" id="4ud-ly-Qer"/>
                     <connections>
                         <outlet property="CategoryDetailTableView" destination="QVa-yG-vIV" id="f3j-oH-8dc"/>
+                        <segue destination="tvk-l5-2t7" kind="show" identifier="showWriteViewinCategory" id="2Kb-4g-xL9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMy-W9-RgW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3432" y="-942"/>
+            <point key="canvasLocation" x="3349" y="-959"/>
+        </scene>
+        <!--SettingStoryboard-->
+        <scene sceneID="cTt-w1-zdX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SettingStoryboard" id="BTe-6A-zoF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BTX-sR-jiV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifb-EX-OGa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1512" y="987"/>
+        </scene>
+        <!--DetailStoryboard-->
+        <scene sceneID="Z1G-bY-5WO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DetailStoryboard" id="lhF-kE-hTF" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ctz-nv-VWZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4089" y="-1171"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="bex-4z-1mh">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="Search" storyboardName="Search" id="Kgw-Vw-meY" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="n6m-7y-Oar"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="exf-bB-zqn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1569" y="-163"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="wFx-iI-0Xy"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="My_information" width="30" height="30"/>
         <image name="My_information_activate" width="30" height="30"/>
