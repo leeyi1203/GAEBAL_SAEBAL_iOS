@@ -88,7 +88,7 @@
                                 <color key="textColor" red="0.46274509803921571" green="0.46274509803921571" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CCP-k3-n27">
+                            <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CCP-k3-n27" userLabel="l">
                                 <rect key="frame" x="34" y="164" width="346" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="tNi-eZ-XFq"/>
@@ -96,7 +96,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9CB-kO-AJL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9CB-kO-AJL">
                                 <rect key="frame" x="359.5" y="348" width="46.5" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="저장" cornerStyle="capsule" titleAlignment="center">
@@ -114,9 +114,11 @@
                         <viewLayoutGuide key="safeArea" id="GFt-pt-r0h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="9CB-kO-AJL" firstAttribute="top" secondItem="CCP-k3-n27" secondAttribute="bottom" constant="150" id="0Lf-xB-2iA"/>
                             <constraint firstItem="CCP-k3-n27" firstAttribute="top" secondItem="Ui3-4x-50I" secondAttribute="bottom" constant="14" id="1M3-Ch-g3w"/>
                             <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="CCP-k3-n27" secondAttribute="trailing" constant="34" id="9GT-UX-fTh"/>
                             <constraint firstItem="Ui3-4x-50I" firstAttribute="leading" secondItem="CCP-k3-n27" secondAttribute="leading" id="M1O-Yu-ggY"/>
+                            <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="9CB-kO-AJL" secondAttribute="trailing" constant="10" id="aNd-oW-d52"/>
                             <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="9CB-kO-AJL" secondAttribute="trailing" constant="8" id="lCh-F8-vwk"/>
                             <constraint firstItem="Ui3-4x-50I" firstAttribute="top" secondItem="GFt-pt-r0h" secondAttribute="top" constant="85" id="mqZ-WU-i94"/>
                             <constraint firstItem="CCP-k3-n27" firstAttribute="leading" secondItem="GFt-pt-r0h" secondAttribute="leading" constant="34" id="nlE-g6-5o7"/>
@@ -124,7 +126,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="p2P-6p-njq"/>
                     <connections>
-                        <outlet property="githubIDInp" destination="CCP-k3-n27" id="OcF-r2-qpM"/>
+                        <outlet property="TokenInp" destination="CCP-k3-n27" id="Ggg-7t-pzU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tev-BM-bH4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

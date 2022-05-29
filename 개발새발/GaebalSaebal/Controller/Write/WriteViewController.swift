@@ -84,6 +84,15 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.async { [self] in
+            // 네비 높이 줄이기
+            removeLargeTitle()
+        }
+        
+        DispatchQueue.main.async { [self] in
+            //백준, 깃허브, 이미지 버튼 디자인
+            self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: false)
+            self.customViewButton(viewButton: self.githubView, radius:self.baekjoonView.frame.height / 2, isUsed: false)
+            self.customViewButton(viewButton: self.imageAddView, radius: CGFloat(15), isUsed: false)
             
             if writeORedit == false {
                 //백준, 깃허브, 이미지 버튼 디자인
@@ -132,10 +141,6 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                 
             }
         }
-        
-        // 네비 높이 줄이기
-        removeLargeTitle()
-
         
         // 스크롤뷰 제스터 추가 (터치 시 키보드 낼기)
         addScrollViewTapGuester()
@@ -408,7 +413,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             self.navigationController?.popViewController(animated: true)
         }
     }
-  
+
     func addCategoryButton(categoryList: [String]){
         for name in categoryList {
             let categoryItemButton = UIButton()

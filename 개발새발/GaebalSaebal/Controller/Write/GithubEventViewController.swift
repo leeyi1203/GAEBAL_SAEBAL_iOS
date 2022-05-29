@@ -79,10 +79,18 @@ class GithubEventViewController: UIViewController{
     // 화면 사라질 때 정보 보내려구,,
     var delegate: SendSelectedGithubEventDelegate?
     
+    // 화면 넓이 바인딩
+    var originViewWidth: CGFloat = 0.0
+    
 
     // MARK: - ✅ View Cycle
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        DispatchQueue.main.async { [self] in
+            print("### main view frame width : \(self.view.frame.width)")
+            self.originViewWidth = self.view.frame.width
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -148,6 +156,8 @@ extension GithubEventViewController : UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "githubEventCell", for: indexPath)
         
         if let cell = cell as? GithubEventTableViewCell {
+            
+            cell.originContentWidth = self.originViewWidth
             
             let greenLabelColor = UIColor.init(red: 77/255, green: 168/255, blue: 86/255, alpha: 1)
             let blueLabelColor = UIColor.init(red: 48/255, green: 141/255, blue: 181/255, alpha: 1)
