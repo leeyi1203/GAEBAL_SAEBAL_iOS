@@ -71,6 +71,13 @@ class ViewController: UIViewController {
           performSegue(withIdentifier: "showWriteView", sender: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showWriteView" {
+            let nextVC : WriteViewController = segue.destination as! WriteViewController
+            nextVC.writeORedit = false
+        }
+    }
+    
     
     //앱 최초 실행 시 기본 카테고리("기본") 설정
     private func setupDefaultCategory() {

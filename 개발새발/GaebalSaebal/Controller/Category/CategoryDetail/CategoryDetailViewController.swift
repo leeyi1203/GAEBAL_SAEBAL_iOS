@@ -6,15 +6,17 @@
 //
 
 import UIKit
+import CoreData
 
 class CategoryDetailViewController: UIViewController,EditLogDelegate {
     
     //EditLog func
-    func goEditLog(name : String ,section_row : Int) {
+    func goEditLog(categoryIdx : Int ,recordIdx : Int) {
         let desStroyboard = UIStoryboard(name: "Write", bundle: nil)
         let pushVC = desStroyboard.instantiateViewController(withIdentifier: "WriteLog") as! WriteViewController
-        pushVC.categoryName = name
-        pushVC.rowNum = section_row
+        pushVC.categoryIndex = categoryIdx
+        pushVC.recordIdx = recordIdx
+        pushVC.writeORedit = true
         self.navigationController?.pushViewController(pushVC, animated: true)
 //        let newVC = self.storyboard?.instantiateViewController(identifier: "WriteLog")
 //            newVC?.modalTransitionStyle = .coverVertical
@@ -24,10 +26,16 @@ class CategoryDetailViewController: UIViewController,EditLogDelegate {
         
     }
     
-    var receiveCategoryTitle: String?
+//    var receiveCategoryTitle: String?
     
     @IBOutlet weak var CategoryDetailTableView: UITableView!
+    
     var categoryIndex: Int = 0
+    
+    lazy var recordList:[NSManagedObject] = {
+        return CoreDataFunc.fetchRecordList()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDelegateDataSource()
@@ -37,7 +45,11 @@ class CategoryDetailViewController: UIViewController,EditLogDelegate {
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        
+        recordList = CoreDataFunc.fetchRecordList()
+        DispatchQueue.main.async {
+            CoreDataFunc.setupRecordData(recordList: self.recordList)
+            self.CategoryDetailTableView.reloadData()
+        }
     }
     
     private func setUpNaviTitle() {
@@ -52,6 +64,15 @@ class CategoryDetailViewController: UIViewController,EditLogDelegate {
         barbuttonItem.customView?.heightAnchor.constraint(equalToConstant: 45).isActive = true
         barbuttonItem.customView?.widthAnchor.constraint(equalToConstant: 45).isActive = true
         self.navigationItem.rightBarButtonItem = barbuttonItem
+        
+        //클릭이벤트
+        writeBtn.addTarget(self, action: #selector(tapWriteButton), for: .touchUpInside)
+    }
+    
+    @objc func tapWriteButton(sender:UIGestureRecognizer){
+            //클릭시 실행할 동작
+        performSegue(withIdentifier: "showWriteViewinCategory", sender: nil)
+        
     }
     
     
@@ -59,15 +80,19 @@ class CategoryDetailViewController: UIViewController,EditLogDelegate {
     func logWillDelete(deleteIndex:IndexPath) {
         let alert = UIAlertController(title: nil, message: "이 기록을 삭제하시겠습니까?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { (_) in
-//            let object = contentsArray[self.categoryIndex][deleteIndex.section]
+            let object = self.recordList[deleteIndex.section]
+            if CoreDataFunc.delete(object: object) {
+
+            }
             recordArray[self.categoryIndex].remove(at: deleteIndex.section)
             self.CategoryDetailTableView.deleteRows(at: [deleteIndex], with: .fade)
-            }
+        }
+
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        
+
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
-        
+
         present(alert, animated: true, completion: nil)
 
     }
@@ -90,13 +115,15 @@ extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let index = recordArray[categoryIndex]
-        print("\(index)")
+//        print("\(index)")
         let body = index[indexPath.section].body
 //        let date = index[indexPath.section]
         let tag = index[indexPath.section].tag
+        let date = index[indexPath.section].recordDate
         let cell = self.CategoryDetailTableView.dequeueReusableCell(withIdentifier: "categoryContentsCell", for: indexPath) as! CategoryDetailTableViewCell
         cell.contentLabel.text = body
         cell.tagLabel.text = tag
+        cell.dateLabel.text = date
         
         
         return cell
@@ -126,11 +153,17 @@ extension CategoryDetailViewController: UITableViewDelegate, UITableViewDataSour
             
             let CategoryDetailTableViewIndexPath = CategoryDetailTableView.indexPath(for: sender as! UITableViewCell)!
             let VCDest = segue.destination as! DetailViewController
-
-            VCDest.DetailData = CategoryDetailTableViewIndexPath.section
+            VCDest.categoryIndex = categoryIndex
+            VCDest.recordIndex = CategoryDetailTableViewIndexPath.section
             
             VCDest.goEditLogDelegate = self
 
+        }
+        
+        if segue.identifier == "showWriteViewinCategory" {
+            let vc = segue.destination as! WriteViewController
+            vc.categoryIndex = categoryIndex
+            vc.writeORedit = false
         }
     }
     // - 가은
