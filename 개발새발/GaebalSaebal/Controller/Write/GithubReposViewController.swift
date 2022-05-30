@@ -18,7 +18,7 @@ class GithubReposViewController: UIViewController, SendSelectedGithubEventDelega
                                   selectedRepoName: selectedRepoName)
     }
     
-    
+    let auth = "Token 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"
     var repos: [UserRepoInfo] = []
     var selectedRepoName: String = ""
     var selectedRepoOwner: String = ""
@@ -136,7 +136,7 @@ extension GithubReposViewController{
 //        print("getUserRepos 실행됨")
 
 
-        let auth = "Token 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"
+//      수정가은토큰  let auth = "Token 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"
 
 
 //        let url:URL = URL(string: "https://api.github.com/users/\(userName)/repos")!

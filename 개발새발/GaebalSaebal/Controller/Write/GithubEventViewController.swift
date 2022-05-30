@@ -75,7 +75,7 @@ class GithubEventViewController: UIViewController{
     var selectedRepoOwner = ""
     var selectedRepoName = ""
     var selectedEvent: Event = Event(type: "", number: "", title: "", node_id: "", created_at: "")
-    let auth = "Token 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"
+    let auth = "Token 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"
     
     // 화면 사라질 때 정보 보내려구,,
     var delegate: SendSelectedGithubEventDelegate?
