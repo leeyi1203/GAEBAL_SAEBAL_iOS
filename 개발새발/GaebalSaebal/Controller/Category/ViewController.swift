@@ -66,7 +66,7 @@ class ViewController: UIViewController {
 
     }
     
-    @objc func tapWriteButton(sender:UIGestureRecognizer){
+    @objc func tapWriteButton(sender:UIGestureRecognizer) {
             //클릭시 실행할 동작
           performSegue(withIdentifier: "showWriteView", sender: nil)
     }

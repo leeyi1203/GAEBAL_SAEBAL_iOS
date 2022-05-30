@@ -31,6 +31,10 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     @IBOutlet weak var codeTextView: UITextView!
     //MARK: - ✅ Variables
     
+    lazy var recordList:[NSManagedObject] = {
+        return CoreDataFunc.fetchRecordList()
+    }()
+    
     // 메인 컬러
     let mainPink = UIColor(red: 250/255, green: 0/255, blue: 255/255, alpha: 1)
     let mainPurple = UIColor(red: 178/255, green: 14/255, blue: 255/255, alpha: 1)
@@ -168,7 +172,11 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        recordList = CoreDataFunc.fetchRecordList()
+        DispatchQueue.main.async {
+            CoreDataFunc.setupRecordData(recordList: self.recordList)
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -323,6 +331,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
             let newRecord = NSEntityDescription.entity(forEntityName: "Record", in: context)
            
             if writeORedit == false {
+        
                 // save core data
                 if let newRecord = newRecord{
                     let myRecord = NSManagedObject(entity: newRecord, insertInto: context)
@@ -342,7 +351,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                     myRecord.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
                     myRecord.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
                     myRecord.setValue(self.selectedImage?.pngData(), forKey: "image")
-                    print("## image chekcing \(self.selectedImage?.pngData())")
+//                    print("## image chekcing \(self.selectedImage?.pngData())")
                     if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
                         myRecord.setValue("", forKey: "code")
                     } else { myRecord.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
@@ -373,12 +382,18 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
                     objectUpdate.setValue(self.bojTitle, forKey: "bojTitle")
                     objectUpdate.setValue(self.selectedGithubEvent?.type, forKey: "gitType")
                     objectUpdate.setValue(self.selectedGithubEvent?.title, forKey: "gitTitle")
-                    objectUpdate.setValue("\(self.selectedRepoOwner)/\(self.selectedRepoName)", forKey: "gitRepoName")
+                    if self.selectedRepoOwner?.isEmpty != true {
+                        objectUpdate.setValue((self.selectedRepoOwner ?? "") + "/" + (self.selectedRepoName ?? ""), forKey: "gitRepoName")
+                    }
                     objectUpdate.setValue(changeDateFormat(dateStr: self.selectedGithubEvent?.created_at ?? ""), forKey: "gitDate")
                     objectUpdate.setValue(self.selectedGithubEvent?.number, forKey: "eventNumber")
-                    objectUpdate.setValue(self.selectedImage?.jpegData(compressionQuality: 1.0), forKey: "image")
-    //                let png = self.selectedImage?.pngData()
-    //                objectUpdate.setValue(png, forKey: <#T##String#>)
+//                    print("##image \(self.selectedImage)")
+                    if self.selectedImage == nil && recordArray[categoryIndex][recordIdx].image != nil {
+                        objectUpdate.setValue(recordArray[categoryIndex][recordIdx].image, forKey: "image")
+                    } else {
+                        objectUpdate.setValue(self.selectedImage?.pngData(), forKey: "image")
+                    }
+//                    objectUpdate.setValue(self.selectedImage?.pngData(), forKey: "image")
                     if self.codeTextView.textStorage.string == codeTextViewPlaceHolder {
                         objectUpdate.setValue("", forKey: "code")
                     } else { objectUpdate.setValue(self.codeTextView.textStorage.string ?? "", forKey: "code")}
@@ -785,24 +800,26 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     
     func setUsedImageView(viewButton: UIView){
         print("### setUsedImageView function run ")
-                
-                viewButton.clipsToBounds = true
-                let image:UIImage
-                let imageView:UIImageView
-                
-                if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].image == nil)) {
-                    imageView = UIImageView(image: self.selectedImage)
-                    // 비율유지되게 바꿔야함z
-                    imageView.frame = viewButton.bounds
-                    viewButton.addSubview(imageView)
-                }
-                else if (writeORedit == true && recordArray[categoryIndex][recordIdx].image != nil) {
-                    image = UIImage(data: recordArray[categoryIndex][recordIdx].image!)!
-                    imageView = UIImageView(image: image)
-                    // 비율유지되게 바꿔야함z
-                    imageView.frame = viewButton.bounds
-                    viewButton.addSubview(imageView)
-                }    }
+        
+        viewButton.clipsToBounds = true
+        let image:UIImage
+        let imageView:UIImageView
+        
+        if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].image == nil)) {
+            imageView = UIImageView(image: self.selectedImage)
+            // 비율유지되게 바꿔야함z
+            imageView.frame = viewButton.bounds
+            viewButton.addSubview(imageView)
+        }
+        else if (writeORedit == true && recordArray[categoryIndex][recordIdx].image != nil) {
+            image = UIImage(data: recordArray[categoryIndex][recordIdx].image!)!
+            imageView = UIImageView(image: image)
+            // 비율유지되게 바꿔야함z
+            imageView.frame = viewButton.bounds
+            viewButton.addSubview(imageView)
+        }
+        
+    }
     
     @objc func tapViewButtonForAdd(sender:UIGestureRecognizer){
         // 백준 뷰 클릭시 실행할 동작
