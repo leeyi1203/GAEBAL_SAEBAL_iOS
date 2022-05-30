@@ -19,8 +19,8 @@ class SettingTableViewCell: UITableViewCell {
         // Initialization code
         setupLayout()
         print("## 연결")
-        Content_View.layer.borderWidth=1
-        Content_View.layer.borderColor = UIColor.lightGray.cgColor
+//        Content_View.layer.borderWidth=1
+//        Content_View.layer.borderColor = UIColor.lightGray.cgColor
 //        Content_View.layer.cornerRadius=10
         Content_View.layer.masksToBounds = true
       
