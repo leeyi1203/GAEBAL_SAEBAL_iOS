@@ -83,13 +83,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ui3-4x-50I">
-                                <rect key="frame" x="34" y="129" width="107" height="21"/>
+                                <rect key="frame" x="34" y="74" width="107" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <color key="textColor" red="0.46274509803921571" green="0.46274509803921571" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CCP-k3-n27" userLabel="l">
-                                <rect key="frame" x="34" y="164" width="346" height="34"/>
+                                <rect key="frame" x="34" y="109" width="346" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="tNi-eZ-XFq"/>
                                 </constraints>
@@ -97,13 +97,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9CB-kO-AJL">
-                                <rect key="frame" x="359.5" y="348" width="46.5" height="30"/>
+                                <rect key="frame" x="344" y="173" width="50" height="32"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="저장" cornerStyle="capsule" titleAlignment="center">
                                     <backgroundConfiguration key="background">
                                         <color key="backgroundColor" red="0.84705882349999995" green="0.023529411760000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </backgroundConfiguration>
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="15"/>
                                     <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -114,13 +114,12 @@
                         <viewLayoutGuide key="safeArea" id="GFt-pt-r0h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="9CB-kO-AJL" firstAttribute="top" secondItem="CCP-k3-n27" secondAttribute="bottom" constant="150" id="0Lf-xB-2iA"/>
+                            <constraint firstItem="9CB-kO-AJL" firstAttribute="top" secondItem="CCP-k3-n27" secondAttribute="bottom" constant="30" id="0Lf-xB-2iA"/>
                             <constraint firstItem="CCP-k3-n27" firstAttribute="top" secondItem="Ui3-4x-50I" secondAttribute="bottom" constant="14" id="1M3-Ch-g3w"/>
                             <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="CCP-k3-n27" secondAttribute="trailing" constant="34" id="9GT-UX-fTh"/>
                             <constraint firstItem="Ui3-4x-50I" firstAttribute="leading" secondItem="CCP-k3-n27" secondAttribute="leading" id="M1O-Yu-ggY"/>
-                            <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="9CB-kO-AJL" secondAttribute="trailing" constant="10" id="aNd-oW-d52"/>
-                            <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="9CB-kO-AJL" secondAttribute="trailing" constant="8" id="lCh-F8-vwk"/>
-                            <constraint firstItem="Ui3-4x-50I" firstAttribute="top" secondItem="GFt-pt-r0h" secondAttribute="top" constant="85" id="mqZ-WU-i94"/>
+                            <constraint firstItem="GFt-pt-r0h" firstAttribute="trailing" secondItem="9CB-kO-AJL" secondAttribute="trailing" constant="20" id="aNd-oW-d52"/>
+                            <constraint firstItem="Ui3-4x-50I" firstAttribute="top" secondItem="GFt-pt-r0h" secondAttribute="top" constant="30" id="mqZ-WU-i94"/>
                             <constraint firstItem="CCP-k3-n27" firstAttribute="leading" secondItem="GFt-pt-r0h" secondAttribute="leading" constant="34" id="nlE-g6-5o7"/>
                         </constraints>
                     </view>
