@@ -785,16 +785,24 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     
     func setUsedImageView(viewButton: UIView){
         print("### setUsedImageView function run ")
-        
-        viewButton.clipsToBounds = true
-        
-        if ( self.selectedImage != nil ){
-            let imageView = UIImageView(image: self.selectedImage)
-            // 비율유지되게 바꿔야함
-            imageView.frame = viewButton.bounds
-            viewButton.addSubview(imageView)
-        }
-    }
+                
+                viewButton.clipsToBounds = true
+                let image:UIImage
+                let imageView:UIImageView
+                
+                if(writeORedit == false || (writeORedit == true && recordArray[categoryIndex][recordIdx].image == nil)) {
+                    imageView = UIImageView(image: self.selectedImage)
+                    // 비율유지되게 바꿔야함z
+                    imageView.frame = viewButton.bounds
+                    viewButton.addSubview(imageView)
+                }
+                else if (writeORedit == true && recordArray[categoryIndex][recordIdx].image != nil) {
+                    image = UIImage(data: recordArray[categoryIndex][recordIdx].image!)!
+                    imageView = UIImageView(image: image)
+                    // 비율유지되게 바꿔야함z
+                    imageView.frame = viewButton.bounds
+                    viewButton.addSubview(imageView)
+                }    }
     
     @objc func tapViewButtonForAdd(sender:UIGestureRecognizer){
         // 백준 뷰 클릭시 실행할 동작
