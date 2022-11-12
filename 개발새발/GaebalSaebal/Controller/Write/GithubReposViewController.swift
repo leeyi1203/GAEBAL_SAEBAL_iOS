@@ -18,7 +18,7 @@ class GithubReposViewController: UIViewController, SendSelectedGithubEventDelega
                                   selectedRepoName: selectedRepoName)
     }
     
-    let auth = "Token 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"
+    let auth = "Token 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"
     var repos: [UserRepoInfo] = []
     var selectedRepoName: String = ""
     var selectedRepoOwner: String = ""
