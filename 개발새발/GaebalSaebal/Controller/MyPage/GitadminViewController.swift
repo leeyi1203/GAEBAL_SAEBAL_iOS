@@ -11,7 +11,7 @@ class GitadminViewController: UIViewController {
 
     var Token = ""
     var flag = true
-    
+    var keyValue = ""
     @IBOutlet weak var TokenInp: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class GitadminViewController: UIViewController {
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        let keyValue = getKey(account: "userToken")
+        keyValue = getKey(account: "userToken")
         TokenInp.placeholder = keyValue
 //        if (flag) {
 //            TokenInp.placeholder = "Token 값이 저장 되지 않았습니다."
@@ -38,8 +38,13 @@ class GitadminViewController: UIViewController {
 
         let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
                         UserDefaults.standard.setValue(self.TokenInp.text, forKey: "token")
-                        updateKey(updatekey: self.TokenInp.text ?? "")
-                        save(account: "userToken", pw: self.TokenInp.text ?? "" )
+            if self.keyValue != "" {
+                updateKey(updatekey: self.TokenInp.text ?? "")
+            }else{
+                save(account: "userToken", pw: self.TokenInp.text ?? "" )
+            }
+                        
+                        
                         self.TokenInp.placeholder = "Token 값이 저장 되었습니다."
                         self.flag = false
                     }
