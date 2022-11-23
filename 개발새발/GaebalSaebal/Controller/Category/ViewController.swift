@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDefaultCategory()
+//        setupDefaultCategory()
         setupWriteButton()
         configure()
         
@@ -80,26 +80,26 @@ class ViewController: UIViewController {
     
     
     //앱 최초 실행 시 기본 카테고리("기본") 설정
-    private func setupDefaultCategory() {
-        // save core data
-        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
-        let context = container.viewContext
-        let defaultCategory = NSEntityDescription.entity(forEntityName: "Category", in: context)
-
-        if let defaultCategory = defaultCategory {
-            if categoryList.isEmpty {
-                let start = NSManagedObject(entity: defaultCategory, insertInto: context)
-                start.setValue("기본", forKey: "categoryName")
-            }
-        }
-
-        do {
-            try context.save()
-            print("기본 카테고리 설정 완료")
-        } catch {
-            print("Error saving contet \(error)")
-        }
-    }
+//    private func setupDefaultCategory() {
+//        // save core data
+//        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+//        let context = container.viewContext
+//        let defaultCategory = NSEntityDescription.entity(forEntityName: "Category", in: context)
+//
+//        if let defaultCategory = defaultCategory {
+//            if categoryList.isEmpty {
+//                let start = NSManagedObject(entity: defaultCategory, insertInto: context)
+//                start.setValue("기본", forKey: "categoryName")
+//            }
+//        }
+//
+//        do {
+//            try context.save()
+//            print("기본 카테고리 설정 완료")
+//        } catch {
+//            print("Error saving contet \(error)")
+//        }
+//    }
     
     //MARK: - CollectionView 설정
     private func configure() {

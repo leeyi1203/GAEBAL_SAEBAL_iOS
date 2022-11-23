@@ -14,7 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        appHaveBeenRun {
+            print("앱 설치 후 최초 실행시 실행됨")
+            setupDefaultCategory()
+        } nothingChanged: {
+            print("변경사항 없음")
+        }
+        
         return true
     }
 
@@ -74,6 +80,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }
+    }
+    
+    func appHaveBeenRun(firstrun: () -> (), nothingChanged: () -> ()) {
+        let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        let versionOfLastRun = UserDefaults.standard.object(forKey: "VersionOfLastRun") as? String
+        if versionOfLastRun == nil {
+            // First start after installing the app
+            firstrun()
+        } else {
+            // nothing changed
+            nothingChanged()
+        }
+        UserDefaults.standard.set(currentVersion, forKey: "VersionOfLastRun")
+        UserDefaults.standard.synchronize()
+        
+    }
+    
+    func setupDefaultCategory() {
+        // save core data
+        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        let context = container.viewContext
+        let defaultCategory = NSEntityDescription.entity(forEntityName: "Category", in: context)
+        lazy var categoryList:[NSManagedObject] = {
+            return CoreDataFunc.fetchCategoryList()
+        }()
+        
+        CoreDataFunc.setupCategoryData(categoryList: categoryList)
+        
+        if let defaultCategory = defaultCategory {
+            if categoryList.isEmpty {
+                let start = NSManagedObject(entity: defaultCategory, insertInto: context)
+                start.setValue("기본", forKey: "categoryName")
+            }
+        }
+
+        do {
+            try context.save()
+            print("기본 카테고리 설정 완료")
+        } catch {
+            print("Error saving contet \(error)")
         }
     }
 

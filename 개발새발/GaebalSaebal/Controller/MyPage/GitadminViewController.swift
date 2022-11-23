@@ -32,27 +32,15 @@ class GitadminViewController: UIViewController {
         Token = TokenInp.text ?? ""
         let alert = UIAlertController(title: "저장완료", message: "저장되었습니다.", preferredStyle: .alert)
 
-                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
-                }
-        
-        TokenInp.text=""
-        TokenInp.placeholder = "Token 값이 저장 되었습니다."
-        flag = false
-        
+        let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+                        UserDefaults.standard.setValue(self.TokenInp.text, forKey: "token")
+                        self.TokenInp.placeholder = "Token 값이 저장 되었습니다."
+                        self.flag = false
+                    }
 
-                alert.addAction(ok)
+                    alert.addAction(ok)
 
-                self.present(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
