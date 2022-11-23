@@ -865,44 +865,47 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     }
     
     func getBojInfo() {
-        let baseURL = "http://203.255.3.246:7071/api/product/"
-        let urlString = baseURL + String(self.bojNumber)
-        
-        print("## start getBojInfo")
-        
-        if let url = URL(string: urlString) {
-            var requestURL = URLRequest(url: url)
-            requestURL.httpMethod = "GET"
-            requestURL.allHTTPHeaderFields = ["Content-Type":"application/json"]
-            let dataTask = URLSession.shared.dataTask(with: requestURL) { (data, response, error) in
-                if let data = data {
-                    let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String : Any]]
-//                    let jsonData = try? JSONDecoder().decode([Issues].self, from: data)
-                    guard let rsData = jsonData else {
-                        print("error boj url session")
-                        return
-                    }
-                    // call back
-                    self.bojTitle = rsData[0]["Title"] as! String
-                    
-                    DispatchQueue.main.sync{
-                        if ( self.bojTitle == "없음" ){
-                            let alert = UIAlertController(title: "해당 번호의 백준 문제를 찾을 수 없습니다",  message: "", preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "ok", style: .default)
-                            alert.addAction(okAction)
+        print("api 실행")
+        var components = URLComponents(string: "http://203.255.3.246:7071/bjapi")
+        let Value = URLQueryItem(name: "number", value: self.bojNumber )
+        components?.queryItems = [Value]
+        let com_url = components?.url
+        guard let url = com_url else {
+             return
+           }
+           var request = URLRequest(url: url)
+           request.httpMethod = "GET"
+           
+           URLSession.shared.dataTask(with: request) { data, response, error in
+               guard error == nil else {
+                   print("Error: error calling GET")
+                   print(error!)
+                   return
+               }
+               if let data = data {
+                   do {
+                       let Result: apiResult = try JSONDecoder().decode(apiResult.self, from: data)
+                       print("Result api: \(Result.result)")
+                       self.bojTitle = Result.result
+                        DispatchQueue.main.sync{
+                           if ( self.bojTitle == "없음" ){
+                               let alert = UIAlertController(title: "해당 번호의 백준 문제를 찾을 수 없습니다",  message: "", preferredStyle: .alert)
+                               let okAction = UIAlertAction(title: "ok", style: .default)
+                               alert.addAction(okAction)
 
-                            //alert 실행
-                            self.present(alert, animated: true, completion: nil)
-                        } else{
-                            // 확인되면 뷰 다시그리기
-                            self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: true)
-                        }
-                        
-                    }
-                }
-            }
-            dataTask.resume()
-        }
+                               //alert 실행
+                               self.present(alert, animated: true, completion: nil)
+                           } else{
+                               // 확인되면 뷰 다시그리기
+                               self.customViewButton(viewButton: self.baekjoonView, radius: self.baekjoonView.frame.height / 2, isUsed: true)
+                           }
+                       }
+                       
+                   } catch let error {
+                       print("err남")
+                       print(error)
+                   }           }
+           }.resume()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

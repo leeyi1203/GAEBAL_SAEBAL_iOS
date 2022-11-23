@@ -40,6 +40,7 @@
 		A62E21CE28417142002C2669 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A62E21CD28417142002C2669 /* Search.storyboard */; };
 		A62E21D328417887002C2669 /* DataFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62E21D228417887002C2669 /* DataFile.swift */; };
 		A6482470281A771A0008A612 /* DetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A648246F281A771A0008A612 /* DetailStoryboard.storyboard */; };
+		A6AF4745292DEF5D0087260F /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AF4744292DEF5D0087260F /* Struct.swift */; };
 		A6E72E35282E817900454A7C /* categoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E72E34282E817900454A7C /* categoryTableViewCell.swift */; };
 		A6F3D14E282EB29A00FD48B0 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F3D14D282EB29A00FD48B0 /* WriteViewController.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +64,6 @@
 
 /* Begin PBXFileReference section */
 		3F052742281A789D006188FA /* Write.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Write.storyboard; sourceTree = "<group>"; };
-		3F85FCD62827B1C500B8C616 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		3F8C6DD628323F1100A8CBE7 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		3F8C6DD828326CEA00A8CBE7 /* GithubEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEventViewController.swift; sourceTree = "<group>"; };
 		3F8C6DDA28327BA100A8CBE7 /* GithubEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubEventTableViewCell.swift; sourceTree = "<group>"; };
@@ -100,6 +100,7 @@
 		A62E21CD28417142002C2669 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		A62E21D228417887002C2669 /* DataFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFile.swift; sourceTree = "<group>"; };
 		A648246F281A771A0008A612 /* DetailStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailStoryboard.storyboard; sourceTree = "<group>"; };
+		A6AF4744292DEF5D0087260F /* Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		A6E72E34282E817900454A7C /* categoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = categoryTableViewCell.swift; sourceTree = "<group>"; };
 		A6F3D14D282EB29A00FD48B0 /* WriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,6 +238,7 @@
 				6FA1DCFB27FD8F8A009C355F /* SceneDelegate.swift */,
 				6FA1DD0527FD8F8C009C355F /* Assets.xcassets */,
 				6FA1DD0A27FD8F8C009C355F /* Info.plist */,
+				A6AF4744292DEF5D0087260F /* Struct.swift */,
 			);
 			path = GaebalSaebal;
 			sourceTree = "<group>";
@@ -269,7 +271,6 @@
 		A6F3D14B282EB16600FD48B0 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				3F85FCD62827B1C500B8C616 /* WriteViewController.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -427,6 +428,7 @@
 				3FB1D8B52832AB68009B0B04 /* GithubReposViewController.swift in Sources */,
 				6FC53962282EBCAD00F1C311 /* CategoryDetailViewController.swift in Sources */,
 				A62E21D328417887002C2669 /* DataFile.swift in Sources */,
+				A6AF4745292DEF5D0087260F /* Struct.swift in Sources */,
 				6F21752127FDA18300D74875 /* MyPageViewController.swift in Sources */,
 				6FA1DCFE27FD8F8A009C355F /* ViewController.swift in Sources */,
 				A60992BB2828146D00DD2D91 /* SettingTableViewCell.swift in Sources */,
