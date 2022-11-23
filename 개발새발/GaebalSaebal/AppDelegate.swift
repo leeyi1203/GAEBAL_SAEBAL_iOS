@@ -12,17 +12,23 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         appHaveBeenRun {
             print("앱 설치 후 최초 실행시 실행됨")
             setupDefaultCategory()
+            
         } nothingChanged: {
             print("변경사항 없음")
         }
+//        save(account: "acc2", pw: "3298rufiodfdsajfadslf")
+//        getKey(account : "acc1")
         
         return true
     }
+    
+//    func getKeyChain(){
+//        guard let data = KeyChain.getItem(KeyChain)
+//    }
 
     // MARK: UISceneSession Lifecycle
 

@@ -11,6 +11,7 @@ class GitadminViewController: UIViewController {
 
     var Token = ""
     var flag = true
+    
     @IBOutlet weak var TokenInp: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,14 +19,17 @@ class GitadminViewController: UIViewController {
         navigationItem.title = "깃허브 사용자 설정"
         self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         
+        
     }
     override func viewWillAppear(_ animated: Bool) {
-        if (flag) {
-            TokenInp.placeholder = "Token 값이 저장 되지 않았습니다."
-        }else{
-            TokenInp.placeholder = "Token 값이 저장 되었습니다."
-        }
-        Token = TokenInp.text ?? ""
+        let keyValue = getKey(account: "userToken")
+        TokenInp.placeholder = keyValue
+//        if (flag) {
+//            TokenInp.placeholder = "Token 값이 저장 되지 않았습니다."
+//        }else{
+//            TokenInp.placeholder = "Token 값이 저장 되었습니다."
+//        }
+//        Token = TokenInp.text ?? ""
     }
     
     @IBAction func SaveInfo(_ sender: Any) {
@@ -34,6 +38,8 @@ class GitadminViewController: UIViewController {
 
         let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
                         UserDefaults.standard.setValue(self.TokenInp.text, forKey: "token")
+                        updateKey(updatekey: self.TokenInp.text ?? "")
+                        save(account: "userToken", pw: self.TokenInp.text ?? "" )
                         self.TokenInp.placeholder = "Token 값이 저장 되었습니다."
                         self.flag = false
                     }
