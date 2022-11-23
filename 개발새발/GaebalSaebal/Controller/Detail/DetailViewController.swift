@@ -187,15 +187,19 @@ class DetailViewController: UIViewController, UIContextMenuInteractionDelegate {
                 git_type_view.layer.borderColor = greenLabelColor.cgColor
                 git_type.textColor = greenLabelColor
         
-                git_link = "https://github.com" + gitEventRepo + "/commits/" + gitEventNumber!
+
+                git_link = "https://github.com/" + gitEventRepo + "/commits/" + (gitEventNumber!)
             } else if(gitEventType == "issue") {
                 git_type_view.layer.borderColor = redLabelColor.cgColor
-                git_link = "https://github.com" + gitEventRepo + "/issues/" + gitEventNumber!
+                git_link = "https://github.com/" + gitEventRepo + "/issues/" + gitEventNumber!
+
                 git_type.textColor = redLabelColor
 
             } else if(gitEventType == "pull request") {
                 git_type_view.layer.borderColor = blueLabelColor.cgColor
-                git_link = "https://github.com" + gitEventRepo + "pulls/" + gitEventNumber!
+
+                git_link = "https://github.com/" + gitEventRepo + "pulls/" + gitEventNumber!
+
                 git_type.textColor = blueLabelColor
             }
 //            git_type_view.layer.cornerRadius=15

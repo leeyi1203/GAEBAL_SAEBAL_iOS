@@ -865,7 +865,7 @@ class WriteViewController: UIViewController, SendSelectedGithubEventDelegate, UI
     }
     
     func getBojInfo() {
-        let baseURL = "http://203.255.3.246:7072/api/product/"
+        let baseURL = "http://203.255.3.246:7071/api/product/"
         let urlString = baseURL + String(self.bojNumber)
         
         print("## start getBojInfo")
